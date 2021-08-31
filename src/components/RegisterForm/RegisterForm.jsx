@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+// Used by Super Admin to register other users. Imported into RegisterPage component
 function RegisterForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
