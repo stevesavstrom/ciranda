@@ -55,7 +55,7 @@ CREATE TABLE "service_area" (
     "id" SERIAL PRIMARY KEY,
     "service_area" TEXT
     "recycling_company_id" INT REFERENCES "recycling_companies"
-)
+);
 
 CREATE TABLE "feedback" (
    "id" SERIAL PRIMARY KEY,
@@ -67,8 +67,8 @@ CREATE TABLE "feedback" (
 );
 
 -- Placeholder Data Insert Statements
-INSERT INTO "recycling_companies" ("name", "website", "address", "provider_area", "phone", "email", "cleanliness", "pickup_requirements", "notes")
-VALUES ('Greif', 'https://wwww.greif.com/', NULL, NULL, NULL, 'recyclingservices@greif.com', 'Triple rinsed, labels removed, contact for more details.', NULL, 'National: Fee for recycling IBCs, cost depends on freight and load density, call or email');
+INSERT INTO "recycling_companies" ("name", "service_range", "website", "address", "city", "state", "zip", "phone", "email", "cleanliness", "pickup_requirements", "notes")
+VALUES ('Greif', 'National', 'https://wwww.greif.com/', NULL, NULL, NULL, NULL, NULL, 'recyclingservices@greif.com', 'Triple rinsed, labels removed, contact for more details.', NULL, 'Fee for recycling IBCs, cost depends on freight and load density, call or email');
 
 INSERT INTO "recyclables" ("accepted_item")
 VALUES ('Metal Drums'), ('Plastic Drums HDPE'), ('LDPE Containers'), ('Plastic Film'), ('IBCs'), ('Cardboard');
@@ -77,9 +77,15 @@ INSERT INTO "recycling_companies_recyclables" ("recycling_company_id", "recyclab
 VALUES (1, 5);
 
 -- Fake company data - repreents a company that accepts multiple items
-INSERT INTO "recycling_companies" ("name", "website", "address", "provider_area", "phone", "email", "cleanliness", "pickup_requirements", "notes")
-VALUES ('Fake Company', 'https://fake/', NULL, NULL, NULL, 'recyclingservices@fake.com', 'Triple rinsed, labels removed, contact for more details.', NULL, 'National: Fee for recycling IBCs, cost depends on freight and load density, call or email');
+INSERT INTO "recycling_companies" ("name", "service_range", "website", "address", "city", "state", "zip", "phone", "email", "cleanliness", "pickup_requirements", "notes")
+VALUES ('Sample Company', 'Local', 'https://wwww.sample.com/', NULL, NULL, NULL, NULL, NULL, 'recyclingservices@greif.com', 'Triple rinsed, labels removed, contact for more details.', NULL, 'Fee for recycling IBCs, cost depends on freight and load density, call or email');
 
 INSERT INTO "recycling_companies_recyclables" ("recycling_company_id", "recyclable_id")
 VALUES (2, 1), (2, 2), (2, 3), (2, 5);
+
+INSERT INTO "service_area" ("service_area", "recycling_company_id")
+VALUES ('MN', 1), ('WI', 1);
+
+INSERT INTO "service_area" ("service_area", "recycling_company_id")
+VALUES ('CA', 2), ('WA', 2), ('OR', 2);
 
