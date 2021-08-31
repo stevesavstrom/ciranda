@@ -25,6 +25,7 @@ CREATE TABLE "recycling_companies" (
     "name" TEXT NOT NULL,
     "website" TEXT,
     "address" TEXT,
+    "provider_area" TEXT,
     "phone" TEXT,
     "email" TEXT,
     "cleanliness" TEXT,
@@ -51,4 +52,21 @@ CREATE TABLE "feedback" (
    "comment" TEXT,
    "date" DATE 
 );
+
+-- Placeholder Data Insert Statements
+INSERT INTO "recycling_companies" ("name", "website", "address", "provider_area", "phone", "email", "cleanliness", "pickup_requirements", "notes")
+VALUES ('Greif', 'https://wwww.greif.com/', NULL, NULL, NULL, 'recyclingservices@greif.com', 'Triple rinsed, labels removed, contact for more details.', NULL, 'National: Fee for recycling IBCs, cost depends on freight and load density, call or email');
+
+INSERT INTO "recyclabes" ("accepted_item")
+VALUES ('Metal Drums'), ('Plastic Drums HDPE'), ('LDPE Containers'), ('Plastic Film'), ('IBCs'), ('Cardboard');
+
+INSERT INTO "recycling_companies_recyclables" ("recycling_company_id", "recyclable_id")
+VALUES (1, 5);
+
+-- Fake company data - repreents a company that accepts multiple items
+INSERT INTO "recycling_companies" ("name", "website", "address", "provider_area", "phone", "email", "cleanliness", "pickup_requirements", "notes")
+VALUES ('Fake Company', 'https://fake/', NULL, NULL, NULL, 'recyclingservices@fake.com', 'Triple rinsed, labels removed, contact for more details.', NULL, 'National: Fee for recycling IBCs, cost depends on freight and load density, call or email');
+
+INSERT INTO "recycling_companies_recyclables" ("recycling_company_id", "recyclable_id")
+VALUES (2, 1), (2, 2), (2, 3), (2, 5);
 
