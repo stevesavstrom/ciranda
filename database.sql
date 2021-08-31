@@ -25,7 +25,9 @@ CREATE TABLE "recycling_companies" (
     "name" TEXT NOT NULL,
     "website" TEXT,
     "address" TEXT,
-    "provider_area" TEXT,
+    "city" TEXT,
+    "state" TEXT,
+    "zip" TEXT,
     "phone" TEXT,
     "email" TEXT,
     "cleanliness" TEXT,
@@ -43,6 +45,15 @@ CREATE TABLE "recycling_companies_recyclables" (
     "recycling_company_id" INT REFERENCES "recycling_companies" ON DELETE CASCADE NOT NULL,
     "recyclable_id" INT REFERENCES "recyclables" ON DELETE CASCADE NOT NULL
 );
+
+-- Service area table - feedback from Chad
+-- Insert entities one at a time
+-- Possibly use CONUS (Continental U.S.) - boolean true/false for national companies. If false then insert individual states.
+CREATE "service_area" (
+    "id" SERIAL PRIMARY KEY,
+    "recycling_company_id" INT REFERENCES
+    "area_name" VARCHAR(55),
+)
 
 CREATE TABLE "feedback" (
    "id" SERIAL PRIMARY KEY,
