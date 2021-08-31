@@ -1,11 +1,12 @@
 -- Create a database called 'ciranda'
 
--- Drop tables
+-- Drop tables (use this order to avoid dependency conflicts)
 DROP TABLE "user";
-DROP TABLE "recycling_companies";
-DROP TABLE "recyclables";
-DROP TABLE "recycling_companies_recyclables";
 DROP TABLE "feedback";
+DROP TABLE "recycling_companies_recyclables";
+DROP TABLE "recyclables";
+DROP TABLE "service_area";
+DROP TABLE "recycling_companies";
 
 -- Create the following tables in Postico
 
@@ -53,7 +54,7 @@ CREATE TABLE "recycling_companies_recyclables" (
 
 CREATE TABLE "service_area" (
     "id" SERIAL PRIMARY KEY,
-    "service_area" TEXT
+    "service_area" TEXT,
     "recycling_company_id" INT REFERENCES "recycling_companies"
 );
 
