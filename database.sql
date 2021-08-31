@@ -57,7 +57,7 @@ CREATE TABLE "feedback" (
 INSERT INTO "recycling_companies" ("name", "website", "address", "provider_area", "phone", "email", "cleanliness", "pickup_requirements", "notes")
 VALUES ('Greif', 'https://wwww.greif.com/', NULL, NULL, NULL, 'recyclingservices@greif.com', 'Triple rinsed, labels removed, contact for more details.', NULL, 'National: Fee for recycling IBCs, cost depends on freight and load density, call or email');
 
-INSERT INTO "recyclabes" ("accepted_item")
+INSERT INTO "recyclables" ("accepted_item")
 VALUES ('Metal Drums'), ('Plastic Drums HDPE'), ('LDPE Containers'), ('Plastic Film'), ('IBCs'), ('Cardboard');
 
 INSERT INTO "recycling_companies_recyclables" ("recycling_company_id", "recyclable_id")
