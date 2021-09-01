@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
 
+// Login form component for Admins and Super Admin to log in. Imported into LoginPage.jsx
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

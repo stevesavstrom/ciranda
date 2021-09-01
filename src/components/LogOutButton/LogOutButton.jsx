@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
+
+// Utilized by Admins and Super Admin to log out. 
 function LogOutButton(props) {
   const dispatch = useDispatch();
   return (
