@@ -73,8 +73,7 @@ router.post('/', (res,req) => {
 
 
 
-
-
+ // TESTING MERGING
 
 
 //     const query2 = `INSERT INTO companies_recyclables (company_id, recyclable_id) VALUES ($1, $2) return ID;`;
