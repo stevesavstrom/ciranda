@@ -64,7 +64,7 @@ CREATE TABLE "feedback" (
    "customer" TEXT,
    "email" TEXT,
    "comment" TEXT,
-   "date" DATE 
+   "date" TIMESTAMP
 );
 
 -- Placeholder Data Insert Statements
