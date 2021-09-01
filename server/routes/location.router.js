@@ -51,6 +51,17 @@ pool.query(query, [companyId])
 })
 });
 
+// DELETE a recycling center record from the recycling_centers table
+router.delete('/:id', (req, res) => {
+  pool.query('DELETE FROM "companies" WHERE id=$1', [req.params.id])
+  .then((result) => {
+      res.sendStatus(200);
+  }).catch((error) => {
+      console.log('Error DELETE /api/location', error);
+      res.sendStatus(500);
+  })
+});
+
 router.post('/', (res,req) => {
     const newCompany = req.body;
     const recyclableIds = req.body.recyclableId;
@@ -70,6 +81,8 @@ router.post('/', (res,req) => {
             pool.query(secondQuery, [newCompanyId, recyclable])
         }
     })
+
+
 
 
 
