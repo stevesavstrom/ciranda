@@ -94,25 +94,44 @@ VALUES ('CA', 2), ('WA', 2), ('OR', 2);
 
 -- Test Queries
 
--- GET all recycling centers from the recycling_centers table
+-- GET all companies - Array_Agg Example to group items and areas
 SELECT
-companies.id,
-companies.name,
-companies.service_range,
-companies.website,
-companies.address,
-companies.city,
-companies.state,
-companies.zip,
-companies.phone,
-companies.email,
-companies.cleanliness,
-companies.pickup_requirements,
-companies.notes,
-companies_recyclables.recyclable_id,
-service_areas.area
+	companies.*,
+	ARRAY_AGG(distinct service_areas.area) AS areas,
+	ARRAY_AGG(distinct recyclables.item) AS item
 FROM companies
 JOIN companies_recyclables ON companies_recyclables.company_id = companies.id
 JOIN service_areas ON service_areas.company_id = companies.id
-JOIN recyclables ON recyclables.id = companies_recyclables.recyclable_id;
+JOIN recyclables ON recyclables.id = companies_recyclables.recyclable_id
+GROUP BY companies.id;
+
+-- GET company by id - Array_Agg Example to group items and areas
+SELECT
+	companies.*,
+	ARRAY_AGG(distinct service_areas.area) AS areas,
+	ARRAY_AGG(distinct recyclables.item) AS item
+FROM companies
+JOIN companies_recyclables ON companies_recyclables.company_id = companies.id
+JOIN service_areas ON service_areas.company_id = companies.id
+JOIN recyclables ON recyclables.id = companies_recyclables.recyclable_id
+WHERE companies.id = 2
+GROUP BY companies.id;
+
+-- POST route for add new company object (postman testing)
+{
+    "name": "Test Company Post",
+    "service_range": "Regional",
+    "website": "http://test",
+    "address": "123 Test",
+    "city": "st paul",
+    "state": "MN",
+    "zip": "55104",
+    "phone": "651-something",
+    "email": "email@test.com",
+    "cleanliness": "clean it",
+    "pickup_requirements": "we will pick up",
+    "notes": "call us",
+    "recyclable_id": [1,2],
+    "area": ["MN", "WI", "IA"]
+}
 
