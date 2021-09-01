@@ -17,6 +17,7 @@ import AdminPage from '../AdminPage/AdminPage';
 import LoginPage from '../LoginPage/LoginPage';
 
 import './App.css';
+import SearchPage from '../SearchPage/SearchPage';
 
 function App() {
   const dispatch = useDispatch();
