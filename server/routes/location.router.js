@@ -51,9 +51,6 @@ pool.query(query, [companyId])
 })
 });
 
-<<<<<<< HEAD
-router.post('/', (req,res) => {
-=======
 // DELETE a recycling center record from the recycling_centers table
 router.delete('/:id', (req, res) => {
   pool.query('DELETE FROM "companies" WHERE id=$1', [req.params.id])
@@ -65,8 +62,7 @@ router.delete('/:id', (req, res) => {
   })
 });
 
-router.post('/', (res,req) => {
->>>>>>> master
+router.post('/', (req,res) => {
     const newCompany = req.body;
     console.log('Whole req.body', req.body);
     const recyclableIds = req.body.recyclable_id;
@@ -102,50 +98,10 @@ router.post('/', (res,req) => {
         };
         res.sendStatus(200);
     })
-<<<<<<< HEAD
     .catch(err => {
         console.log('unable to post new company', err);
         res.sendStatus(500);
     })
 });
-=======
-
-
-
-
-
-
-
-
-
-//     const query2 = `INSERT INTO companies_recyclables (company_id, recyclable_id) VALUES ($1, $2) return ID;`;
-
-//     for (const category in categories) {
-//             pool.query(query1, [companyId, recId])
-//             .then(dbRes => {
-//                 console.log(dbRes.rows[0].id);
-
-//             const newCompanyId = dbRes.rows[0].id;
-//             const query2 = `INSERT INTO service_areas VALUES ($3, $3);`;
-
-//             const query3 = 
-
-//             pool.query(query2, [newCompanyId, serviceAreas])
-//             .then(dbRes => {
-//                 res.send(dbRes.rows);
-//             })
-//             .catch(err => {
-//                 console.log('Unable to post new company', err);
-//                 res.sendStatus(500);
-
-//             })
-//         };
-//         .catch(err => {
-//             console.log('Unable to post new company', err);
-//             res.sendStatus(500);
-//         })
-//     }
-// })
->>>>>>> master
 
 module.exports = router;
