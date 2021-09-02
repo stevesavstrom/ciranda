@@ -108,42 +108,24 @@ router.post('/', (req,res) => {
 // PUT to edit recycling center record
 // Getting 
 router.put("/:id", async (req, res) => {
-    const editCompany = req.body;
-    console.log('This is req.body', req.body);
-    console.log('This is req.params.id', req.params.id);
-
-    let recyclableQuery = `DELETE FROM "companies_recyclables" WHERE "company_id" = ${req.params.id};`;
-
-    let areaQuery = `DELETE FROM "service_areas" WHERE "company_id" = ${req.params.id};`
     
-    let blingCounter = 14;
+    const editCompany = req.body;
+
+    let deleteRecyclables = `DELETE FROM "companies_recyclables" WHERE "company_id" = ${req.params.id};`;
+    const insertRecyclables = `INSERT INTO "companies_recyclables" ("company_id", "recyclable_id")
+                                VALUES (${req.params.id}, $1);`
+    ;
+    let deleteAreas = `DELETE FROM "service_areas" WHERE "company_id" = ${req.params.id};`
+    const insertAreas = `INSERT INTO "service_areas" ("area", "company_id")
+                                VALUES ($1, ${req.params.id});`
+    ;
 
     const companyQueryParams = [editCompany.name, editCompany.service_range, editCompany.website,
         editCompany.address, editCompany.city, editCompany.state, editCompany.zip, editCompany.phone,
         editCompany.email, editCompany.cleanliness, editCompany.pickup_requirements, editCompany.notes, req.params.id]
 
-    // await client.query =
-    for (const recyclable of req.body.recyclable_id){
-        recyclableQuery += `INSERT INTO "companies_recyclables" ("company_id", "recyclable_id")
-                                VALUES (${req.params.id}, $${blingCounter});`;
-
-        // companyQueryParams.push(recyclable)
-
-    blingCounter++;
-    }
-
-    for (const area of req.body.area){
-        areaQuery += `INSERT INTO "service_areas" ("area", "company_id")
-                                VALUES ($${blingCounter}, ${req.params.id});`;
-
-        // companyQueryParams.push(area)
-
-    blingCounter++;
-    }
-
     const companyQuery = 
-    `BEGIN;
-    UPDATE companies 
+    `UPDATE companies 
     SET name = $1,
     service_range = $2,
     website = $3,
@@ -156,19 +138,20 @@ router.put("/:id", async (req, res) => {
     cleanliness = $10,
     pickup_requirements = $11,
     notes = $12
-    WHERE companies.id = $13;
+    WHERE companies.id = $13;`;
 
-    ${recyclableQuery}
-
-    ${areaQuery}
-    COMMIT;
-    `;
-
-    console.log(`company query is: ${companyQuery}`);
-    console.log(`company queryParams is : ${companyQueryParams}`);
-
-    pool.query(companyQuery, companyQueryParams)
-
+    try{
+    await pool.query('BEGIN;');
+    await pool.query(companyQuery, companyQueryParams);
+    await pool.query(deleteRecyclables);
+    for (const recyclable of req.body.recyclable_id){
+        await pool.query(insertRecyclables, [recyclable])
+    }
+    await pool.query(deleteAreas);
+    for (const area of req.body.area){
+        await pool.query(insertAreas, [area])
+    }
+    await pool.query('COMMIT')
     .then(result => {
         console.log("successfully edited company", result);
         res.sendStatus(201);
@@ -178,17 +161,12 @@ router.put("/:id", async (req, res) => {
         res.sendStatus(500);
     })
 
-});
+    } catch (error) {
+        await pool.query('ROLLBACK')
+        throw error;
+    }
+})
 
-// Ideas for handling edits for materials and area list.
-// User can toggle/select which materials are accepted by a recycling center
 
-// DELETE item (to modify item list)
-
-// POST item (to modify item list)
-
-// DELETE area (to modify area list)
-
-// POST area (to modify area list)
 
 module.exports = router;
