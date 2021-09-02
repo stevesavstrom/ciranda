@@ -135,3 +135,11 @@ GROUP BY companies.id;
     "area": ["MN", "WI", "IA"]
 }
 
+-- PUT route for feedback edit
+{
+    "company_id": "Company 13"
+    "customer": "Steve"
+    "email": "steve@food.com"
+    "comment": "Easy to find"
+    "date": "NOW"
+}
