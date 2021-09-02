@@ -106,7 +106,6 @@ router.post('/', (req,res) => {
 });
 
 // PUT to edit recycling center record
-// Getting 
 router.put("/:id", async (req, res) => {
     
     const editCompany = req.body;
