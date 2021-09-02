@@ -107,13 +107,43 @@ router.post('/', (req,res) => {
 
 // PUT to edit recycling center record
 // Getting 
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
     const editCompany = req.body;
     console.log('This is req.body', req.body);
     console.log('This is req.params.id', req.params.id);
 
+    let recyclableQuery = `DELETE FROM "companies_recyclables" WHERE "company_id" = ${req.params.id};`;
+
+    let areaQuery = `DELETE FROM "service_areas" WHERE "company_id" = ${req.params.id};`
+    
+    let blingCounter = 14;
+
+    const companyQueryParams = [editCompany.name, editCompany.service_range, editCompany.website,
+        editCompany.address, editCompany.city, editCompany.state, editCompany.zip, editCompany.phone,
+        editCompany.email, editCompany.cleanliness, editCompany.pickup_requirements, editCompany.notes, req.params.id]
+
+    // await client.query =
+    for (const recyclable of req.body.recyclable_id){
+        recyclableQuery += `INSERT INTO "companies_recyclables" ("company_id", "recyclable_id")
+                                VALUES (${req.params.id}, $${blingCounter});`;
+
+        // companyQueryParams.push(recyclable)
+
+    blingCounter++;
+    }
+
+    for (const area of req.body.area){
+        areaQuery += `INSERT INTO "service_areas" ("area", "company_id")
+                                VALUES ($${blingCounter}, ${req.params.id});`;
+
+        // companyQueryParams.push(area)
+
+    blingCounter++;
+    }
+
     const companyQuery = 
-    `UPDATE "companies"
+    `BEGIN;
+    UPDATE companies 
     SET name = $1,
     service_range = $2,
     website = $3,
@@ -126,11 +156,18 @@ router.put("/:id", (req, res) => {
     cleanliness = $10,
     pickup_requirements = $11,
     notes = $12
-    WHERE "companies".id = $13;`;
+    WHERE companies.id = $13;
 
-    pool.query(companyQuery, [editCompany.name, editCompany.service_range, editCompany.website,
-    editCompany.address, editCompany.city, editCompany.state, editCompany.zip, editCompany.phone,
-    editCompany.email, editCompany.cleanliness, editCompany.pickup_requirements, editCompany.notes, req.params.id])
+    ${recyclableQuery}
+
+    ${areaQuery}
+    COMMIT;
+    `;
+
+    console.log(`company query is: ${companyQuery}`);
+    console.log(`company queryParams is : ${companyQueryParams}`);
+
+    pool.query(companyQuery, companyQueryParams)
 
     .then(result => {
         console.log("successfully edited company", result);
