@@ -110,6 +110,7 @@ router.post('/', (req,res) => {
 router.put("/:id", (req, res) => {
     const editCompany = req.body;
     console.log('This is req.body', req.body);
+    console.log('This is req.params.id', req.params.id);
 
     const companyQuery = 
     `UPDATE "companies"
