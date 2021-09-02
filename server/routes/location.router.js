@@ -62,6 +62,7 @@ router.delete('/:id', (req, res) => {
   })
 });
 
+// POST a recycling center record
 router.post('/', (req,res) => {
     const newCompany = req.body;
     console.log('Whole req.body', req.body);
@@ -103,5 +104,53 @@ router.post('/', (req,res) => {
         res.sendStatus(500);
     })
 });
+
+// PUT to edit recycling center record
+// Getting 
+router.put("/:id", (req, res) => {
+    const editCompany = req.body;
+    console.log('This is req.body', req.body);
+
+    const companyQuery = 
+    `UPDATE "companies"
+    SET name = $1,
+    service_range = $2,
+    website = $3,
+    address = $4,
+    city = $5,
+    state = $6,
+    zip = $7,
+    phone = $8,
+    email = $9,
+    cleanliness = $10,
+    pickup_requirements = $11,
+    notes = $12
+    WHERE "companies".id = $13;`;
+
+    pool.query(companyQuery, [editCompany.name, editCompany.service_range, editCompany.website,
+    editCompany.address, editCompany.city, editCompany.state, editCompany.zip, editCompany.phone,
+    editCompany.email, editCompany.cleanliness, editCompany.pickup_requirements, editCompany.notes, req.params.id])
+
+    .then(result => {
+        console.log("successfully edited company", result);
+        res.sendStatus(201);
+    })
+    .catch(err => {
+        console.log('unable to edit company', err);
+        res.sendStatus(500);
+    })
+
+});
+
+// Ideas for handling edits for materials and area list.
+// User can toggle/select which materials are accepted by a recycling center
+
+// DELETE item (to modify item list)
+
+// POST item (to modify item list)
+
+// DELETE area (to modify area list)
+
+// POST area (to modify area list)
 
 module.exports = router;
