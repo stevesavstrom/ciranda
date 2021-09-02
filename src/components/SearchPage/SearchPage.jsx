@@ -26,9 +26,11 @@ const useStyles = makeStyles((theme) => ({
 export default function CheckboxesGroup() {
     const classes = useStyles();
     const [state, setState] = React.useState({
-        gilad: true,
-        jason: false,
-        antoine: false,
+        metalDrums: false,
+        plasticDrums: false,
+        plasticFilm: false,
+        ibcs: false,
+        cardboard: false,
     });
 }
 
@@ -43,19 +45,27 @@ function SearchPage () {
     return (
         <section> 
             <FormControl component="fieldset" className={classes.formControl}>
-                <FormLabel component="legend">Assign responsibility</FormLabel>
+                <FormLabel component="legend">Materials to Recycle</FormLabel>
                 <FormGroup>
                 <FormControlLabel
-                    control={<Checkbox checked={gilad} onChange={handleChange} name="gilad" />}
-                    label="Gilad Gray"
+                    control={<Checkbox checked={metalDrums} onChange={handleChange} name="metalDrums" />}
+                    label="Metal Drums"
                 />
                 <FormControlLabel
-                    control={<Checkbox checked={jason} onChange={handleChange} name="jason" />}
-                    label="Jason Killian"
+                    control={<Checkbox checked={plasticDrums} onChange={handleChange} name="plasticDrums" />}
+                    label="Plastic Drums"
                 />
                 <FormControlLabel
-                    control={<Checkbox checked={antoine} onChange={handleChange} name="antoine" />}
-                    label="Antoine Llorca"
+                    control={<Checkbox checked={plasticFilm} onChange={handleChange} name="plasticFilm" />}
+                    label="Plastic Film"
+                />
+                <FormControlLabel
+                    control={<Checkbox checked={ibcs} onChange={handleChange} name="ibcs" />}
+                    label="IBCs"
+                />
+                <FormControlLabel
+                    control={<Checkbox checked={cardboard} onChange={handleChange} name="cardboard" />}
+                    label="Cardboard"
                 />
                 </FormGroup>
             </FormControl>
