@@ -30,6 +30,7 @@ GROUP BY companies.id;`;
  * GET route to find by id
  */
 router.get("/:id", (req, res) => {
+    console.log('Inside router.get by ID, the req.body is:', req.body);
     const companyId = req.params.id;
     const query = `SELECT
 	companies.*,

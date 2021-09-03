@@ -18,6 +18,7 @@ import LoginPage from '../LoginPage/LoginPage';
 
 import './App.css';
 import SearchPage from '../SearchPage/SearchPage';
+import SearchList from '../SearchList/SearchList';
 
 function App() {
   const dispatch = useDispatch();
@@ -76,6 +77,11 @@ function App() {
               // Otherwise, show the Landing page -- ADJUST TO USER SEARCH PAGE
               <SearchPage />
             }
+          </Route>
+          <Route 
+          exact
+          path="/search-results">
+            <SearchList />
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}
