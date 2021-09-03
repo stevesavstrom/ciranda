@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
+import { useHistory } from 'react-router';
 
 // MUI Imports
     // button import
@@ -36,6 +37,8 @@ const useStyles = makeStyles((theme) => ({
 
 function SearchPage () {
     const classes = useStyles();
+    const history = useHistory();
+    const dispatch = useDispatch();
 
     // Local States
     const [materials, setMaterials] = React.useState({
@@ -64,7 +67,8 @@ function SearchPage () {
 
     // Handle search for state and material results from the DB 
     const handleSearch = () => {
-
+        dispatch({ type: 'FETCH_COMPANIES', payload: materials, selectedState})
+        history.push("/search-results");
     }
 
 
