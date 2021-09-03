@@ -30,9 +30,10 @@ GROUP BY companies.id;`;
  * GET route using query params to search for companies that match
  */
 router.get("/search?", (req, res) => {
+    console.log('IN SEARCH')
     // trueMaterials is populated with all materials = 'true' from req.query
     const trueMaterials = []
-    // loop through req.query and push materials to trueMaterials
+    // loop through req.query and push materials to trueMaterials.  Use switch to replace query name with database name.
     for (const material in req.query){
         if (req.query[material] == 'true'){
             switch (material) {
@@ -59,26 +60,33 @@ router.get("/search?", (req, res) => {
             }
         }
     }
+    // bling counter used to adjust queryText based on the amount of materials selected for search
     let blingCounter = 2
-    // materialString will be added to the end of WHERE statement in queryText
+    // materialString will be assembled with a for loop and added to the end of WHERE statement in queryText
     let materialString = ` AND ( `
-    if (trueMaterials == 0){
+    // if the array is empty, replace the material string with empty string so it doesn't affect the query.
+    if (trueMaterials.length == 0){
         materialString = ''
     }
+    // loop through trueMaterials array and add to the materialString.  Creates a dynamic string that changes based on the materials selected to search.
     for (let i=0; i<trueMaterials.length; i++){
+        // if there's only one material then finish the WHERE query
         if (trueMaterials.length === 1){
             materialString += `recyclables.item = $${blingCounter})`
+            // if there is more than one material in the array, start the string but don't close it off like if statement.
         } else if (i === 0 && trueMaterials.length > 1){
             materialString += `recyclables.item = $${blingCounter}`
+            // if the material is in the middle, include an OR statement
         } else if (i > 0){
             materialString += ` OR recyclables.item = $${blingCounter}`
+            // if this is the last material in the array, close off the string.
             if (i === trueMaterials.length - 1){
                 materialString += ` )`
             }
         }
         blingCounter ++
     }
-
+    // queryText is what
     const queryText = (`
         SELECT
             companies.*,
