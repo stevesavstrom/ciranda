@@ -64,7 +64,7 @@ CREATE TABLE "feedback" (
    "customer" TEXT,
    "email" TEXT,
    "comment" TEXT,
-   "date" DATE 
+   "date" TIMESTAMP
 );
 
 -- Placeholder Data Insert Statements
@@ -116,4 +116,22 @@ JOIN service_areas ON service_areas.company_id = companies.id
 JOIN recyclables ON recyclables.id = companies_recyclables.recyclable_id
 WHERE companies.id = 2
 GROUP BY companies.id;
+
+-- POST route for add new company object (postman testing)
+{
+    "name": "Test Company Post",
+    "service_range": "Regional",
+    "website": "http://test",
+    "address": "123 Test",
+    "city": "st paul",
+    "state": "MN",
+    "zip": "55104",
+    "phone": "651-something",
+    "email": "email@test.com",
+    "cleanliness": "clean it",
+    "pickup_requirements": "we will pick up",
+    "notes": "call us",
+    "recyclable_id": [1,2],
+    "area": ["MN", "WI", "IA"]
+}
 
