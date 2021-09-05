@@ -27,9 +27,95 @@ GROUP BY companies.id;`;
 });
 
 /**
+ * GET route using query params to search for companies that match
+ */
+router.get("/search?", (req, res) => {
+    console.log('IN SEARCH')
+    // trueMaterials is populated with all materials = 'true' from req.query
+    const trueMaterials = []
+    // loop through req.query and push materials to trueMaterials.  Use switch to replace query name with database name.
+    for (const material in req.query){
+        if (req.query[material] == 'true'){
+            switch (material) {
+                case 'metalDrums':
+                    trueMaterials.push('Metal Drums')
+                    break;
+                case 'plasticDrums':
+                    trueMaterials.push('Plastic Drums HDPE')
+                    break;
+                case 'plasticFilm':
+                    trueMaterials.push('Plastic Film')
+                    break;
+                case 'cardboard':
+                    trueMaterials.push('Cardboard')
+                    break;
+                case 'ibcs':
+                    trueMaterials.push('IBCs')
+                    break; 
+                case 'ldpe':
+                    trueMaterials.push('LDPE Containers')
+                    break;        
+                default:
+                    break;
+            }
+        }
+    }
+    // bling counter used to adjust queryText based on the amount of materials selected for search
+    let blingCounter = 2
+    // materialString will be assembled with a for loop and added to the end of WHERE statement in queryText
+    let materialString = ` AND ( `
+    // if the array is empty, replace the material string with empty string so it doesn't affect the query.
+    if (trueMaterials.length == 0){
+        materialString = ''
+    }
+    // loop through trueMaterials array and add to the materialString.  Creates a dynamic string that changes based on the materials selected to search.
+    for (let i=0; i<trueMaterials.length; i++){
+        // if there's only one material then finish the WHERE query
+        if (trueMaterials.length === 1){
+            materialString += `recyclables.item = $${blingCounter})`
+            // if there is more than one material in the array, start the string but don't close it off like if statement.
+        } else if (i === 0 && trueMaterials.length > 1){
+            materialString += `recyclables.item = $${blingCounter}`
+            // if the material is in the middle, include an OR statement
+        } else if (i > 0){
+            materialString += ` OR recyclables.item = $${blingCounter}`
+            // if this is the last material in the array, close off the string.
+            if (i === trueMaterials.length - 1){
+                materialString += ` )`
+            }
+        }
+        blingCounter ++
+    }
+    // queryText is what
+    const queryText = (`
+        SELECT
+            companies.*,
+            ARRAY_AGG(distinct service_areas.area) AS areas,
+            ARRAY_AGG(distinct recyclables.item) AS item
+        FROM companies
+        JOIN companies_recyclables ON companies_recyclables.company_id = companies.id
+        JOIN service_areas ON service_areas.company_id = companies.id
+        JOIN recyclables ON recyclables.id = companies_recyclables.recyclable_id
+        WHERE service_areas.area=$1 ${materialString}
+        GROUP BY companies.id;`
+    );
+    console.log(queryText);
+    trueMaterials.unshift(req.query.state)
+    console.log(trueMaterials);
+    pool.query(queryText, trueMaterials)
+    .then(results => {
+        res.send(results.rows)
+    }).catch(error => {
+        res.sendStatus(500);
+        console.log(error);
+    });
+})
+
+/**
  * GET route to find by id
  */
 router.get("/:id", (req, res) => {
+    console.log('Inside router.get by ID, the req.body is:', req.body);
     const companyId = req.params.id;
     const query = `SELECT
 	companies.*,
@@ -62,6 +148,7 @@ router.delete('/:id', (req, res) => {
   })
 });
 
+// POST a recycling center record
 router.post('/', (req,res) => {
     const newCompany = req.body;
     console.log('Whole req.body', req.body);
@@ -103,5 +190,68 @@ router.post('/', (req,res) => {
         res.sendStatus(500);
     })
 });
+
+// PUT to edit recycling center record
+router.put("/:id", async (req, res) => {
+    
+    const editCompany = req.body;
+
+    let deleteRecyclables = `DELETE FROM "companies_recyclables" WHERE "company_id" = ${req.params.id};`;
+    const insertRecyclables = `INSERT INTO "companies_recyclables" ("company_id", "recyclable_id")
+                                VALUES (${req.params.id}, $1);`
+    ;
+    let deleteAreas = `DELETE FROM "service_areas" WHERE "company_id" = ${req.params.id};`
+    const insertAreas = `INSERT INTO "service_areas" ("area", "company_id")
+                                VALUES ($1, ${req.params.id});`
+    ;
+
+    const companyQueryParams = [editCompany.name, editCompany.service_range, editCompany.website,
+        editCompany.address, editCompany.city, editCompany.state, editCompany.zip, editCompany.phone,
+        editCompany.email, editCompany.cleanliness, editCompany.pickup_requirements, editCompany.notes, req.params.id]
+
+    const companyQuery = 
+    `UPDATE companies 
+    SET name = $1,
+    service_range = $2,
+    website = $3,
+    address = $4,
+    city = $5,
+    state = $6,
+    zip = $7,
+    phone = $8,
+    email = $9,
+    cleanliness = $10,
+    pickup_requirements = $11,
+    notes = $12
+    WHERE companies.id = $13;`;
+
+    try{
+    await pool.query('BEGIN;');
+    await pool.query(companyQuery, companyQueryParams);
+    await pool.query(deleteRecyclables);
+    for (const recyclable of req.body.recyclable_id){
+        await pool.query(insertRecyclables, [recyclable])
+    }
+    await pool.query(deleteAreas);
+    for (const area of req.body.area){
+        await pool.query(insertAreas, [area])
+    }
+    await pool.query('COMMIT')
+    .then(result => {
+        console.log("successfully edited company", result);
+        res.sendStatus(201);
+    })
+    .catch(err => {
+        console.log('unable to edit company', err);
+        res.sendStatus(500);
+    })
+
+    } catch (error) {
+        await pool.query('ROLLBACK')
+        throw error;
+    }
+})
+
+
 
 module.exports = router;
