@@ -1,3 +1,4 @@
+
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
@@ -34,4 +35,40 @@ router.post('/', (req, res) => {
     })
 });
 
+// PUT feedback router
+// This is a sample of what should be needed for the admin edit feedback.
+router.put("/:id",  (req, res) => {
+    const company_id = req.body.company_id;
+    const customer = req.body.customer;
+    const email = req.body.email;
+    const comment = req.body.comment;
+    const date = req.body.date;
+
+    const queryText = `UPDATE "feedback"
+    SET company_id=$1, customer=$2, email=$3, comment=$4, date=$5
+    WHERE id=$6`;
+	pool
+	  .query(queryText, [req.body.company_id, req.body.customer, req.body.email, req.body.comment, req.body.date])
+	  .then((result) => {
+		console.log("Updated feedback confirm", result);
+		res.sendStatus(201);
+	  })
+	  .catch((error) => {
+		console.log(`PUT error: ${error}`);
+		res.sendStatus(500);
+	  });
+  });
+
+
+// DELETE feedback from the Feedback table
+router.delete('/:id', (req, res) => {
+    pool.query('DELETE FROM "feedback" WHERE id=$1', [req.params.id])
+    .then((result) => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log('Error DELETE /api/feedback', error);
+        res.sendStatus(500);
+    })
+  });
+  
 module.exports = router;
