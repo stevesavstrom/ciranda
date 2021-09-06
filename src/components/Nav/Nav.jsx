@@ -10,6 +10,7 @@ function Nav() {
   return (
     <div className="nav">
       <Link to="/home">
+        {/* TODO Replace <h2> with <Typography variant="h2"> */}
         <h2 className="nav-title">Prime Solo Project</h2>
       </Link>
       <div>
