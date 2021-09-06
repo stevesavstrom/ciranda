@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {useSelector} from 'react-redux';
+import React from 'react';
 
-// SearchItem is imported into SearchPage and returns record cards for each returned recycler 
-// function SearchItem () {
-//     return 
-// }
+function SearchItem (props) {
+    
+    return(
+        <li>{props.company.name}</li>
+    )
+}
 
-// export default SearchItem;
+export default SearchItem;

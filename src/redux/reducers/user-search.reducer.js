@@ -1,4 +1,4 @@
-const userSearch = (state = {}, action) => {
+const userSearch = (state = [], action) => {
     switch (action.type) {
       case 'SET_COMPANIES':
         return action.payload;

@@ -19,6 +19,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import './App.css';
 import SearchPage from '../SearchPage/SearchPage';
 import SearchList from '../SearchList/SearchList';
+import SearchItem from '../SearchItem/SearchItem';
 
 function App() {
   const dispatch = useDispatch();
@@ -80,8 +81,14 @@ function App() {
           </Route>
           <Route 
           exact
-          path="/search-results">
+          path="/search?">
             <SearchList />
+          </Route>
+          
+          <Route 
+          exact
+          path="/search-results">
+            <SearchItem />
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}
