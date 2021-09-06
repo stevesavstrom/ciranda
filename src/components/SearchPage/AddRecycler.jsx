@@ -33,72 +33,95 @@ function AddRecycler() {
             autoFocus
             margin="dense"
             id="name"
-            label="Email Address"
-            type="email"
+            label="Company Name"
             fullWidth
           />
           <TextField
+            required
             autoFocus
             margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
+            id="service_range"
+            label="Service Range"
             fullWidth
           />
           <TextField
+            required
             autoFocus
             margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
+            id="website"
+            label="Company Website"
             fullWidth
           />
           <TextField
+            required
             autoFocus
             margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
+            id="address"
+            label="Street Address"
             fullWidth
           />
           <TextField
+            required
             autoFocus
             margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
+            id="city"
+            label="City"
             fullWidth
           />
           <TextField
+            required
             autoFocus
             margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
+            id="state"
+            label="State"
             fullWidth
           />
           <TextField
+            required
             autoFocus
             margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
+            id="zip"
+            label="Zip Code"
             fullWidth
           />
           <TextField
+            required
             autoFocus
             margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
+            id="phone"
+            label="Phone Number"
             fullWidth
           />
           <TextField
+            required
             autoFocus
             margin="dense"
-            id="name"
+            id="email"
             label="Email Address"
-            type="email"
+            fullWidth
+          />
+          <TextField
+            required
+            autoFocus
+            margin="dense"
+            id="cleanliness"
+            label="Cleanliness Instructions"
+            fullWidth
+          />
+          <TextField
+            required
+            autoFocus
+            margin="dense"
+            id="pickup_requirements"
+            label="Pickup Requirements"
+            fullWidth
+          />
+          <TextField
+            required
+            autoFocus
+            margin="dense"
+            id="notes"
+            label="Notes"
             fullWidth
           />
         </DialogContent>
