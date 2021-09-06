@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
 import { useHistory } from 'react-router';
+import AddRecycler from '../SearchPage/AddRecycler.jsx';
 
 // MUI Imports
     // button import
@@ -129,6 +130,7 @@ function SearchPage () {
 
     return (
         <section> 
+            <AddRecycler />
             <Autocomplete
                 id="states-combo-box"
                 options={states}
