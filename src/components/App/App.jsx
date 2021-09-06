@@ -19,6 +19,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import './App.css';
 import SearchPage from '../SearchPage/SearchPage';
 import SearchList from '../SearchList/SearchList';
+import CompanyDetail from '../CompanyDetail/CompanyDetail';
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
           <Redirect exact from="/" to="/search" />
           <Route exact path="/search">
             <SearchPage />
+            <CompanyDetail />
           </Route>
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.

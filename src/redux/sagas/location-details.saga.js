@@ -2,7 +2,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* locationDetailsSaga(){
-    yield takeEvery('GET_JOB_DETAILS', fetchLocationDetails);
+    yield takeEvery('GET_LOCATION_DETAILS', fetchLocationDetails);
 }
 
 function* fetchLocationDetails(action) {
