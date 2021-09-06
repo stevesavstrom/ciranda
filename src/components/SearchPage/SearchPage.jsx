@@ -116,17 +116,10 @@ function SearchPage () {
         setMaterials({ ...materials, [event.target.name]: event.target.checked });
       };
 
-    // logs states for testing
-    console.log(materials);
-    console.log(selectedState);
-
-
-
     // Handle search for state and material results from the DB 
     const handleSearch = () => {
         dispatch({ type: 'FETCH_COMPANIES', payload: materials, selectedState});
     }
-
 
     return (
         <section> 
@@ -151,7 +144,7 @@ function SearchPage () {
                 />
                 <FormControlLabel
                     control={<Checkbox checked={materials.plasticDrums} onChange={handleChange} name="plasticDrums" />}
-                    label="Plastic Drums"
+                    label="Plastic Drums HDPE"
                 />
                 <FormControlLabel
                     control={<Checkbox checked={materials.plasticFilm} onChange={handleChange} name="plasticFilm" />}

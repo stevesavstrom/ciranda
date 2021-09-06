@@ -1,12 +1,15 @@
-import React from "react";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+import Checkbox from "@material-ui/core/Checkbox";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { useState } from "react";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormLabel from "@material-ui/core/FormLabel";
+import TextField from "@material-ui/core/TextField";
+import React, { useState } from "react";
 
 function AddRecycler() {
   const [open, setOpen] = React.useState(false);
@@ -23,7 +26,14 @@ function AddRecycler() {
     cleanliness: "",
     pickup_requirements: "",
     notes: "",
-    recyclable_id: [],
+    recyclable_id: [
+      { metalDrums: false, id: 1 },
+      { plasticDrums: false, id: 2 },
+      { ldpeContainers: false, id: 3 },
+      { plasticFilm: false, id: 4 },
+      { ibcs: false, id: 5 },
+      { cardboard: false, id: 6 },
+    ],
     area: [],
   };
   const [newRecycler, setNewRecycler] = useState(emptyRecycler);
@@ -34,15 +44,24 @@ function AddRecycler() {
 
   const handleClose = () => {
     setOpen(false);
+    setNewRecycler(emptyRecycler);
   };
 
   const handleChange = (event) => {
-      setNewRecycler({...newRecycler, [event.target.id]: event.target.value})
-  }
+    setNewRecycler({ ...newRecycler, [event.target.id]: event.target.value });
+  };
 
-  const handleSubmit = () => {
+  const handleChecked = (event) => {
+      console.log(event.target.location);
+      console.log(event.target.name);
+      console.log(event.target.checked);
+    setNewRecycler({
+      ...event.target.location,
+      [event.target.name]: event.target.checked,
+    });
+  };
 
-  }
+  const handleSubmit = () => {};
 
   return (
     <div>
@@ -71,6 +90,76 @@ function AddRecycler() {
             fullWidth
             autoComplete="off"
           />
+          <FormLabel component="legend">Accepted Materials</FormLabel>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={newRecycler.recyclable_id[0].metalDrums}
+                  onChange={handleChecked}
+                  location={newRecycler.recyclable_id[0]}
+                  name="metalDrums"
+                />
+              }
+              label="Metal Drums"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={newRecycler.recyclable_id[1].plasticDrums}
+                  onChange={handleChecked}
+                  location={newRecycler.recyclable_id[1]}
+                  name="plasticDrums"
+                />
+              }
+              label="Plastic Drums HDPE"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={newRecycler.recyclable_id[2].ldpeContainers}
+                  onChange={handleChecked}
+                  location={newRecycler.recyclable_id[2]}
+                  name="ldpeContainers"
+                />
+              }
+              label="LDPE Containers"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={newRecycler.recyclable_id[3].plasticFilm}
+                  onChange={handleChecked}
+                  location={newRecycler.recyclable_id[3]}
+                  name="plasticFilm"
+                />
+              }
+              label="Plastic Film"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={newRecycler.recyclable_id[4].ibcs}
+                  onChange={handleChecked}
+                  location={newRecycler.recyclable_id[4]}
+                  name="ibcs"
+                />
+              }
+              label="IBCs"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={newRecycler.recyclable_id[5].cardboard}
+                  onChange={handleChecked}
+                  location={newRecycler.recyclable_id[5]}
+                  name="cardboard"
+                />
+              }
+              label="Cardboard"
+            />
+          </FormGroup>
+
           <TextField
             required
             margin="dense"
@@ -184,7 +273,7 @@ function AddRecycler() {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleSubmit} color="primary">
             Submit
           </Button>
         </DialogActions>
