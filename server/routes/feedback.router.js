@@ -6,7 +6,8 @@ const router = express.Router();
 // returns all feedback from db for display in the admin view
 router.get('/', (req, res) => {
     const query = `
-    SELECT * FROM feedback;
+    SELECT feedback.company_id, companies.name AS company_name, feedback.customer, feedback.email, feedback.comment, feedback.date FROM feedback
+    JOIN companies ON feedback.company_id = companies.id
     `;
     pool.query(query)
     .then( response => {
