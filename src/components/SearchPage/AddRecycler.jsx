@@ -1,5 +1,7 @@
+import { FormControl } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
+import Chip from "@material-ui/core/Chip";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -8,15 +10,14 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
-import { FormControl } from "@material-ui/core";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
-import Chip from "@material-ui/core/Chip";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import Input from "@material-ui/core/Input";
-import MenuItem from "@material-ui/core/MenuItem";
+import { useDispatch } from "react-redux";
 
 function getStyles(stateName, stateArray, theme) {
   return {
@@ -58,6 +59,7 @@ const MenuProps = {
 
 function AddRecycler(props) {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const emptyRecycler = {
@@ -85,7 +87,7 @@ function AddRecycler(props) {
     5: false,
     6: false,
   });
-  
+
   const [selectedStates, setSelectedStates] = useState([]);
 
   const handleClickOpen = () => {
@@ -100,7 +102,7 @@ function AddRecycler(props) {
   const handleChange = (event) => {
     setNewRecycler({
       ...newRecycler,
-      [event.target.name]: event.target.checked,
+      [event.target.id]: event.target.value,
     });
   };
 
@@ -123,8 +125,11 @@ function AddRecycler(props) {
       }
     }
     newRecycler.recyclable_id = recyclablesIdArray;
+    newRecycler.area = selectedStates;
+    dispatch({type:'ADD_RECYCLER', payload: newRecycler})
+    handleClose();
   };
-console.log(selectedStates);
+
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
