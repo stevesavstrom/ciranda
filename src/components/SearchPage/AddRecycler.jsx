@@ -11,7 +11,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
 
-function AddRecycler() {
+function AddRecycler(props) {
   const [open, setOpen] = React.useState(false);
   const emptyRecycler = {
     name: "",
@@ -26,17 +26,25 @@ function AddRecycler() {
     cleanliness: "",
     pickup_requirements: "",
     notes: "",
-    recyclable_id: [
-      { metalDrums: false, id: 1 },
-      { plasticDrums: false, id: 2 },
-      { ldpeContainers: false, id: 3 },
-      { plasticFilm: false, id: 4 },
-      { ibcs: false, id: 5 },
-      { cardboard: false, id: 6 },
-    ],
+    recyclable_id: {
+        '1': false,
+        '2': false, 
+        '3': false,
+        '4': false, 
+        '5': false,
+        '6': false,
+      },
     area: [],
   };
   const [newRecycler, setNewRecycler] = useState(emptyRecycler);
+  const [recyclables, setRecyclables] = useState({
+    '1': false,
+    '2': false, 
+    '3': false,
+    '4': false, 
+    '5': false,
+    '6': false,
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -48,20 +56,21 @@ function AddRecycler() {
   };
 
   const handleChange = (event) => {
-    setNewRecycler({ ...newRecycler, [event.target.id]: event.target.value });
+    setNewRecycler({ ...newRecycler, [event.target.name]: event.target.checked });
   };
 
   const handleChecked = (event) => {
-      console.log(event.target.location);
-      console.log(event.target.name);
-      console.log(event.target.checked);
-    setNewRecycler({
-      ...event.target.location,
+    setRecyclables({
+      ...recyclables,
       [event.target.name]: event.target.checked,
     });
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+  };
+
+  console.log(newRecycler);
+  console.log(recyclables);
 
   return (
     <div>
@@ -73,7 +82,7 @@ function AddRecycler() {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogTitle id="form-dialog-title">Add Recycler</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please complete all required (*) fields and click "Submit" to add
@@ -95,10 +104,9 @@ function AddRecycler() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={newRecycler.recyclable_id[0].metalDrums}
+                  checked={recyclables[1]}
                   onChange={handleChecked}
-                  location={newRecycler.recyclable_id[0]}
-                  name="metalDrums"
+                  name="1"
                 />
               }
               label="Metal Drums"
@@ -106,10 +114,9 @@ function AddRecycler() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={newRecycler.recyclable_id[1].plasticDrums}
+                  checked={recyclables[2]}
                   onChange={handleChecked}
-                  location={newRecycler.recyclable_id[1]}
-                  name="plasticDrums"
+                  name="2"
                 />
               }
               label="Plastic Drums HDPE"
@@ -117,10 +124,9 @@ function AddRecycler() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={newRecycler.recyclable_id[2].ldpeContainers}
+                  checked={recyclables[3]}
                   onChange={handleChecked}
-                  location={newRecycler.recyclable_id[2]}
-                  name="ldpeContainers"
+                  name="3"
                 />
               }
               label="LDPE Containers"
@@ -128,10 +134,9 @@ function AddRecycler() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={newRecycler.recyclable_id[3].plasticFilm}
+                  checked={recyclables[4]}
                   onChange={handleChecked}
-                  location={newRecycler.recyclable_id[3]}
-                  name="plasticFilm"
+                  name="4"
                 />
               }
               label="Plastic Film"
@@ -139,10 +144,9 @@ function AddRecycler() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={newRecycler.recyclable_id[4].ibcs}
+                  checked={recyclables[5]}
                   onChange={handleChecked}
-                  location={newRecycler.recyclable_id[4]}
-                  name="ibcs"
+                  name="5"
                 />
               }
               label="IBCs"
@@ -150,10 +154,9 @@ function AddRecycler() {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={newRecycler.recyclable_id[5].cardboard}
+                  checked={recyclables[6]}
                   onChange={handleChecked}
-                  location={newRecycler.recyclable_id[5]}
-                  name="cardboard"
+                  name="6"
                 />
               }
               label="Cardboard"

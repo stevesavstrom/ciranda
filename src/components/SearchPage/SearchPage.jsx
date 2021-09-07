@@ -123,7 +123,7 @@ function SearchPage () {
 
     return (
         <section> 
-            <AddRecycler />
+            <AddRecycler states={states} />
             <Autocomplete
                 id="states-combo-box"
                 options={states}
