@@ -65,7 +65,7 @@ function SearchItem(props) {
     return (
       <React.Fragment>                  
         <TableRow className={classes.root}>
-          <TableCell>
+          <TableCell style={{ width: 50 }}>
             <IconButton
               aria-label="expand row"
               size="large"
@@ -74,19 +74,19 @@ function SearchItem(props) {
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell className={classes.headerText} component="th" scope="row">
+          <TableCell className={classes.headerText} style={{ width: 200 }} component="th" scope="row">
             {props.company.name}
           </TableCell>
-          <TableCell  align="left">{props.company.areas}</TableCell>
+          <TableCell  align="left" style={{ width: 200 }}>{props.company.areas}</TableCell>
           {/* <TableCell  align="left">{props.company.city}</TableCell>
           <TableCell  align="left">{props.company.state}</TableCell>
           <TableCell  align="left">{props.company.zip}</TableCell> */}
 
 
 
-          <TableCell align="left">{props.company.phone}</TableCell>
-          <TableCell  align="left">{props.company.email}</TableCell>
-          <TableCell  align="left">{props.company.item.join(', ') }</TableCell>
+          <TableCell align="left" style={{ width: 200 }}>{props.company.phone}</TableCell>
+          <TableCell  align="left" style={{ width: 200 }}>{props.company.email}</TableCell>
+          <TableCell  align="left" style={{ width: 200 }} >{props.company.item.join(', ') }</TableCell>
         </TableRow>
         <TableRow className={classes.collapsible}>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0, }} colSpan={9}>

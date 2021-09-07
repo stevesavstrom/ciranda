@@ -4,6 +4,7 @@ import {useSelector} from 'react-redux';
 
 import SearchItem from '../SearchItem/SearchItem';
 
+import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -14,6 +15,23 @@ import TableRow from "@material-ui/core/TableRow";
 
 
 function SearchList () {
+
+    const useRowStyles = makeStyles({
+        root: {
+          "& > *": {
+            borderBottom: "unset",
+      
+          },
+        },
+        tableHeader: {
+            fontSize: "18px",
+            color: "#fff",
+            background: '#2E61A9',
+        },
+
+      });
+    
+      const classes = useRowStyles();
 
 const companies = useSelector(store => store.userSearch);
 console.log('Companies:', companies);
@@ -30,14 +48,14 @@ if (companies.length === 0) {
         
         <Box style={{ padding: 20, }}>
                             <Table size="large" aria-label="purchases">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell align="left"></TableCell>
-                      <TableCell align="left">Company</TableCell>
-                      <TableCell align="left">Service Area</TableCell>
-                      <TableCell align="left">Phone</TableCell>
-                      <TableCell align="left">Email</TableCell>
-                      <TableCell align="left">Materials Accepted</TableCell>
+                  <TableHead align="left">
+                    <TableRow align="left">
+                      <TableCell className={classes.tableHeader} align="left" style={{ width: 50 }}></TableCell>
+                      <TableCell className={classes.tableHeader} align="left" style={{ width: 200 }}>Company</TableCell>
+                      <TableCell className={classes.tableHeader} align="left" style={{ width: 200 }}>Service Area</TableCell>
+                      <TableCell className={classes.tableHeader} align="left" style={{ width: 200 }}>Phone</TableCell>
+                      <TableCell className={classes.tableHeader} align="left" style={{ width: 200 }}>Email</TableCell>
+                      <TableCell className={classes.tableHeader} align="left" style={{ width: 200 }}>Materials Accepted</TableCell>
                     </TableRow>
                   </TableHead>
                   </Table>
