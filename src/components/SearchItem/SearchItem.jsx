@@ -1,4 +1,5 @@
 import React from "react";
+import {useState} from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -14,7 +15,15 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
 import { Button } from "@material-ui/core";
+
+import EditForm from '../EditForm/EditForm';
 
 function SearchItem(props) {
   const useRowStyles = makeStyles({
@@ -58,12 +67,25 @@ function SearchItem(props) {
     ),
   ];
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+
   function Row() {
     // const { row } = props;
     const [open, setOpen] = React.useState(false);
 
     return (
-      <React.Fragment>                  
+      <div>
+      <React.Fragment>
         <TableRow className={classes.root}>
           <TableCell style={{ width: 50 }}>
             <IconButton
@@ -74,34 +96,58 @@ function SearchItem(props) {
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell className={classes.headerText} style={{ width: 200 }} component="th" scope="row">
+          <TableCell
+            className={classes.headerText}
+            style={{ width: 200 }}
+            component="th"
+            scope="row"
+          >
             {props.company.name}
           </TableCell>
-          <TableCell  align="left" style={{ width: 200 }}>{props.company.areas}</TableCell>
+          <TableCell align="left" style={{ width: 200 }}>
+            {props.company.areas}
+          </TableCell>
           {/* <TableCell  align="left">{props.company.city}</TableCell>
           <TableCell  align="left">{props.company.state}</TableCell>
           <TableCell  align="left">{props.company.zip}</TableCell> */}
 
-
-
-          <TableCell align="left" style={{ width: 200 }}>{props.company.phone}</TableCell>
-          <TableCell  align="left" style={{ width: 200 }}>{props.company.email}</TableCell>
-          <TableCell  align="left" style={{ width: 200 }} >{props.company.item.join(', ') }</TableCell>
+          <TableCell align="left" style={{ width: 200 }}>
+            {props.company.phone}
+          </TableCell>
+          <TableCell align="left" style={{ width: 200 }}>
+            {props.company.email}
+          </TableCell>
+          <TableCell align="left" style={{ width: 200 }}>
+            {props.company.item.join(", ")}
+          </TableCell>
         </TableRow>
         <TableRow className={classes.collapsible}>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0, }} colSpan={9}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box margin={1}>
-                <Typography className={classes.headerText} variant="h6" gutterBottom component="div">
+                <Typography
+                  className={classes.headerText}
+                  variant="h6"
+                  gutterBottom
+                  component="div"
+                >
                   Details
                 </Typography>
                 <Table size="large" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell className={classes.headerText}>Service Range</TableCell>
-                      <TableCell className={classes.headerText}>Recyclable Cleanliness</TableCell>
-                      <TableCell className={classes.headerText} align="left">Pickup Requirements</TableCell>
-                      <TableCell className={classes.headerText} align="left">Notes</TableCell>
+                      <TableCell className={classes.headerText}>
+                        Service Range
+                      </TableCell>
+                      <TableCell className={classes.headerText}>
+                        Recyclable Cleanliness
+                      </TableCell>
+                      <TableCell className={classes.headerText} align="left">
+                        Pickup Requirements
+                      </TableCell>
+                      <TableCell className={classes.headerText} align="left">
+                        Notes
+                      </TableCell>
                     </TableRow>
                   </TableHead>
 
@@ -119,42 +165,34 @@ function SearchItem(props) {
                   </TableBody>
                 </Table>
               </Box>
-              <Box textAlign='right'>
-              <Button size="small" variant="contained" color="primary" style={{ margin: 5}}>Edit</Button>
-              <Button size="small" variant="contained" color="secondary">Delete</Button>
+              <Box textAlign="right">
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  style={{ margin: 5 }}
+                  onClick={handleClickOpen}
+                >
+                  Edit
+                </Button>
+                <Button size="small" variant="contained" color="secondary">
+                  Delete
+                </Button>
+                
               </Box>
             </Collapse>
           </TableCell>
-  
         </TableRow>
       </React.Fragment>
+  
+      </div>
     );
   }
 
-  Row.propTypes = {
-    row: PropTypes.shape({
-      address: PropTypes.string.isRequired,
-      email: PropTypes.string.isRequired,
-      phone: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      item: PropTypes.string.isRequired,
-    }).isRequired,
-  };
-
   return (
+    <div>
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
-
-        {/* <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell className={classes.headerText}>Company</TableCell>
-            <TableCell className={classes.headerText} align="left">Address</TableCell>
-            <TableCell className={classes.headerText} align="left">Phone</TableCell>
-            <TableCell className={classes.headerText} align="left">Email</TableCell>
-            <TableCell className={classes.headerText} align="left">Materials Accepted</TableCell>
-          </TableRow>
-        </TableHead> */}
 
         <TableBody>
           {rows.map((row) => (
@@ -163,6 +201,32 @@ function SearchItem(props) {
         </TableBody>
       </Table>
     </TableContainer>
+
+<Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+<DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+<DialogContent>
+  <DialogContentText>
+    {props.company.name}
+  </DialogContentText>
+  <TextField
+    autoFocus
+    margin="dense"
+    id="name"
+    label={props.company.email}
+    type="email"
+    fullWidth
+  />
+</DialogContent>
+<DialogActions>
+  <Button onClick={handleClose} color="primary">
+    Cancel
+  </Button>
+  <Button onClick={handleClose} color="primary">
+    Subscribe
+  </Button>
+</DialogActions>
+</Dialog>
+</div>
   );
 }
 

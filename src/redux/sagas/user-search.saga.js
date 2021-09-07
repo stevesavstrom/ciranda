@@ -8,7 +8,7 @@ function* fetchCompanies(action) {
     );
     yield put({ type: "SET_COMPANIES", payload: searchCompanies.data });
   } catch (error) {
-    console.log("Inside fetchCompanies, unable to return comapnies", error);
+    console.log("Inside fetchCompanies, unable to return companies", error);
   }
 }
 
