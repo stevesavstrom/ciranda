@@ -20,6 +20,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
+import SearchList from '../SearchList/SearchList';
+
 const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
@@ -37,9 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 function SearchPage () {
     const classes = useStyles();
-    const history = useHistory();
     const dispatch = useDispatch();
-    const company = useSelector(store => store.userSearch);
 
     // Local States
     const [materials, setMaterials] = React.useState({
@@ -119,8 +119,6 @@ function SearchPage () {
     console.log(materials);
     console.log(selectedState);
 
-
-
     // Handle search for state and material results from the DB 
     const handleSearch = () => {
         dispatch({ type: 'FETCH_COMPANIES', payload: materials, selectedState});
@@ -168,6 +166,7 @@ function SearchPage () {
             <Button variant="contained" color="primary" className={classes.button} onClick={handleSearch}>
                 Search
             </Button>
+            <SearchList />
         </section>
     )
 }
