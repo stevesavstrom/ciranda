@@ -8,10 +8,57 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
+import { FormControl } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
+import Chip from "@material-ui/core/Chip";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import Input from "@material-ui/core/Input";
+import MenuItem from "@material-ui/core/MenuItem";
+
+function getStyles(stateName, stateArray, theme) {
+  return {
+    fontWeight:
+      stateArray.indexOf(stateName) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    maxWidth: 300,
+  },
+  chips: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  chip: {
+    margin: 2,
+  },
+  noLabel: {
+    marginTop: theme.spacing(3),
+  },
+}));
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 function AddRecycler(props) {
+  const theme = useTheme();
+  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const emptyRecycler = {
     name: "",
@@ -26,25 +73,20 @@ function AddRecycler(props) {
     cleanliness: "",
     pickup_requirements: "",
     notes: "",
-    recyclable_id: {
-        '1': false,
-        '2': false, 
-        '3': false,
-        '4': false, 
-        '5': false,
-        '6': false,
-      },
+    recyclable_id: [],
     area: [],
   };
   const [newRecycler, setNewRecycler] = useState(emptyRecycler);
   const [recyclables, setRecyclables] = useState({
-    '1': false,
-    '2': false, 
-    '3': false,
-    '4': false, 
-    '5': false,
-    '6': false,
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+    6: false,
   });
+  
+  const [selectedStates, setSelectedStates] = useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -56,7 +98,10 @@ function AddRecycler(props) {
   };
 
   const handleChange = (event) => {
-    setNewRecycler({ ...newRecycler, [event.target.name]: event.target.checked });
+    setNewRecycler({
+      ...newRecycler,
+      [event.target.name]: event.target.checked,
+    });
   };
 
   const handleChecked = (event) => {
@@ -66,12 +111,20 @@ function AddRecycler(props) {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSelectedStates = (event) => {
+    setSelectedStates(event.target.value);
   };
 
-  console.log(newRecycler);
-  console.log(recyclables);
-
+  const handleSubmit = () => {
+    let recyclablesIdArray = [];
+    for (let i in recyclables) {
+      if (recyclables[i] === true) {
+        recyclablesIdArray.push(i);
+      }
+    }
+    newRecycler.recyclable_id = recyclablesIdArray;
+  };
+console.log(selectedStates);
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -99,6 +152,35 @@ function AddRecycler(props) {
             fullWidth
             autoComplete="off"
           />
+          <FormControl className={classes.formControl}>
+            <InputLabel id="demo-mutiple-chip-label">Service States</InputLabel>
+            <Select
+              labelId="demo-mutiple-chip-label"
+              id="demo-mutiple-chip"
+              multiple
+              value={selectedStates}
+              onChange={handleSelectedStates}
+              input={<Input id="select-multiple-chip" />}
+              renderValue={(selected) => (
+                <div className={classes.chips}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} className={classes.chip} />
+                  ))}
+                </div>
+              )}
+              MenuProps={MenuProps}
+            >
+              {props.states.map((state) => (
+                <MenuItem
+                  key={state.value}
+                  value={state.value}
+                  style={getStyles(state.label, selectedStates, theme)}
+                >
+                  {state.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <FormLabel component="legend">Accepted Materials</FormLabel>
           <FormGroup>
             <FormControlLabel
