@@ -25,6 +25,9 @@ function SearchItem(props) {
     headerText: {
         fontWeight: 'bold',
     },
+    collapsible: {
+      background: "#F6F6F6",
+    }
   });
 
   const classes = useRowStyles();
@@ -54,7 +57,7 @@ function SearchItem(props) {
     const [open, setOpen] = React.useState(false);
 
     return (
-      <React.Fragment>
+      <React.Fragment>                  
         <TableRow className={classes.root}>
           <TableCell>
             <IconButton
@@ -68,13 +71,13 @@ function SearchItem(props) {
           <TableCell component="th" scope="row">
             {props.company.name}
           </TableCell>
-          <TableCell align="right">{props.company.address}</TableCell>
-          <TableCell align="right">{props.company.phone}</TableCell>
-          <TableCell align="right">{props.company.email}</TableCell>
-          <TableCell align="right">{props.company.item}</TableCell>
+          <TableCell align="left">{props.company.address}</TableCell>
+          <TableCell align="left">{props.company.phone}</TableCell>
+          <TableCell align="left">{props.company.email}</TableCell>
+          <TableCell align="left">{props.company.item.join(', ') }</TableCell>
         </TableRow>
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableRow className={classes.collapsible}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0, }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box margin={1}>
                 <Typography className={classes.headerText} variant="h6" gutterBottom component="div">
@@ -85,8 +88,8 @@ function SearchItem(props) {
                     <TableRow>
                       <TableCell className={classes.headerText}>Service range</TableCell>
                       <TableCell className={classes.headerText}>Recyclable Cleanliness</TableCell>
-                      <TableCell className={classes.headerText} align="right">Pickup Requirements</TableCell>
-                      <TableCell className={classes.headerText} align="right">Notes</TableCell>
+                      <TableCell className={classes.headerText} align="left">Pickup Requirements</TableCell>
+                      <TableCell className={classes.headerText} align="left">Notes</TableCell>
                     </TableRow>
                   </TableHead>
 
@@ -96,10 +99,10 @@ function SearchItem(props) {
                         {props.company.service_range}
                       </TableCell>
                       <TableCell>{props.company.cleanliness}</TableCell>
-                      <TableCell align="right">
+                      <TableCell align="left">
                         {props.company.pickup_requirements}
                       </TableCell>
-                      <TableCell align="right">{props.company.notes}</TableCell>
+                      <TableCell align="left">{props.company.notes}</TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
@@ -125,16 +128,16 @@ function SearchItem(props) {
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
 
-        <TableHead>
+        {/* <TableHead>
           <TableRow>
             <TableCell />
             <TableCell className={classes.headerText}>Company</TableCell>
-            <TableCell className={classes.headerText} align="right">Address</TableCell>
-            <TableCell className={classes.headerText} align="right">Phone</TableCell>
-            <TableCell className={classes.headerText} align="right">Email</TableCell>
-            <TableCell className={classes.headerText} align="right">Materials Accepted</TableCell>
+            <TableCell className={classes.headerText} align="left">Address</TableCell>
+            <TableCell className={classes.headerText} align="left">Phone</TableCell>
+            <TableCell className={classes.headerText} align="left">Email</TableCell>
+            <TableCell className={classes.headerText} align="left">Materials Accepted</TableCell>
           </TableRow>
-        </TableHead>
+        </TableHead> */}
 
         <TableBody>
           {rows.map((row) => (
