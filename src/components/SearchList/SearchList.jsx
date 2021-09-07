@@ -7,12 +7,12 @@ import SearchItem from '../SearchItem/SearchItem';
 function SearchList () {
 
 const companies = useSelector(store => store.userSearch);
-console.log('What are the companies?', companies);
+console.log('Companies:', companies);
 
 if (companies.length === 0) {
     return(
         <section>
-            <h1>Your search returned no results, please adjust your filters and try again</h1>
+            <h1>Adjust your filters to find recycling companies</h1>
         </section>
     )
 } else {

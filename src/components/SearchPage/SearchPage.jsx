@@ -119,8 +119,6 @@ function SearchPage () {
     console.log(materials);
     console.log(selectedState);
 
-
-
     // Handle search for state and material results from the DB 
     const handleSearch = () => {
         dispatch({ type: 'FETCH_COMPANIES', payload: materials, selectedState});
