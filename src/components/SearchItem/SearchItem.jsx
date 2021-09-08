@@ -112,6 +112,17 @@ function SearchItem(props) {
 
   // const renderSearch = { type: 'FETCH_COMPANIES', payload: {materials: props.materials}, selectedState: props.selectedState};
 
+  // Dialog for company feedback
+  const [openFeedback, setOpenFeedback] = React.useState(false);
+
+  const handleFeedbackOpen = () => {
+    setOpenFeedback(true);
+  };
+
+  const handleFeedbackClose = () => {
+    setOpenFeedback(false);
+  };
+
 
 
   function Row() {
@@ -208,8 +219,8 @@ function SearchItem(props) {
                   size="small"
                   variant="contained"
                   color="primary"
-                  style={{ margin: 5 }}
-                  onClick={handleClickOpen}
+                  style={{ margin: 2 }}
+                  onClick={handleFeedbackOpen}
                 >
                   Feedback
                 </Button>
@@ -217,15 +228,16 @@ function SearchItem(props) {
                   size="small"
                   variant="contained"
                   color="primary"
-                  style={{ margin: 5 }}
+                  style={{ margin: 2 }}
                   onClick={handleClickOpen}
                 >
                   Edit
                 </Button>
                 <Button 
                 size="small" 
-                variant="contained" 
+                variant="contained"
                 color="secondary"
+                style={{ margin: 2 }}
                 onClick={() => handleDeleteOpen(props.company.id)}
                 
                 >
@@ -306,6 +318,52 @@ function SearchItem(props) {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Feedback Dialog */}
+      <Dialog open={openFeedback} onClose={handleFeedbackClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Company Feedback</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please provide feedback on this recycling company and let us know about your experience with them.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Name"
+            type="name"
+            fullWidth
+          />
+
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+          />
+
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Please provide feedback"
+            type="feedback"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleFeedbackClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleFeedbackClose} color="primary">
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+
     </Box>
   );
 }

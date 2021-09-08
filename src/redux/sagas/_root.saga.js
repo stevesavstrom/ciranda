@@ -6,8 +6,7 @@ import userSearchSaga from './user-search.saga';
 import deleteLocationSaga from './delete-location.saga';
 import recyclerSaga from './recycler.saga';
 import feedbackSaga from './feedback.saga';
-
-
+import companyFeedbackSaga from './company-feedback.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
