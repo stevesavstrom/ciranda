@@ -13,7 +13,6 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 
 
 const columns = [
-  { id: 'company_name', label: 'Recycler', minWidth: 170 },
   { id: 'customer', label: 'Customer Name', minWidth: 100 },
   {
     id: 'email',
@@ -45,7 +44,7 @@ const useStyles = makeStyles({
 });
 
 // the AdminPage component displays the compiled feedback from users and other Admin-only content 
-function AdminPage() {
+function RecyclingFeedback() {
   //MUI
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
@@ -61,13 +60,9 @@ function AdminPage() {
   };
   // Dispatches & Store
   const dispatch = useDispatch();
-  const feedback = useSelector(store => store.feedback);
-  const rows = feedback;
+  const recyclingFeedback = useSelector(store => store.recyclingFeedback);
+  const rows = recyclingFeedback;
   const user = useSelector((store) => store.user);
-
-  useEffect(() => {
-    dispatch({type:'GET_FEEDBACK'});
-  }, []);
 
   return (
     <>
@@ -128,4 +123,4 @@ function AdminPage() {
 }
 
 // this allows us to use <App /> in index.js
-export default AdminPage;
+export default RecyclingFeedback;

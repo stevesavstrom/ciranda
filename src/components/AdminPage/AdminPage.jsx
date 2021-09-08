@@ -1,5 +1,6 @@
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,9 +8,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
+import RecyclingFeedback from './RecylcingFeedback';
 
 
 const columns = [
@@ -50,6 +52,7 @@ function AdminPage() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [isFeedback, setIsFeedback] = React.useState(true);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -67,15 +70,19 @@ function AdminPage() {
 
   useEffect(() => {
     dispatch({type:'GET_FEEDBACK'});
+    dispatch({type: 'GET_RECYCLING_FEEDBACK'})
   }, []);
 
   return (
     <>
+    <Button onClick={()=>setIsFeedback(true)}>Company Feedback</Button>
+    <Button onClick={()=>setIsFeedback(false)}>Recycling Comments</Button>
       {/* <div className="container">
         <h2>Welcome, {user.username}!</h2>
         <p>Your ID is: {user.id}</p>
         <LogOutButton className="btn" />
       </div> */}
+      {isFeedback ? 
       <section>
         Client Feedback
         <Paper className={classes.root}>
@@ -123,6 +130,8 @@ function AdminPage() {
           />
         </Paper>
       </section>
+      :
+        <RecyclingFeedback />}
     </>
   );
 }
