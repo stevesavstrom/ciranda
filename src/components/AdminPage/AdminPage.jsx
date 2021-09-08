@@ -75,8 +75,8 @@ function AdminPage() {
 
   return (
     <>
-    <Button onClick={()=>setIsFeedback(true)}>Company Feedback</Button>
-    <Button onClick={()=>setIsFeedback(false)}>Recycling Comments</Button>
+    <Button variant="contained" color="primary" onClick={()=>setIsFeedback(true)}>Company Feedback</Button>
+    <Button variant="contained" color="secondary" onClick={()=>setIsFeedback(false)}>Recycling Comments</Button>
       {/* <div className="container">
         <h2>Welcome, {user.username}!</h2>
         <p>Your ID is: {user.id}</p>

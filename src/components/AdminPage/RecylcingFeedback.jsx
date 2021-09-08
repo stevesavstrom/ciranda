@@ -58,8 +58,7 @@ function RecyclingFeedback() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  // Dispatches & Store
-  const dispatch = useDispatch();
+  // Store and row definition
   const recyclingFeedback = useSelector(store => store.recyclingFeedback);
   const rows = recyclingFeedback;
   const user = useSelector((store) => store.user);
