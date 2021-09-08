@@ -1,6 +1,9 @@
 import React from "react";
 import {useState} from "react";
+import {useSelector, useDispatch} from 'react-redux';
 import PropTypes from "prop-types";
+
+// Material-UI imports
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Collapse from "@material-ui/core/Collapse";
@@ -26,6 +29,7 @@ import { Button } from "@material-ui/core";
 import EditForm from '../EditForm/EditForm';
 
 function SearchItem(props) {
+  const dispatch = useDispatch();
   const useRowStyles = makeStyles({
     root: {
       "& > *": {
@@ -67,6 +71,7 @@ function SearchItem(props) {
     ),
   ];
 
+  // Dialog form for EDIT
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -77,6 +82,36 @@ function SearchItem(props) {
     setOpen(false);
   };
 
+  // Dialog for DELETE
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  // This is for the selected company to be deleted (dialog modal)
+  const [deleteID, setDeleteId] = useState('');
+
+  const handleDeleteOpen = (companyId) => {
+    console.log('This is Open companyId', companyId);
+    setDeleteId(companyId)
+    setOpenDialog(true);
+  };
+
+  const handleDeleteClose = () => {
+    setOpenDialog(false);
+  };
+
+  const handleDelete = (deleteItem) => {
+    console.log(`Delete item`, deleteItem);
+    console.log('materials', props.materials);
+    console.log('selectedState', props.selectedState);
+    dispatch({ type: 'DELETE_LOCATION', payload: deleteItem, renderSearch })
+    setOpenDialog(false);
+  }
+
+  const renderSearch = () => {
+    dispatch({ type: 'FETCH_COMPANIES', payload: {materials: props.materials}, selectedState: props.selectedState})
+  }
+
+  // const renderSearch = { type: 'FETCH_COMPANIES', payload: {materials: props.materials}, selectedState: props.selectedState};
+
 
 
   function Row() {
@@ -84,13 +119,13 @@ function SearchItem(props) {
     const [open, setOpen] = React.useState(false);
 
     return (
-      <div>
+      <Box>
       <React.Fragment>
         <TableRow className={classes.root}>
           <TableCell style={{ width: 50 }}>
             <IconButton
               aria-label="expand row"
-              size="large"
+              size="medium"
               onClick={() => setOpen(!open)}
             >
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -98,31 +133,34 @@ function SearchItem(props) {
           </TableCell>
           <TableCell
             className={classes.headerText}
-            style={{ width: 200 }}
+            align="left"
+            style={{ width: 400 }}
             component="th"
             scope="row"
           >
             {props.company.name}
           </TableCell>
-          <TableCell align="left" style={{ width: 200 }}>
+          <TableCell 
+          align="left" 
+          style={{ width: 400 }}>
             {props.company.areas}
           </TableCell>
           {/* <TableCell  align="left">{props.company.city}</TableCell>
           <TableCell  align="left">{props.company.state}</TableCell>
           <TableCell  align="left">{props.company.zip}</TableCell> */}
 
-          <TableCell align="left" style={{ width: 200 }}>
+          {/* <TableCell align="left" style={{ width: 200 }}>
             {props.company.phone}
           </TableCell>
           <TableCell align="left" style={{ width: 200 }}>
             {props.company.email}
-          </TableCell>
-          <TableCell align="left" style={{ width: 200 }}>
+          </TableCell> */}
+          <TableCell align="left" style={{ width: 400 }}>
             {props.company.item.join(", ")}
           </TableCell>
         </TableRow>
         <TableRow className={classes.collapsible}>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0}} colSpan={9}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box margin={1}>
                 <Typography
@@ -136,16 +174,16 @@ function SearchItem(props) {
                 <Table size="large" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell className={classes.headerText}>
+                      <TableCell className={classes.headerText} style={{ width: 150 }}>
                         Service Range
                       </TableCell>
-                      <TableCell className={classes.headerText}>
+                      <TableCell className={classes.headerText} style={{ width: 390 }}>
                         Recyclable Cleanliness
                       </TableCell>
-                      <TableCell className={classes.headerText} align="left">
+                      <TableCell className={classes.headerText} align="left" style={{ width: 390 }}>
                         Pickup Requirements
                       </TableCell>
-                      <TableCell className={classes.headerText} align="left">
+                      <TableCell className={classes.headerText} align="left" style={{ width: 390 }}>
                         Notes
                       </TableCell>
                     </TableRow>
@@ -175,7 +213,13 @@ function SearchItem(props) {
                 >
                   Edit
                 </Button>
-                <Button size="small" variant="contained" color="secondary">
+                <Button 
+                size="small" 
+                variant="contained" 
+                color="secondary"
+                onClick={() => handleDeleteOpen(props.company.id)}
+                
+                >
                   Delete
                 </Button>
                 
@@ -185,48 +229,75 @@ function SearchItem(props) {
         </TableRow>
       </React.Fragment>
   
-      </div>
+      </Box>
     );
   }
 
   return (
-    <div>
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+    <Box>
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableBody>
+            {rows.map((row) => (
+              <Row key={row.name} row={row} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
-        <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{props.company.name}</DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label={props.company.email}
+            type="email"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            Subscribe
+          </Button>
+        </DialogActions>
+      </Dialog>
 
-<Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-<DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-<DialogContent>
-  <DialogContentText>
-    {props.company.name}
-  </DialogContentText>
-  <TextField
-    autoFocus
-    margin="dense"
-    id="name"
-    label={props.company.email}
-    type="email"
-    fullWidth
-  />
-</DialogContent>
-<DialogActions>
-  <Button onClick={handleClose} color="primary">
-    Cancel
-  </Button>
-  <Button onClick={handleClose} color="primary">
-    Subscribe
-  </Button>
-</DialogActions>
-</Dialog>
-</div>
+      <Dialog
+        open={openDialog}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Delete company?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            This company will permanently be deleted.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteClose} color="primary">
+            No
+          </Button>
+          <Button
+            onClick={() => handleDelete(deleteID)}
+            color="primary"
+            autoFocus
+          >
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 }
 

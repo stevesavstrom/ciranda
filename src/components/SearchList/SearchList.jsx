@@ -14,7 +14,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
 
-function SearchList () {
+function SearchList ({materials, selectedState}) {
 
     const useRowStyles = makeStyles({
         root: {
@@ -47,22 +47,22 @@ if (companies.length === 0) {
 
         
         <Box style={{ padding: 20, }}>
-                            <Table size="large" aria-label="purchases">
+                  <Table size="medium" aria-label="purchases">
                   <TableHead align="left">
                     <TableRow align="left">
                       <TableCell className={classes.tableHeader} align="left" style={{ width: 50 }}></TableCell>
-                      <TableCell className={classes.tableHeader} align="left" style={{ width: 200 }}>Company</TableCell>
-                      <TableCell className={classes.tableHeader} align="left" style={{ width: 200 }}>Service Area</TableCell>
-                      <TableCell className={classes.tableHeader} align="left" style={{ width: 200 }}>Phone</TableCell>
-                      <TableCell className={classes.tableHeader} align="left" style={{ width: 200 }}>Email</TableCell>
-                      <TableCell className={classes.tableHeader} align="left" style={{ width: 200 }}>Materials Accepted</TableCell>
+                      <TableCell className={classes.tableHeader} align="left" style={{ width: 400 }}>Company</TableCell>
+                      <TableCell className={classes.tableHeader} align="left" style={{ width: 400 }}>Service Area</TableCell>
+                      {/* <TableCell className={classes.tableHeader} align="left" style={{ width: 200 }}>Phone</TableCell>
+                      <TableCell className={classes.tableHeader} align="left" style={{ width: 200 }}>Email</TableCell> */}
+                      <TableCell className={classes.tableHeader} align="center" style={{ width: 400 }}>Materials Accepted</TableCell>
                     </TableRow>
                   </TableHead>
                   </Table>
 
                 {companies.map(company => {
                     return (
-                        <SearchItem key={company.id} company={company} />
+                        <SearchItem key={company.id} company={company} materials={materials} selectedState={selectedState} />
                     )
                 })}
             
