@@ -19,6 +19,20 @@ router.get('/', (req, res) => {
     })
 });
 
+// returns all recycler feedback from db for display in the admin view
+router.get('/', (req, res) => {
+    const query = `
+    SELECT * FROM feedback;`;
+    pool.query(query)
+    .then( response => {
+        res.send(response.rows);
+    })
+    .catch ( err => {
+        console.log('Error getting feedback', err);
+        res.sendStatus(500);
+    })
+});
+
 // adds new feedback to the database upon submission by a user. 
 // these records are tied to the recycler id for which they are submitted.
 router.post('/', (req, res) => {
