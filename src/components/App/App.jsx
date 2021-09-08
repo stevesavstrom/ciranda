@@ -15,11 +15,12 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AdminPage from '../AdminPage/AdminPage';
 import LoginPage from '../LoginPage/LoginPage';
+import RegisterPage from '../RegisterPage/RegisterPage';
 
-import './App.css';
 import SearchPage from '../SearchPage/SearchPage';
 import SearchList from '../SearchList/SearchList';
 import SearchItem from '../SearchItem/SearchItem';
+import "../App/App.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ function App() {
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/search" />
+          <Redirect exact from="/home" to="/search" />
           <Route exact path="/search">
             <SearchPage />
           </Route>
@@ -50,15 +52,22 @@ function App() {
 
           <Route
             exact
+            path="/register"
+          >
+            <RegisterPage />
+          </Route>
+
+          <Route
+            exact
             path="/login"
           >
             {user.id ?
               // If the user is already logged in, 
               // redirect to the /user page
-              <Redirect to="/admin" />
+              <Redirect to="/search" />
               :
               // Otherwise, show the login page
-              <SearchPage />
+              <LoginPage />
             }
           </Route>
 
@@ -66,14 +75,7 @@ function App() {
             exact
             path="/home"
           >
-            {user.id ?
-              // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/admin" />
-              :
-              // Otherwise, show the Landing page -- ADJUST TO USER SEARCH PAGE
-              <SearchPage />
-            }
+            <SearchPage />
           </Route>
           <Route 
           exact
