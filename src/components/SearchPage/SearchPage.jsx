@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'inline-block',
         margin: '10px',
     },
+    addRecycler: {
+        display:'inline-block',
+    },
     button: {
         display: 'inline-block',
         margin: '10px',
@@ -181,7 +184,7 @@ function SearchPage () {
             <Button variant="contained" color="primary" size='large' className={classes.button} onClick={handleSearch}>
                 Search
             </Button>
-            <AddRecycler states={states}/>
+            <AddRecycler states={states} />
 
             <SearchList materials={materials} selectedState={selectedState} />
         </section>

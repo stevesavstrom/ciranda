@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {useSelector} from 'react-redux';
-
-import SearchItem from '../SearchItem/SearchItem';
-
-import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import MuiAlert from '@material-ui/lab/Alert';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import SearchItem from '../SearchItem/SearchItem';
 
+
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '60%',
+        '& > * + *': {
+        marginTop: theme.spacing(2),
+        },
+    },
+}));
 
 function SearchList ({materials, selectedState}) {
 
@@ -20,7 +29,6 @@ function SearchList ({materials, selectedState}) {
         root: {
           "& > *": {
             borderBottom: "unset",
-      
           },
         },
         tableHeader: {
@@ -30,15 +38,15 @@ function SearchList ({materials, selectedState}) {
         },
 
       });
-    
-      const classes = useRowStyles();
+      const classes = useStyles();
+      const rowClasses = useRowStyles();
 
 const companies = useSelector(store => store.userSearch);
 
 if (companies.length === 0) {
     return(
-        <section>
-            <h1>Adjust your filters to find recycling companies</h1>
+        <section className={classes.root}>
+            <Alert className={classes.alert} severity="info">Please refine search criteria to return results.</Alert>
         </section>
     )
 } else {
@@ -49,12 +57,12 @@ if (companies.length === 0) {
                   <Table size="medium" aria-label="purchases">
                   <TableHead align="left">
                     <TableRow align="left">
-                      <TableCell className={classes.tableHeader} align="left" style={{ width: 50 }}></TableCell>
-                      <TableCell className={classes.tableHeader} align="left" style={{ width: 400 }}>Company</TableCell>
-                      <TableCell className={classes.tableHeader} align="left" style={{ width: 400 }}>Service Area</TableCell>
-                      {/* <TableCell className={classes.tableHeader} align="left" style={{ width: 200 }}>Phone</TableCell>
-                      <TableCell className={classes.tableHeader} align="left" style={{ width: 200 }}>Email</TableCell> */}
-                      <TableCell className={classes.tableHeader} align="center" style={{ width: 400 }}>Materials Accepted</TableCell>
+                      <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 50 }}></TableCell>
+                      <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 400 }}>Company</TableCell>
+                      <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 400 }}>Service Area</TableCell>
+                      {/* <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 200 }}>Phone</TableCell>
+                      <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 200 }}>Email</TableCell> */}
+                      <TableCell className={rowClasses.tableHeader} align="center" style={{ width: 400 }}>Materials Accepted</TableCell>
                     </TableRow>
                   </TableHead>
                   </Table>
