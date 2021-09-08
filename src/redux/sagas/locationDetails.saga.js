@@ -16,17 +16,4 @@ function* editLocationDetails() {
     }
 }
 
-// Delete starts here...
-
-function* deleteLocation(action) {
-    console.log(action.payload);
-    try {
-        yield axios.delete('');
-        yield put({ type: 'DELETE_LOCATION_DETAILS' ,  });
-    } catch (err) {
-        console.log("Error deleting details")
-    }
-}
-
-
 export default editLocationDetailsSaga;
