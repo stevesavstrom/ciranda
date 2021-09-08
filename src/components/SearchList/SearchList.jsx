@@ -34,7 +34,6 @@ function SearchList ({materials, selectedState}) {
       const classes = useRowStyles();
 
 const companies = useSelector(store => store.userSearch);
-console.log('Companies:', companies);
 
 if (companies.length === 0) {
     return(
