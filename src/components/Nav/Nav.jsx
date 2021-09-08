@@ -22,13 +22,13 @@ function Nav() {
         }
 
         {/* If a user is logged in, show these links */}
-        {user.id && (
+        {user.id===1 && (
           <>
-            <Link className="navLink" to="/user">
-              Home
+            <Link className="navLink" to="/register">
+              Register User
             </Link>
         {/* will be the Admin link for the SUPERUSER login */}
-            <Link className="navLink" to="/AdminPage">
+            <Link className="navLink" to="/">
               Admin
             </Link>
         {/* will be the Admin link for the companies page */}
@@ -39,19 +39,18 @@ function Nav() {
             <Link className="navLink" to="/info">
               Feedback
             </Link>
-
+          </>
+        )}
+        {!user.id && (
+          <Link className="navLink" to="/login">
+            Login
+          </Link>
+        )}
+        {user.id && (
+          <>
             <LogOutButton className="navLink" />
           </>
         )}
-
-        <Link className="navLink" to="/LoginPage">
-          Login
-        </Link>
-        
-        {/* <Link className="navLink" to="/">
-          Companies
-        </Link> */}
-  
       </div>
     </div>
   );

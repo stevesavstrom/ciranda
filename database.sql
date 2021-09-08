@@ -16,8 +16,8 @@ DROP TABLE "companies";
 -- Otherwise you will have errors!
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
-    "employee_name" TEXT,
-    "email" VARCHAR (80) UNIQUE NOT NULL,
+    "username" TEXT UNIQUE,
+    "email" VARCHAR (80) NOT NULL,
     "password" VARCHAR (1000) NOT NULL
 );
 
