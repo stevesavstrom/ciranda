@@ -19,6 +19,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import './App.css';
 import SearchPage from '../SearchPage/SearchPage';
 import SearchList from '../SearchList/SearchList';
+import SearchItem from '../SearchItem/SearchItem';
 
 function App() {
   const dispatch = useDispatch();
@@ -39,17 +40,13 @@ function App() {
           <Route exact path="/search">
             <SearchPage />
           </Route>
-          {/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/user will show the UserPage if the user is logged in.
-            If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
-            Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-          <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
+
+          <Route
             exact
             path="/admin"
           >
             <AdminPage />
-          </ProtectedRoute>
+          </Route>
 
           <Route
             exact
@@ -80,8 +77,14 @@ function App() {
           </Route>
           <Route 
           exact
-          path="/search-results">
+          path="/search?">
             <SearchList />
+          </Route>
+          
+          <Route 
+          exact
+          path="/search-results">
+            <SearchItem />
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}
