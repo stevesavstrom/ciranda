@@ -204,6 +204,15 @@ function SearchItem(props) {
                 </Table>
               </Box>
               <Box textAlign="right">
+              <Button
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  style={{ margin: 5 }}
+                  onClick={handleClickOpen}
+                >
+                  Feedback
+                </Button>
                 <Button
                   size="small"
                   variant="contained"
