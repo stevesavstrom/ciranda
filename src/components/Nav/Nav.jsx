@@ -27,7 +27,7 @@ function Nav() {
             <Link className="navLink" to="/register">
               Register User
             </Link>
-            <Link className="navLink" to="/">
+            <Link className="navLink" to="/admin">
               Admin
             </Link>
           </>
