@@ -1,32 +1,38 @@
-import React from "react";
-import {useState} from "react";
-import {useSelector, useDispatch} from 'react-redux';
-import PropTypes from "prop-types";
-
+import { Button, FormControl, InputLabel } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
+import Checkbox from "@material-ui/core/Checkbox";
+import Chip from "@material-ui/core/Chip";
+import Collapse from "@material-ui/core/Collapse";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormLabel from "@material-ui/core/FormLabel";
+import IconButton from "@material-ui/core/IconButton";
+import Input from "@material-ui/core/Input";
+import MenuItem from "@material-ui/core/MenuItem";
+import Paper from "@material-ui/core/Paper";
+import Select from "@material-ui/core/Select";
 // Material-UI imports
 import { makeStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import Collapse from "@material-ui/core/Collapse";
-import IconButton from "@material-ui/core/IconButton";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import TextField from '@material-ui/core/TextField';
 import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-import { Button } from "@material-ui/core";
+import React, { useState } from "react";
+import { useDispatch } from 'react-redux';
 
-import EditForm from '../EditForm/EditForm';
+
+
 
 function SearchItem(props) {
   const dispatch = useDispatch();
@@ -109,9 +115,102 @@ function SearchItem(props) {
   const renderSearch = () => {
     dispatch({ type: 'FETCH_COMPANIES', payload: {materials: props.materials}, selectedState: props.selectedState})
   }
+  
+// const renderSearch = { type: 'FETCH_COMPANIES', payload: {materials: props.materials}, selectedState: props.selectedState};
 
-  // const renderSearch = { type: 'FETCH_COMPANIES', payload: {materials: props.materials}, selectedState: props.selectedState};
+  const currentCompany = {
+    name: props.company.name,
+    service_range: props.company.service_range,
+    website: props.company.website,
+    address: props.company.address,
+    city: props.company.city,
+    state: props.company.state,
+    zip: props.company.zip,
+    phone: props.company.phone,
+    email: props.company.email,
+    cleanliness: props.company.cleanliness,
+    pickup_requirements: props.company.pickup_requirements,
+    notes: props.company.notes,
+    recyclable_id: [],
+    area: [],
+  };
+  const [updatedCompany, setUpdatedCompany] = useState(currentCompany);
+  const [material, setMaterial] = useState({
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+    6: false,
+  });
+  
+  let acceptedItems = props.company.item;
+  for (const item in acceptedItems) {
+    switch (item) {
+      case 'Metal Drums':
+        material[1]=true;
+        break;
+      case 'Plastic Drums HDPE':
+        material[2]=true;
+        break;
+      case 'LDPE Containers':
+        material[3]=true;
+        break;
+      case 'Plastic Film':
+        material[4]=true;
+        break;
+      case 'IBCs':
+        material[5]=true;
+        break;
+      case 'Cardboard':
+        material[6]=true;
+        break;
+      default:
+        break;
+    }
+  }
 
+  const [selectedStates, setSelectedStates] = useState([]);
+
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  //   setNewRecycler(emptyRecycler);
+  // };
+
+  const handleChange = (event) => {
+    setUpdatedCompany({
+      ...updatedCompany,
+      [event.target.id]: event.target.value,
+    });
+  };
+
+  const handleChecked = (event) => {
+    setMaterial({
+      ...material,
+      [event.target.name]: event.target.checked,
+    });
+  };
+
+  const handleSelectedStates = (event) => {
+    setSelectedStates(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    let materialsArray = [];
+    for (let i in material) {
+      if (material[i] === true) {
+        materialsArray.push(i);
+      }
+    }
+    updatedCompany.recyclable_id = recyclablesIdArray;
+    updatedCompany.area = selectedStates;
+    dispatch({type:'UPDATE_COMPANY', payload: updatedCompany})
+    // handleClose();
+  };
 
 
   function Row() {
@@ -233,6 +332,7 @@ function SearchItem(props) {
     );
   }
 
+
   return (
     <Box>
       <TableContainer component={Paper}>
@@ -245,12 +345,249 @@ function SearchItem(props) {
         </Table>
       </TableContainer>
 
+
+{/* start of dialog box pulled from posting */}
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogTitle id="form-dialog-title">Edit {props.company.name}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please complete all required (*) fields and click "Submit" to update
+            new recycler.
+          </DialogContentText>
+          <TextField
+            required
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Company Name"
+            value={props.company.name}
+            // onChange={handleChange}
+            fullWidth
+            autoComplete="off"
+          />
+          <FormControl className={classes.formControl}>
+            <InputLabel id="demo-mutiple-chip-label">Service States</InputLabel>
+            {/* <Select
+              labelId="demo-mutiple-chip-label"
+              id="demo-mutiple-chip"
+              multiple
+              value={props.company.state}
+              // onChange={handleSelectedStates}
+              input={<Input id="select-multiple-chip" />}
+              renderValue={(selected) => (
+                <div className={classes.chips}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} className={classes.chip} />
+                  ))}
+                </div>
+              )}
+              // MenuProps={MenuProps}
+            >
+              {props.states.map((state) => (
+                <MenuItem
+                  key={state.value}
+                  value={state.value}
+                  style={getStyles(state.label, selectedStates, theme)}
+                >
+                  {state.label}
+                </MenuItem>
+              ))}
+            </Select> */}
+          </FormControl>
+          <FormLabel component="legend">Accepted Materials</FormLabel>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={material[1]}
+                  onChange={handleChecked}
+                  name="1"
+                />
+              }
+              label="Metal Drums"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={material[2]}
+                  onChange={handleChecked}
+                  name="2"
+                />
+              }
+              label="Plastic Drums HDPE"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={recyclables[3]}
+                  // onChange={handleChecked}
+                  name="3"
+                />
+              }
+              label="LDPE Containers"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={recyclables[4]}
+                  // onChange={handleChecked}
+                  name="4"
+                />
+              }
+              label="Plastic Film"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={recyclables[5]}
+                  // onChange={handleChecked}
+                  name="5"
+                />
+              }
+              label="IBCs"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={recyclables[6]}
+                  // onChange={handleChecked}
+                  name="6"
+                />
+              }
+              label="Cardboard"
+            />
+          </FormGroup>
+
+          <TextField
+            required
+            margin="dense"
+            id="service_range"
+            label="Service Range"
+            value={props.company.service_range}
+            // onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            required
+            margin="dense"
+            id="website"
+            label="Company Website"
+            value={props.company.website}
+            // onChange={handleChange}
+            autoComplete="off"
+            fullWidth
+          />
+          <TextField
+            required
+            margin="dense"
+            id="address"
+            label="Street Address"
+            value={props.company.address}
+            // onChange={handleChange}
+            autoComplete="off"
+            fullWidth
+          />
+          <TextField
+            required
+            margin="dense"
+            id="city"
+            label="City"
+            value={props.company.city}
+            // onChange={handleChange}
+            autoComplete="off"
+            fullWidth
+          />
+          <TextField
+            required
+            margin="dense"
+            id="state"
+            label="State"
+            value={props.company.state}
+            // onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            required
+            margin="dense"
+            id="zip"
+            label="Zip Code"
+            value={props.company.zip}
+            // onChange={handleChange}
+            autoComplete="off"
+            fullWidth
+          />
+          <TextField
+            required
+            margin="dense"
+            id="phone"
+            label="Phone Number"
+            value={props.company.phone}
+            // onChange={handleChange}
+            autoComplete="off"
+            fullWidth
+          />
+          <TextField
+            required
+            margin="dense"
+            id="email"
+            label="Email Address"
+            value={props.company.email}
+            // onChange={handleChange}
+            autoComplete="off"
+            fullWidth
+          />
+          <TextField
+            required
+            margin="dense"
+            id="cleanliness"
+            label="Cleanliness Instructions"
+            value={props.company.cleanliness}
+            // onChange={handleChange}
+            autoComplete="off"
+            fullWidth
+          />
+          <TextField
+            required
+            margin="dense"
+            id="pickup_requirements"
+            label="Pickup Requirements"
+            value={props.company.pickup_requirements}
+            // onChange={handleChange}
+            autoComplete="off"
+            fullWidth
+          />
+          <TextField
+            required
+            margin="dense"
+            id="notes"
+            label="Notes"
+            value={props.company.notes}
+            // onChange={handleChange}
+            autoComplete="off"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button color="primary">
+            Cancel
+          </Button>
+          <Button color="primary">
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+
+      {/* <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Update Company</DialogTitle>
         <DialogContent>
           <DialogContentText>{props.company.name}</DialogContentText>
           <TextField
@@ -267,10 +604,10 @@ function SearchItem(props) {
             Cancel
           </Button>
           <Button onClick={handleClose} color="primary">
-            Subscribe
+            Update
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
 
       <Dialog
         open={openDialog}
