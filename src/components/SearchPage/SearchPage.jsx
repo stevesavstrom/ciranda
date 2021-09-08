@@ -163,7 +163,7 @@ function SearchPage () {
             <Button variant="contained" color="primary" className={classes.button} onClick={handleSearch}>
                 Search
             </Button>
-            <SearchList />
+            <SearchList materials={materials} selectedState={selectedState} />
         </section>
     )
 }
