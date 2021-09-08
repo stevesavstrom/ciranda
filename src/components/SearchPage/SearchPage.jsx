@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
 import { useHistory } from 'react-router';
+import AddRecycler from '../SearchPage/AddRecycler.jsx';
 
 // MUI Imports
     // button import
@@ -115,18 +116,14 @@ function SearchPage () {
         setMaterials({ ...materials, [event.target.name]: event.target.checked });
       };
 
-    // logs states for testing
-    console.log(materials);
-    console.log(selectedState);
-
     // Handle search for state and material results from the DB 
     const handleSearch = () => {
         dispatch({ type: 'FETCH_COMPANIES', payload: materials, selectedState});
     }
 
-
     return (
         <section> 
+            <AddRecycler states={states} />
             <Autocomplete
                 id="states-combo-box"
                 options={states}
@@ -147,7 +144,7 @@ function SearchPage () {
                 />
                 <FormControlLabel
                     control={<Checkbox checked={materials.plasticDrums} onChange={handleChange} name="plasticDrums" />}
-                    label="Plastic Drums"
+                    label="Plastic Drums HDPE"
                 />
                 <FormControlLabel
                     control={<Checkbox checked={materials.plasticFilm} onChange={handleChange} name="plasticFilm" />}
