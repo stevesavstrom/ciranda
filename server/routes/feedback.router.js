@@ -3,6 +3,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
+
 // returns all feedback from db for display in the admin view
 router.get('/', (req, res) => {
     const query = `
@@ -19,10 +20,11 @@ router.get('/', (req, res) => {
     })
 });
 
+
 // returns all recycler feedback from db for display in the admin view
-router.get('/', (req, res) => {
+router.get('/recycling_comments', (req, res) => {
     const query = `
-    SELECT * FROM feedback;`;
+    SELECT * FROM recycle_feedback ORDER BY date;`;
     pool.query(query)
     .then( response => {
         res.send(response.rows);
@@ -32,6 +34,8 @@ router.get('/', (req, res) => {
         res.sendStatus(500);
     })
 });
+
+
 
 // adds new feedback to the database upon submission by a user. 
 // these records are tied to the recycler id for which they are submitted.
