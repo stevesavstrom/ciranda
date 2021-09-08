@@ -7,7 +7,6 @@ import SearchItem from '../SearchItem/SearchItem';
 function SearchList () {
 
 const companies = useSelector(store => store.userSearch);
-console.log('Companies:', companies);
 
 if (companies.length === 0) {
     return(
