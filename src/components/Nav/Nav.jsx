@@ -27,22 +27,30 @@ function Nav() {
             <Link className="navLink" to="/user">
               Home
             </Link>
-
+        {/* will be the Admin link for the SUPERUSER login */}
+            <Link className="navLink" to="/AdminPage">
+              Admin
+            </Link>
+        {/* will be the Admin link for the companies page */}
+            <Link className="navLink" to="/SearchPage">
+              Companies
+            </Link>
+        {/* will be the Admin link for the feedback page */}
             <Link className="navLink" to="/info">
-              Info Page
+              Feedback
             </Link>
 
             <LogOutButton className="navLink" />
           </>
         )}
 
-        <Link className="navLink" to="/about">
-          About
+        <Link className="navLink" to="/LoginPage">
+          Login
         </Link>
-
-        <Link className="navLink" to="/">
-          Admin
-        </Link>
+        
+        {/* <Link className="navLink" to="/">
+          Companies
+        </Link> */}
   
       </div>
     </div>
@@ -50,3 +58,4 @@ function Nav() {
 }
 
 export default Nav;
+
