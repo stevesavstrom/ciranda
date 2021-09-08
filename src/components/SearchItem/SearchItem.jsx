@@ -3,11 +3,11 @@ import Box from "@material-ui/core/Box";
 import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
 import Collapse from "@material-ui/core/Collapse";
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -16,7 +16,6 @@ import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
 import Select from "@material-ui/core/Select";
-// Material-UI imports
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -24,15 +23,13 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import TextField from '@material-ui/core/TextField';
+import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import React, { useState } from "react";
-import { useDispatch } from 'react-redux';
-
-
-
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 function SearchItem(props) {
   const dispatch = useDispatch();
@@ -40,18 +37,17 @@ function SearchItem(props) {
     root: {
       "& > *": {
         borderBottom: "unset",
-  
       },
     },
     headerText: {
-        fontWeight: 'bold',
-        fontSize: "16px",
+      fontWeight: "bold",
+      fontSize: "16px",
     },
     collapsible: {
       background: "#F6F6F6",
     },
     buttons: {
-      justifyContent: 'center',
+      justifyContent: "center",
     },
   });
 
@@ -77,26 +73,15 @@ function SearchItem(props) {
     ),
   ];
 
-  // Dialog form for EDIT
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   // Dialog for DELETE
   const [openDialog, setOpenDialog] = React.useState(false);
 
   // This is for the selected company to be deleted (dialog modal)
-  const [deleteID, setDeleteId] = useState('');
+  const [deleteID, setDeleteId] = useState("");
 
   const handleDeleteOpen = (companyId) => {
-    console.log('This is Open companyId', companyId);
-    setDeleteId(companyId)
+    console.log("This is Open companyId", companyId);
+    setDeleteId(companyId);
     setOpenDialog(true);
   };
 
@@ -106,17 +91,34 @@ function SearchItem(props) {
 
   const handleDelete = (deleteItem) => {
     console.log(`Delete item`, deleteItem);
-    console.log('materials', props.materials);
-    console.log('selectedState', props.selectedState);
-    dispatch({ type: 'DELETE_LOCATION', payload: deleteItem, renderSearch })
+    console.log("materials", props.materials);
+    console.log("selectedState", props.selectedState);
+    dispatch({ type: "DELETE_LOCATION", payload: deleteItem, renderSearch });
     setOpenDialog(false);
-  }
+  };
 
   const renderSearch = () => {
-    dispatch({ type: 'FETCH_COMPANIES', payload: {materials: props.materials}, selectedState: props.selectedState})
-  }
-  
-// const renderSearch = { type: 'FETCH_COMPANIES', payload: {materials: props.materials}, selectedState: props.selectedState};
+    dispatch({
+      type: "FETCH_COMPANIES",
+      payload: { materials: props.materials },
+      selectedState: props.selectedState,
+    });
+  };
+
+  // const renderSearch = { type: 'FETCH_COMPANIES', payload: {materials: props.materials}, selectedState: props.selectedState};
+
+ // Dialog form for EDIT
+ const [open, setOpen] = React.useState(false);
+
+ const handleClickOpen = () => {
+   setOpen(true);
+   setMaterialType();
+   console.log("Boolean of material type:", material);
+ };
+
+ const handleClose = () => {
+   setOpen(false);
+ };
 
   const currentCompany = {
     name: props.company.name,
@@ -131,10 +133,12 @@ function SearchItem(props) {
     cleanliness: props.company.cleanliness,
     pickup_requirements: props.company.pickup_requirements,
     notes: props.company.notes,
-    recyclable_id: [],
-    area: [],
+    recyclable_id: props.company.item,
+    area: props.company.areas,
   };
+
   const [updatedCompany, setUpdatedCompany] = useState(currentCompany);
+
   const [material, setMaterial] = useState({
     1: false,
     2: false,
@@ -143,37 +147,40 @@ function SearchItem(props) {
     5: false,
     6: false,
   });
-  
-  let acceptedItems = props.company.item;
-  for (const item in acceptedItems) {
-    switch (item) {
-      case 'Metal Drums':
-        material[1]=true;
-        break;
-      case 'Plastic Drums HDPE':
-        material[2]=true;
-        break;
-      case 'LDPE Containers':
-        material[3]=true;
-        break;
-      case 'Plastic Film':
-        material[4]=true;
-        break;
-      case 'IBCs':
-        material[5]=true;
-        break;
-      case 'Cardboard':
-        material[6]=true;
-        break;
-      default:
-        break;
+
+  function setMaterialType(event) {
+    let acceptedItems = props.company.item;
+
+    for (const item in acceptedItems) {
+      switch (item) {
+        case "Metal Drums":
+          setMaterial(material[1]= true);
+          break;
+        case "Plastic Drums HDPE":
+          setMaterial(material[2]= true);
+          break;
+        case "LDPE Containers":
+          setMaterial(material[3]= true);
+          break;
+        case "Plastic Film":
+          setMaterial(material[4]= true);
+          break;
+        case "IBCs":
+          setMaterial(material[5]= true);
+          break;
+        case "Cardboard":
+          setMaterial(material[6]= true);
+          break;
+        default:
+          break;
+      }
     }
   }
 
   const [selectedStates, setSelectedStates] = useState([]);
 
   // const handleClickOpen = () => {
-  //   setOpen(true);
+  //   checkMaterialType();
   // };
 
   // const handleClose = () => {
@@ -208,10 +215,9 @@ function SearchItem(props) {
     }
     updatedCompany.recyclable_id = recyclablesIdArray;
     updatedCompany.area = selectedStates;
-    dispatch({type:'UPDATE_COMPANY', payload: updatedCompany})
+    dispatch({ type: "UPDATE_COMPANY", payload: updatedCompany });
     // handleClose();
   };
-
 
   function Row() {
     // const { row } = props;
@@ -219,119 +225,129 @@ function SearchItem(props) {
 
     return (
       <Box>
-      <React.Fragment>
-        <TableRow className={classes.root}>
-          <TableCell style={{ width: 50 }}>
-            <IconButton
-              aria-label="expand row"
-              size="medium"
-              onClick={() => setOpen(!open)}
+        <React.Fragment>
+          <TableRow className={classes.root}>
+            <TableCell style={{ width: 50 }}>
+              <IconButton
+                aria-label="expand row"
+                size="medium"
+                onClick={() => setOpen(!open)}
+              >
+                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              </IconButton>
+            </TableCell>
+            <TableCell
+              className={classes.headerText}
+              align="left"
+              style={{ width: 400 }}
+              component="th"
+              scope="row"
             >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </TableCell>
-          <TableCell
-            className={classes.headerText}
-            align="left"
-            style={{ width: 400 }}
-            component="th"
-            scope="row"
-          >
-            {props.company.name}
-          </TableCell>
-          <TableCell 
-          align="left" 
-          style={{ width: 400 }}>
-            {props.company.areas}
-          </TableCell>
-          {/* <TableCell  align="left">{props.company.city}</TableCell>
+              {props.company.name}
+            </TableCell>
+            <TableCell align="left" style={{ width: 400 }}>
+              {props.company.areas.join(", ")}
+            </TableCell>
+            {/* <TableCell  align="left">{props.company.city}</TableCell>
           <TableCell  align="left">{props.company.state}</TableCell>
           <TableCell  align="left">{props.company.zip}</TableCell> */}
 
-          {/* <TableCell align="left" style={{ width: 200 }}>
+            {/* <TableCell align="left" style={{ width: 200 }}>
             {props.company.phone}
           </TableCell>
           <TableCell align="left" style={{ width: 200 }}>
             {props.company.email}
           </TableCell> */}
-          <TableCell align="left" style={{ width: 400 }}>
-            {props.company.item.join(", ")}
-          </TableCell>
-        </TableRow>
-        <TableRow className={classes.collapsible}>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0}} colSpan={9}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box margin={1}>
-                <Typography
-                  className={classes.headerText}
-                  variant="h6"
-                  gutterBottom
-                  component="div"
-                >
-                  Details
-                </Typography>
-                <Table size="large" aria-label="purchases">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell className={classes.headerText} style={{ width: 150 }}>
-                        Service Range
-                      </TableCell>
-                      <TableCell className={classes.headerText} style={{ width: 390 }}>
-                        Recyclable Cleanliness
-                      </TableCell>
-                      <TableCell className={classes.headerText} align="left" style={{ width: 390 }}>
-                        Pickup Requirements
-                      </TableCell>
-                      <TableCell className={classes.headerText} align="left" style={{ width: 390 }}>
-                        Notes
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
+            <TableCell align="left" style={{ width: 400 }}>
+              {props.company.item.join(", ")}
+            </TableCell>
+          </TableRow>
+          <TableRow className={classes.collapsible}>
+            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
+              <Collapse in={open} timeout="auto" unmountOnExit>
+                <Box margin={1}>
+                  <Typography
+                    className={classes.headerText}
+                    variant="h6"
+                    gutterBottom
+                    component="div"
+                  >
+                    Details
+                  </Typography>
+                  <Table size="large" aria-label="purchases">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell
+                          className={classes.headerText}
+                          style={{ width: 150 }}
+                        >
+                          Service Range
+                        </TableCell>
+                        <TableCell
+                          className={classes.headerText}
+                          style={{ width: 390 }}
+                        >
+                          Recyclable Cleanliness
+                        </TableCell>
+                        <TableCell
+                          className={classes.headerText}
+                          align="left"
+                          style={{ width: 390 }}
+                        >
+                          Pickup Requirements
+                        </TableCell>
+                        <TableCell
+                          className={classes.headerText}
+                          align="left"
+                          style={{ width: 390 }}
+                        >
+                          Notes
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
 
-                  <TableBody>
-                    <TableRow>
-                      <TableCell component="th" scope="row">
-                        {props.company.service_range}
-                      </TableCell>
-                      <TableCell>{props.company.cleanliness}</TableCell>
-                      <TableCell align="left">
-                        {props.company.pickup_requirements}
-                      </TableCell>
-                      <TableCell align="left">{props.company.notes}</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </Box>
-              <Box textAlign="right">
-                <Button
-                  size="small"
-                  variant="contained"
-                  color="primary"
-                  style={{ margin: 5 }}
-                  onClick={handleClickOpen}
-                >
-                  Edit
-                </Button>
-                <Button 
-                size="small" 
-                variant="contained" 
-                color="secondary"
-                onClick={() => handleDeleteOpen(props.company.id)}
-                
-                >
-                  Delete
-                </Button>
-                
-              </Box>
-            </Collapse>
-          </TableCell>
-        </TableRow>
-      </React.Fragment>
-  
+                    <TableBody>
+                      <TableRow>
+                        <TableCell component="th" scope="row">
+                          {props.company.service_range}
+                        </TableCell>
+                        <TableCell>{props.company.cleanliness}</TableCell>
+                        <TableCell align="left">
+                          {props.company.pickup_requirements}
+                        </TableCell>
+                        <TableCell align="left">
+                          {props.company.notes}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </Box>
+                <Box textAlign="right">
+                  <Button
+                    size="small"
+                    variant="contained"
+                    color="primary"
+                    style={{ margin: 5 }}
+                    onClick={handleClickOpen}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => handleDeleteOpen(props.company.id)}
+                  >
+                    Delete
+                  </Button>
+                </Box>
+              </Collapse>
+            </TableCell>
+          </TableRow>
+        </React.Fragment>
       </Box>
     );
   }
-
 
   return (
     <Box>
@@ -345,14 +361,15 @@ function SearchItem(props) {
         </Table>
       </TableContainer>
 
-
-{/* start of dialog box pulled from posting */}
+      {/* start of dialog box pulled from posting */}
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Edit {props.company.name}</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          Edit {props.company.name}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please complete all required (*) fields and click "Submit" to update
@@ -365,7 +382,7 @@ function SearchItem(props) {
             id="name"
             label="Company Name"
             value={props.company.name}
-            // onChange={handleChange}
+            onChange={handleChange}
             fullWidth
             autoComplete="off"
           />
@@ -423,8 +440,8 @@ function SearchItem(props) {
             <FormControlLabel
               control={
                 <Checkbox
-                  // checked={recyclables[3]}
-                  // onChange={handleChecked}
+                  checked={material[3]}
+                  onChange={handleChecked}
                   name="3"
                 />
               }
@@ -433,8 +450,8 @@ function SearchItem(props) {
             <FormControlLabel
               control={
                 <Checkbox
-                  // checked={recyclables[4]}
-                  // onChange={handleChecked}
+                  checked={material[4]}
+                  onChange={handleChecked}
                   name="4"
                 />
               }
@@ -443,8 +460,8 @@ function SearchItem(props) {
             <FormControlLabel
               control={
                 <Checkbox
-                  // checked={recyclables[5]}
-                  // onChange={handleChecked}
+                  checked={material[5]}
+                  onChange={handleChecked}
                   name="5"
                 />
               }
@@ -453,8 +470,8 @@ function SearchItem(props) {
             <FormControlLabel
               control={
                 <Checkbox
-                  // checked={recyclables[6]}
-                  // onChange={handleChecked}
+                  checked={material[6]}
+                  onChange={handleChecked}
                   name="6"
                 />
               }
@@ -468,7 +485,7 @@ function SearchItem(props) {
             id="service_range"
             label="Service Range"
             value={props.company.service_range}
-            // onChange={handleChange}
+            onChange={handleChange}
             fullWidth
           />
           <TextField
@@ -477,7 +494,7 @@ function SearchItem(props) {
             id="website"
             label="Company Website"
             value={props.company.website}
-            // onChange={handleChange}
+            onChange={handleChange}
             autoComplete="off"
             fullWidth
           />
@@ -487,7 +504,7 @@ function SearchItem(props) {
             id="address"
             label="Street Address"
             value={props.company.address}
-            // onChange={handleChange}
+            onChange={handleChange}
             autoComplete="off"
             fullWidth
           />
@@ -497,7 +514,7 @@ function SearchItem(props) {
             id="city"
             label="City"
             value={props.company.city}
-            // onChange={handleChange}
+            onChange={handleChange}
             autoComplete="off"
             fullWidth
           />
@@ -507,7 +524,7 @@ function SearchItem(props) {
             id="state"
             label="State"
             value={props.company.state}
-            // onChange={handleChange}
+            onChange={handleChange}
             fullWidth
           />
           <TextField
@@ -516,7 +533,7 @@ function SearchItem(props) {
             id="zip"
             label="Zip Code"
             value={props.company.zip}
-            // onChange={handleChange}
+            onChange={handleChange}
             autoComplete="off"
             fullWidth
           />
@@ -526,7 +543,7 @@ function SearchItem(props) {
             id="phone"
             label="Phone Number"
             value={props.company.phone}
-            // onChange={handleChange}
+            onChange={handleChange}
             autoComplete="off"
             fullWidth
           />
@@ -536,7 +553,7 @@ function SearchItem(props) {
             id="email"
             label="Email Address"
             value={props.company.email}
-            // onChange={handleChange}
+            onChange={handleChange}
             autoComplete="off"
             fullWidth
           />
@@ -546,7 +563,7 @@ function SearchItem(props) {
             id="cleanliness"
             label="Cleanliness Instructions"
             value={props.company.cleanliness}
-            // onChange={handleChange}
+            onChange={handleChange}
             autoComplete="off"
             fullWidth
           />
@@ -556,7 +573,7 @@ function SearchItem(props) {
             id="pickup_requirements"
             label="Pickup Requirements"
             value={props.company.pickup_requirements}
-            // onChange={handleChange}
+            onChange={handleChange}
             autoComplete="off"
             fullWidth
           />
@@ -566,49 +583,22 @@ function SearchItem(props) {
             id="notes"
             label="Notes"
             value={props.company.notes}
-            // onChange={handleChange}
+            onChange={handleChange}
             autoComplete="off"
             fullWidth
           />
         </DialogContent>
         <DialogActions>
-          <Button color="primary">
+          <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button color="primary">
+          <Button onClick={handleSubmit} color="primary">
             Submit
           </Button>
         </DialogActions>
       </Dialog>
 
-
-      {/* <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Update Company</DialogTitle>
-        <DialogContent>
-          <DialogContentText>{props.company.name}</DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label={props.company.email}
-            type="email"
-            fullWidth
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Update
-          </Button>
-        </DialogActions>
-      </Dialog> */}
-
+      {/* Delete Button Below */}
       <Dialog
         open={openDialog}
         onClose={handleClose}
