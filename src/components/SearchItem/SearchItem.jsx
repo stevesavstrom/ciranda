@@ -112,6 +112,33 @@ function SearchItem(props) {
 
   // const renderSearch = { type: 'FETCH_COMPANIES', payload: {materials: props.materials}, selectedState: props.selectedState};
 
+  // Company feedback form variables
+  const [name, setName] = useState('');
+  const [customer, setCustomer] = useState('');
+  const [email, setEmail] = useState('');
+  const [comment, setComment] = useState('');
+
+  // Dispatch for company feedback
+  const postFeedback = (event) => {
+    event.preventDefault();
+    dispatch({
+      type: 'ADD_COMPANY_FEEDBACK',
+      payload: {
+        name: name,
+        customer: customer,
+        email: email,
+        comment: comment,
+        company_id: props.company.id
+      },
+    });
+    setOpenFeedback(false);
+    setName('');
+    setCustomer('');
+    setEmail('');
+    setComment('');
+
+  };
+
   // Dialog for company feedback
   const [openFeedback, setOpenFeedback] = React.useState(false);
 
@@ -327,29 +354,42 @@ function SearchItem(props) {
             Please provide feedback on this recycling company and let us know about your experience with them.
           </DialogContentText>
           <TextField
-            autoFocus
             margin="dense"
             id="name"
             label="Name"
             type="name"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            fullWidth
+          />
+
+        <TextField
+            margin="dense"
+            id="name"
+            label="Company"
+            type="name"
+            value={customer}
+            onChange={(event) => setCustomer(event.target.value)}
             fullWidth
           />
 
           <TextField
-            autoFocus
             margin="dense"
             id="name"
             label="Email Address"
             type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
             fullWidth
           />
 
           <TextField
-            autoFocus
             margin="dense"
             id="name"
             label="Please provide feedback"
             type="feedback"
+            value={comment}
+            onChange={(event) => setComment(event.target.value)}
             fullWidth
           />
         </DialogContent>
@@ -357,7 +397,7 @@ function SearchItem(props) {
           <Button onClick={handleFeedbackClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleFeedbackClose} color="primary">
+          <Button onClick={postFeedback} color="primary">
             Submit
           </Button>
         </DialogActions>
