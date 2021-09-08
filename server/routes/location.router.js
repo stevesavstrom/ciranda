@@ -29,86 +29,102 @@ GROUP BY companies.id;`;
 /**
  * GET route using query params to search for companies that match
  */
-router.get("/search?", (req, res) => {
-    console.log('IN SEARCH')
-    // trueMaterials is populated with all materials = 'true' from req.query
-    const trueMaterials = []
-    // loop through req.query and push materials to trueMaterials.  Use switch to replace query name with database name.
-    for (const material in req.query){
-        if (req.query[material] == 'true'){
-            switch (material) {
-                case 'metalDrums':
-                    trueMaterials.push('Metal Drums')
-                    break;
-                case 'plasticDrums':
-                    trueMaterials.push('Plastic Drums HDPE')
-                    break;
-                case 'plasticFilm':
-                    trueMaterials.push('Plastic Film')
-                    break;
-                case 'cardboard':
-                    trueMaterials.push('Cardboard')
-                    break;
-                case 'ibcs':
-                    trueMaterials.push('IBCs')
-                    break; 
-                case 'ldpe':
-                    trueMaterials.push('LDPE Containers')
-                    break;        
-                default:
-                    break;
+router.get("/search?", async (req, res) => {
+    try{
+        console.log('IN SEARCH')
+        // trueMaterials is populated with all materials = 'true' from req.query
+        const trueMaterials = []
+        // loop through req.query and push materials to trueMaterials.  Use switch to replace query name with database name.
+        for (const material in req.query){
+            if (req.query[material] == 'true'){
+                switch (material) {
+                    case 'metalDrums':
+                        trueMaterials.push('Metal Drums')
+                        break;
+                    case 'plasticDrums':
+                        trueMaterials.push('Plastic Drums HDPE')
+                        break;
+                    case 'plasticFilm':
+                        trueMaterials.push('Plastic Film')
+                        break;
+                    case 'cardboard':
+                        trueMaterials.push('Cardboard')
+                        break;
+                    case 'ibcs':
+                        trueMaterials.push('IBCs')
+                        break; 
+                    case 'ldpe':
+                        trueMaterials.push('LDPE Containers')
+                        break;        
+                    default:
+                        break;
+                }
             }
         }
-    }
-    // bling counter used to adjust queryText based on the amount of materials selected for search
-    let blingCounter = 2
-    // materialString will be assembled with a for loop and added to the end of WHERE statement in queryText
-    let materialString = ` AND ( `
-    // if the array is empty, replace the material string with empty string so it doesn't affect the query.
-    if (trueMaterials.length == 0){
-        materialString = ''
-    }
-    // loop through trueMaterials array and add to the materialString.  Creates a dynamic string that changes based on the materials selected to search.
-    for (let i=0; i<trueMaterials.length; i++){
-        // if there's only one material then finish the WHERE query
-        if (trueMaterials.length === 1){
-            materialString += `recyclables.item = $${blingCounter})`
-            // if there is more than one material in the array, start the string but don't close it off like if statement.
-        } else if (i === 0 && trueMaterials.length > 1){
-            materialString += `recyclables.item = $${blingCounter}`
-            // if the material is in the middle, include an OR statement
-        } else if (i > 0){
-            materialString += ` OR recyclables.item = $${blingCounter}`
-            // if this is the last material in the array, close off the string.
-            if (i === trueMaterials.length - 1){
-                materialString += ` )`
-            }
+        // bling counter used to adjust queryText based on the amount of materials selected for search
+        let blingCounter = 2
+        // materialString will be assembled with a for loop and added to the end of WHERE statement in queryText
+        let materialString = ` AND ( `
+        // if the array is empty, replace the material string with empty string so it doesn't affect the query.
+        if (trueMaterials.length == 0){
+            materialString = ''
         }
-        blingCounter ++
+        // loop through trueMaterials array and add to the materialString.  Creates a dynamic string that changes based on the materials selected to search.
+        for (let i=0; i<trueMaterials.length; i++){
+            // if there's only one material then finish the WHERE query
+            if (trueMaterials.length === 1){
+                materialString += `recyclables.item = $${blingCounter})`
+                // if there is more than one material in the array, start the string but don't close it off like if statement.
+            } else if (i === 0 && trueMaterials.length > 1){
+                materialString += `recyclables.item = $${blingCounter}`
+                // if the material is in the middle, include an OR statement
+            } else if (i > 0){
+                materialString += ` OR recyclables.item = $${blingCounter}`
+                // if this is the last material in the array, close off the string.
+                if (i === trueMaterials.length - 1){
+                    materialString += ` )`
+                }
+            }
+            blingCounter ++
+        }
+        // queryText will return all company ids that match the location and selected materials
+        const queryText = (`
+            SELECT
+                companies.id
+            FROM companies
+            JOIN companies_recyclables ON companies_recyclables.company_id = companies.id
+            JOIN service_areas ON service_areas.company_id = companies.id
+            JOIN recyclables ON recyclables.id = companies_recyclables.recyclable_id
+            WHERE (companies.service_range = 'National' OR service_areas.area=$1) ${materialString}
+            GROUP BY companies.id;`
+        );
+        // Add the state to the trueMaterials array, the array will then be used for the pool.query
+        trueMaterials.unshift(req.query.state)
+        // Creates a variable of the returned array from queryText and trueMaterials - this will be used to gather information on all companies
+        const companiesList = await pool.query(queryText, trueMaterials)
+        // Blank array that will hold further query info - this array is eventually sent as the complete array
+        const returningCompanies = []
+        // Second query - This query gathers all the relevant information we want to display for a specific company
+        const secondaryQuery = `SELECT
+                                    companies.*,
+                                    ARRAY_AGG(distinct service_areas.area) AS areas,
+                                    ARRAY_AGG(distinct recyclables.item) AS item
+                                FROM companies
+                                JOIN companies_recyclables ON companies_recyclables.company_id = companies.id
+                                JOIN service_areas ON service_areas.company_id = companies.id
+                                JOIN recyclables ON recyclables.id = companies_recyclables.recyclable_id
+                                WHERE companies.id=$1
+                                GROUP BY companies.id;`
+        // Loop through the companyList of ids, run a query to get all company details, then push those details to the returningCompanies array.
+        for (company of companiesList.rows){
+            const companyDetails = await pool.query(secondaryQuery, [company.id])
+            returningCompanies.push(companyDetails.rows[0])
+        }
+        // Send the returningCompanies details array to the client.
+        res.send(returningCompanies)
+    } catch (error) {
+        throw error;
     }
-    // queryText is what
-    const queryText = (`
-        SELECT
-            companies.*,
-            ARRAY_AGG(distinct service_areas.area) AS areas,
-            ARRAY_AGG(distinct recyclables.item) AS item
-        FROM companies
-        JOIN companies_recyclables ON companies_recyclables.company_id = companies.id
-        JOIN service_areas ON service_areas.company_id = companies.id
-        JOIN recyclables ON recyclables.id = companies_recyclables.recyclable_id
-        WHERE service_areas.area=$1 ${materialString}
-        GROUP BY companies.id;`
-    );
-    console.log(queryText);
-    trueMaterials.unshift(req.query.state)
-    console.log(trueMaterials);
-    pool.query(queryText, trueMaterials)
-    .then(results => {
-        res.send(results.rows)
-    }).catch(error => {
-        res.sendStatus(500);
-        console.log(error);
-    });
 })
 
 /**
@@ -237,15 +253,9 @@ router.put("/:id", async (req, res) => {
         await pool.query(insertAreas, [area])
     }
     await pool.query('COMMIT')
-    .then(result => {
-        console.log("successfully edited company", result);
-        res.sendStatus(201);
-    })
-    .catch(err => {
-        console.log('unable to edit company', err);
-        res.sendStatus(500);
-    })
-
+    console.log("successfully edited company", result);
+    res.sendStatus(201);
+    
     } catch (error) {
         await pool.query('ROLLBACK')
         throw error;
