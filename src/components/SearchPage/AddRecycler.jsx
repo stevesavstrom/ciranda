@@ -38,6 +38,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexWrap: "wrap",
   },
+  button: {
+    display: 'inline-block',
+    margin: '10px',
+    marginLeft: '20px',
+  },
   chip: {
     margin: 2,
   },
@@ -132,7 +137,7 @@ function AddRecycler(props) {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button variant="outlined" color="primary" size='large' className={classes.button} onClick={handleClickOpen}>
         Add Recycler
       </Button>
       <Dialog

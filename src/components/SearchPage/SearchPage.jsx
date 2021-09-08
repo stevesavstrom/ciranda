@@ -25,13 +25,30 @@ import SearchList from '../SearchList/SearchList';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      display: 'flex',
+        display: 'inline-block',
+        margin: '10px',
     },
     button: {
-        display: 'block',
+        display: 'inline-block',
+        margin: '10px',
+        marginBottom: '0px',
+        marginTop:'20px;,'
+    },
+    autocomplete: {
+        display: 'inline-block',
+        margin: '10px',
+        marginLeft: '20px',
+
     },
     formControl: {
-      margin: theme.spacing(3),
+        // margin: theme.spacing(3),
+        display: 'inline-block',
+        margin: '10px',
+        marginTop:'16px',
+    },
+    formGroup: {
+        display:'flex',
+        flexDirection:'row',
     },
   }));
 
@@ -123,10 +140,11 @@ function SearchPage () {
 
     return (
         <section> 
-            <AddRecycler states={states} />
             <Autocomplete
                 id="states-combo-box"
                 options={states}
+                className={classes.autocomplete}
+                disableClearable='true'
                 getOptionLabel={(option) => option.label}
                 getOptionSelected={(option) => option.value}
                 style={{ width: 300 }}
@@ -137,32 +155,34 @@ function SearchPage () {
             />
             <FormControl component="fieldset" className={classes.formControl}>
                 <FormLabel component="legend">Materials to Recycle</FormLabel>
-                <FormGroup>
-                <FormControlLabel
-                    control={<Checkbox checked={materials.metalDrums} onChange={handleChange} name="metalDrums" />}
-                    label="Metal Drums"
-                />
-                <FormControlLabel
-                    control={<Checkbox checked={materials.plasticDrums} onChange={handleChange} name="plasticDrums" />}
-                    label="Plastic Drums HDPE"
-                />
-                <FormControlLabel
-                    control={<Checkbox checked={materials.plasticFilm} onChange={handleChange} name="plasticFilm" />}
-                    label="Plastic Film"
-                />
-                <FormControlLabel
-                    control={<Checkbox checked={materials.ibcs} onChange={handleChange} name="ibcs" />}
-                    label="IBCs"
-                />
-                <FormControlLabel
-                    control={<Checkbox checked={materials.cardboard} onChange={handleChange} name="cardboard" />}
-                    label="Cardboard"
-                />
+                <FormGroup className={classes.formGroup}>
+                    <FormControlLabel
+                        control={<Checkbox checked={materials.metalDrums} onChange={handleChange} name="metalDrums" />}
+                        label="Metal Drums"
+                    />
+                    <FormControlLabel
+                        control={<Checkbox checked={materials.plasticDrums} onChange={handleChange} name="plasticDrums" />}
+                        label="Plastic Drums HDPE"
+                    />
+                    <FormControlLabel
+                        control={<Checkbox checked={materials.plasticFilm} onChange={handleChange} name="plasticFilm" />}
+                        label="Plastic Film"
+                    />
+                    <FormControlLabel
+                        control={<Checkbox checked={materials.ibcs} onChange={handleChange} name="ibcs" />}
+                        label="IBCs"
+                    />
+                    <FormControlLabel
+                        control={<Checkbox checked={materials.cardboard} onChange={handleChange} name="cardboard" />}
+                        label="Cardboard"
+                    />
                 </FormGroup>
             </FormControl>
-            <Button variant="contained" color="primary" className={classes.button} onClick={handleSearch}>
+            <Button variant="contained" color="primary" size='large' className={classes.button} onClick={handleSearch}>
                 Search
             </Button>
+            <AddRecycler states={states}/>
+
             <SearchList materials={materials} selectedState={selectedState} />
         </section>
     )
