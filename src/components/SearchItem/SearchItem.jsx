@@ -195,6 +195,7 @@ function SearchItem(props) {
 
  // Dialog form for EDIT
  const [open, setOpen] = React.useState(false);
+ const [openRow, setRowOpen] = React.useState(false);
 
  const handleClickOpen = (id) => {
    setOpen(true);
@@ -312,7 +313,6 @@ function SearchItem(props) {
 
   function Row() {
     // const { row } = props;
-    const [open, setOpen] = React.useState(false);
 
     return (
       <Box>
@@ -322,9 +322,9 @@ function SearchItem(props) {
               <IconButton
                 aria-label="expand row"
                 size="medium"
-                onClick={() => setOpen(!open)}
+                onClick={() => setRowOpen(!openRow)}
               >
-                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                {openRow ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
               </IconButton>
             </TableCell>
             <TableCell
@@ -356,7 +356,7 @@ function SearchItem(props) {
         </TableRow>
         <TableRow className={classes.collapsible}>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0}} colSpan={9}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
+            <Collapse in={openRow} timeout="auto" unmountOnExit>
               <Box margin={1}>
                 <Typography
                   className={classes.headerText}
