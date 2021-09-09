@@ -270,7 +270,7 @@ function SearchPage () {
           Search
         </Button>
 
-        <SearchList materials={materials} selectedState={selectedState} />
+        <SearchList materials={materials} selectedState={selectedState} states={states} />
       </Box>
     );
 }
