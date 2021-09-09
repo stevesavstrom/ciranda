@@ -111,6 +111,7 @@ function SearchItem(props) {
 
   // This is for the selected company to be deleted (dialog modal)
   const [deleteID, setDeleteId] = useState("");
+  const [editId, setEditId] = useState("");
 
   const handleDeleteOpen = (companyId) => {
     console.log("This is Open companyId", companyId);
@@ -181,10 +182,11 @@ function SearchItem(props) {
  // Dialog form for EDIT
  const [open, setOpen] = React.useState(false);
 
- const handleClickOpen = () => {
+ const handleClickOpen = (id) => {
    setOpen(true);
    initializeMaterials();
    initializeStates();
+   setEditId(id);
  };
 
  const handleClose = () => {
@@ -289,7 +291,8 @@ function SearchItem(props) {
     }
     updatedCompany.recyclable_id = materialsArray;
     updatedCompany.area = selectedStates;
-    dispatch({ type: "EDIT_LOCATION_DETAILS", payload: updatedCompany });
+    console.log('The edit payload', updatedCompany);
+    dispatch({ type: "EDIT_LOCATION_DETAILS", payload: updatedCompany, id: editId });
     handleClose();
   };
 
@@ -396,7 +399,7 @@ function SearchItem(props) {
                   variant="contained"
                   color="primary"
                   style={{ margin: 2 }}
-                  onClick={handleClickOpen}
+                  onClick={ () => handleClickOpen(props.company.id) }
                 >
                   Edit
                 </Button>
