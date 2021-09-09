@@ -253,7 +253,6 @@ router.put("/:id", async (req, res) => {
         await pool.query(insertAreas, [area])
     }
     await pool.query('COMMIT')
-    console.log("successfully edited company", result);
     res.sendStatus(201);
     
     } catch (error) {
