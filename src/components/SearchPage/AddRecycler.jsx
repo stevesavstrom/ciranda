@@ -43,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline-block',
     margin: '10px',
     marginLeft: '20px',
+    fontSize: '12px',
+    width: '130px',
+    padding: '10px'
   },
   chip: {
     margin: 2,

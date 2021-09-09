@@ -39,7 +39,10 @@ const useStyles = makeStyles((theme) => ({
         display: 'inline-block',
         margin: '10px',
         marginBottom: '0px',
-        marginTop:'20px;,'
+        marginTop:'20px',
+        fontSize: '12px',
+        width: '130px',
+        padding: '10px'
     },
     autocomplete: {
         display: 'inline-block',
@@ -58,6 +61,15 @@ const useStyles = makeStyles((theme) => ({
         display:'flex',
         flexDirection:'row',
     },
+    feedback: {
+    display: 'inline-block',
+    margin: '1px',
+    marginLeft: '20px',
+    fontSize: '12px',
+    width: '130px',
+    padding: '10px'
+
+    }
   }));
 
 // SearchPage component includes the search criteria, search button, and imports the separate SearchItem component, 
@@ -157,65 +169,110 @@ function SearchPage () {
     }
 
     return (
-
-        <Box className={classes.wrapper}> 
+      <Box className={classes.wrapper}>
+        {/* Button opens RecyclingFeedbackDialog, where the user can enter in comments on what they're recycling */}
+        <Button
+        className={classes.feedback}
+          variant="contained"
+          color="secondary"
+          onClick={handleRecyclingDialog}
+        >
+          Feedback
+        </Button>
+        <RecyclingFeedbackDialog
+          closeRecyclingDialog={closeRecyclingDialog}
+          recycleFeedbackDialogOpen={recycleFeedbackDialogOpen}
+        />
         <AddRecycler states={states} />
-            {/* Button opens RecyclingFeedbackDialog, where the user can enter in comments on what they're recycling */}
-            <Button variant="contained" color="secondary" onClick={handleRecyclingDialog}>Recycling Feedback</Button>
-                <RecyclingFeedbackDialog
-                    closeRecyclingDialog={closeRecyclingDialog}
-                    recycleFeedbackDialogOpen={recycleFeedbackDialogOpen}
-                />
-            <Autocomplete
-                id="states-combo-box"
-                options={states}
-                className={classes.autocomplete}
-                disableClearable='true'
-                getOptionLabel={(option) => option.label}
-                getOptionSelected={(option) => option.value}
-                style={{ width: '33%' }}
-                renderInput={(params) => <TextField {...params} label="Select your State" variant="outlined" />}
-                onChange={(event, newValue) => {
-                    setSelectedState(newValue.value);
-                  }}
+
+        <Autocomplete
+          id="states-combo-box"
+          options={states}
+          className={classes.autocomplete}
+          disableClearable="true"
+          getOptionLabel={(option) => option.label}
+          getOptionSelected={(option) => option.value}
+          style={{ width: "33%" }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Select your State"
+              variant="outlined"
             />
-            <FormControl component="fieldset" className={classes.formControl}>
-                <FormLabel component="legend">Materials to Recycle</FormLabel>
-                <FormGroup className={classes.formGroup}>
-                    <FormControlLabel
-                        control={<Checkbox checked={materials.metalDrums} onChange={handleChange} name="metalDrums" />}
-                        label="Metal Drums"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox checked={materials.plasticDrums} onChange={handleChange} name="plasticDrums" />}
-                        label="Plastic Drums HDPE"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox checked={materials.plasticFilm} onChange={handleChange} name="plasticFilm" />}
-                        label="Plastic Film"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox checked={materials.ibcs} onChange={handleChange} name="ibcs" />}
-                        label="IBCs"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox checked={materials.cardboard} onChange={handleChange} name="cardboard" />}
-                        label="Cardboard"
-                    />
-                </FormGroup>
-            </FormControl>
+          )}
+          onChange={(event, newValue) => {
+            setSelectedState(newValue.value);
+          }}
+        />
+        <FormControl component="fieldset" className={classes.formControl}>
+          <FormLabel component="legend">Materials to Recycle</FormLabel>
+          <FormGroup className={classes.formGroup}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={materials.metalDrums}
+                  onChange={handleChange}
+                  name="metalDrums"
+                />
+              }
+              label="Metal Drums"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={materials.plasticDrums}
+                  onChange={handleChange}
+                  name="plasticDrums"
+                />
+              }
+              label="Plastic Drums HDPE"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={materials.plasticFilm}
+                  onChange={handleChange}
+                  name="plasticFilm"
+                />
+              }
+              label="Plastic Film"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={materials.ibcs}
+                  onChange={handleChange}
+                  name="ibcs"
+                />
+              }
+              label="IBCs"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={materials.cardboard}
+                  onChange={handleChange}
+                  name="cardboard"
+                />
+              }
+              label="Cardboard"
+            />
+          </FormGroup>
+        </FormControl>
 
-          
-            <Button variant="contained" color="primary" size='large' className={classes.button} onClick={handleSearch}>
-                Search
-            </Button>
-            
-  
-            <SearchList materials={materials} selectedState={selectedState} />
-        </Box>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          className={classes.button}
+          onClick={handleSearch}
+        >
+          Search
+        </Button>
 
-
-    )
+        <SearchList materials={materials} selectedState={selectedState} />
+      </Box>
+    );
 }
 
 export default SearchPage;
