@@ -11,7 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
-import RecyclingFeedback from './RecylcingFeedback';
+import RecyclingFeedback from './RecyclingFeedback';
 
 
 const columns = [
