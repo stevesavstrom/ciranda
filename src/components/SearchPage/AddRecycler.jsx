@@ -14,6 +14,7 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+import Box from '@material-ui/core/Box';
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
@@ -137,9 +138,11 @@ function AddRecycler(props) {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" size='large' className={classes.button} onClick={handleClickOpen}>
+      <Box>
+      <Button variant="contained" color="primary" className={classes.button} onClick={handleClickOpen}>
         Add Recycler
       </Button>
+      </Box>
       <Dialog
         open={open}
         onClose={handleClose}
