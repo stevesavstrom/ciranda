@@ -25,6 +25,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import SearchList from '../SearchList/SearchList';
+import RecyclingFeedbackDialog from './RecyclingFeedbackDialog.jsx';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -74,6 +75,8 @@ function SearchPage () {
         ibcs: false,
         cardboard: false,
     });
+    // Determines if RecyclingFeedbackDialog is opened or closed.
+    const [recycleFeedbackDialogOpen, setRecycleFeedbackDialogOpen] = React.useState(false);
 
     // U.S. States for State Select Dropdown
     const states = [
@@ -145,9 +148,24 @@ function SearchPage () {
         dispatch({ type: 'FETCH_COMPANIES', payload: materials, selectedState});
     }
 
+    const handleRecyclingDialog = () => {
+        setRecycleFeedbackDialogOpen(true);
+    }
+
+    const closeRecyclingDialog = () => {
+        setRecycleFeedbackDialogOpen(false);
+    }
+
     return (
+
         <Box className={classes.wrapper}> 
         <AddRecycler states={states} />
+            {/* Button opens RecyclingFeedbackDialog, where the user can enter in comments on what they're recycling */}
+            <Button variant="contained" color="secondary" onClick={handleRecyclingDialog}>Recycling Feedback</Button>
+                <RecyclingFeedbackDialog
+                    closeRecyclingDialog={closeRecyclingDialog}
+                    recycleFeedbackDialogOpen={recycleFeedbackDialogOpen}
+                />
             <Autocomplete
                 id="states-combo-box"
                 options={states}
@@ -192,10 +210,11 @@ function SearchPage () {
                 Search
             </Button>
             
-       
-
+  
             <SearchList materials={materials} selectedState={selectedState} />
         </Box>
+
+
     )
 }
 

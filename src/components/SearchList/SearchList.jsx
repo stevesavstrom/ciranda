@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function SearchList ({materials, selectedState}) {
+function SearchList ({materials, selectedState, states}) {
 
     const useRowStyles = makeStyles({
         root: {
@@ -73,7 +73,7 @@ if (companies.length === 0) {
 
                 {companies.map(company => {
                     return (
-                        <SearchItem key={company.id} company={company} materials={materials} selectedState={selectedState} />
+                        <SearchItem key={company.id} states={states} company={company} materials={materials} selectedState={selectedState} />
                     )
                 })}
             

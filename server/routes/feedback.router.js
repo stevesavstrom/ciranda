@@ -54,6 +54,25 @@ router.post('/', (req, res) => {
     })
 });
 
+/**
+ * POSTs recycling feedback to the recycling feedback database.
+ */
+router.post('/recycling_comments', (req, res) => {
+    const feedback = req.body;
+    const query = `
+    INSERT INTO recycle_feedback (name, company, email, comment, date)
+    VALUES ($1, $2, $3, $4, NOW());
+    `;
+    pool.query(query, [feedback.name, feedback.company, feedback.email, feedback.comment])
+    .then( response => {
+        res.sendStatus(201);
+    })
+    .catch( err => {
+        console.log('Error posting feedback record', err);
+    })
+});
+
+
 // PUT feedback router
 // This is a sample of what should be needed for the admin edit feedback.
 router.put("/:id",  (req, res) => {

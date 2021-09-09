@@ -69,7 +69,8 @@ CREATE TABLE "feedback" (
 
 CREATE TABLE "recycle_feedback" (
    "id" SERIAL PRIMARY KEY,
-   "customer" TEXT,
+   "name" TEXT,
+   "company" TEXT,
    "email" TEXT,
    "comment" TEXT,
    "date" DATE 

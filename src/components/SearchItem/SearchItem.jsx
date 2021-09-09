@@ -16,7 +16,7 @@ import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
 import Select from "@material-ui/core/Select";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -31,7 +31,40 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
+function getStyles(stateName, stateArray, theme) {
+  return {
+    fontWeight:
+      stateArray.indexOf(stateName) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    maxWidth: 300,
+  },
+  chips: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  button: {
+    display: 'inline-block',
+    margin: '10px',
+    marginLeft: '20px',
+  },
+  chip: {
+    margin: 2,
+  },
+  noLabel: {
+    marginTop: theme.spacing(3),
+  },
+}));
+
 function SearchItem(props) {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const useRowStyles = makeStyles({
     root: {
@@ -150,8 +183,8 @@ function SearchItem(props) {
 
  const handleClickOpen = () => {
    setOpen(true);
-   setMaterialType();
-   console.log("Boolean of material type:", material);
+   initializeMaterials();
+   initializeStates();
  };
 
  const handleClose = () => {
@@ -186,33 +219,36 @@ function SearchItem(props) {
     6: false,
   });
 
-  function setMaterialType(event) {
+  const initializeMaterials = () => {
     let acceptedItems = props.company.item;
-
-    for (const item in acceptedItems) {
+    for (const item of acceptedItems) {
       switch (item) {
         case "Metal Drums":
-          setMaterial(material[1]= true);
+          material[1]=true;
           break;
         case "Plastic Drums HDPE":
-          setMaterial(material[2]= true);
+          material[2]=true;
           break;
         case "LDPE Containers":
-          setMaterial(material[3]= true);
+          material[3]=true;
           break;
         case "Plastic Film":
-          setMaterial(material[4]= true);
+          material[4]=true;
           break;
         case "IBCs":
-          setMaterial(material[5]= true);
+          material[5]=true;
           break;
         case "Cardboard":
-          setMaterial(material[6]= true);
+          material[6]=true;
           break;
         default:
           break;
       }
     }
+  }
+
+  const initializeStates = () => {
+    setSelectedStates(currentCompany.area);
   }
 
   const [selectedStates, setSelectedStates] = useState([]);
@@ -251,10 +287,10 @@ function SearchItem(props) {
         materialsArray.push(i);
       }
     }
-    updatedCompany.recyclable_id = recyclablesIdArray;
+    updatedCompany.recyclable_id = materialsArray;
     updatedCompany.area = selectedStates;
-    dispatch({ type: "UPDATE_COMPANY", payload: updatedCompany });
-    // handleClose();
+    dispatch({ type: "EDIT_LOCATION_DETAILS", payload: updatedCompany });
+    handleClose();
   };
 
   function Row() {
@@ -416,19 +452,19 @@ function SearchItem(props) {
             margin="dense"
             id="name"
             label="Company Name"
-            value={props.company.name}
+            value={updatedCompany.name}
             onChange={handleChange}
             fullWidth
             autoComplete="off"
           />
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-mutiple-chip-label">Service States</InputLabel>
-            {/* <Select
+            <Select
               labelId="demo-mutiple-chip-label"
               id="demo-mutiple-chip"
               multiple
-              value={props.company.state}
-              // onChange={handleSelectedStates}
+              value={selectedStates}
+              onChange={handleSelectedStates}
               input={<Input id="select-multiple-chip" />}
               renderValue={(selected) => (
                 <div className={classes.chips}>
@@ -448,7 +484,7 @@ function SearchItem(props) {
                   {state.label}
                 </MenuItem>
               ))}
-            </Select> */}
+            </Select>
           </FormControl>
           <FormLabel component="legend">Accepted Materials</FormLabel>
           <FormGroup>
@@ -519,7 +555,7 @@ function SearchItem(props) {
             margin="dense"
             id="service_range"
             label="Service Range"
-            value={props.company.service_range}
+            value={updatedCompany.service_range}
             onChange={handleChange}
             fullWidth
           />
@@ -528,7 +564,7 @@ function SearchItem(props) {
             margin="dense"
             id="website"
             label="Company Website"
-            value={props.company.website}
+            value={updatedCompany.website}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -538,7 +574,7 @@ function SearchItem(props) {
             margin="dense"
             id="address"
             label="Street Address"
-            value={props.company.address}
+            value={updatedCompany.address}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -548,7 +584,7 @@ function SearchItem(props) {
             margin="dense"
             id="city"
             label="City"
-            value={props.company.city}
+            value={updatedCompany.city}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -558,7 +594,7 @@ function SearchItem(props) {
             margin="dense"
             id="state"
             label="State"
-            value={props.company.state}
+            value={updatedCompany.state}
             onChange={handleChange}
             fullWidth
           />
@@ -567,7 +603,7 @@ function SearchItem(props) {
             margin="dense"
             id="zip"
             label="Zip Code"
-            value={props.company.zip}
+            value={updatedCompany.zip}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -577,7 +613,7 @@ function SearchItem(props) {
             margin="dense"
             id="phone"
             label="Phone Number"
-            value={props.company.phone}
+            value={updatedCompany.phone}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -587,7 +623,7 @@ function SearchItem(props) {
             margin="dense"
             id="email"
             label="Email Address"
-            value={props.company.email}
+            value={updatedCompany.email}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -597,7 +633,7 @@ function SearchItem(props) {
             margin="dense"
             id="cleanliness"
             label="Cleanliness Instructions"
-            value={props.company.cleanliness}
+            value={updatedCompany.cleanliness}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -607,7 +643,7 @@ function SearchItem(props) {
             margin="dense"
             id="pickup_requirements"
             label="Pickup Requirements"
-            value={props.company.pickup_requirements}
+            value={updatedCompany.pickup_requirements}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -617,7 +653,7 @@ function SearchItem(props) {
             margin="dense"
             id="notes"
             label="Notes"
-            value={props.company.notes}
+            value={updatedCompany.notes}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
