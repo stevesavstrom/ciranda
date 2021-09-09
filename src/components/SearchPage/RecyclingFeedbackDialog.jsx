@@ -13,13 +13,13 @@ function RecyclingFeedbackDialog (props) {
     const [name, setName] = useState('');
     const [company, setCompany] = useState('');
     const [email, setEmail] = useState('');
-    const [comments, setComments] = useState('');
+    const [comment, setComment] = useState('');
 
 
 
     const handleFeedbackSubmit = () => {
-        dispatch({ type: "POST_RECYCLE_FEEDBACK", payload: {name, company, email, comments}});
-        setName(''); setCompany(''); setEmail(''); setComments('');
+        dispatch({ type: "POST_RECYCLE_FEEDBACK", payload: {name, company, email, comment}});
+        setName(''); setCompany(''); setEmail(''); setComment('');
         props.closeRecyclingDialog();
     }
     
@@ -57,8 +57,8 @@ function RecyclingFeedbackDialog (props) {
             <TextField
                 margin="dense"
                 label="What Are You Recycling?"
-                value={comments}
-                onChange={(event) => setComments(event.target.value)}
+                value={comment}
+                onChange={(event) => setComment(event.target.value)}
                 required
                 fullWidth
             />
