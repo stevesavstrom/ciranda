@@ -13,10 +13,11 @@
 
 .footerWrapper {
   background-color: #EF5E3A;
-  position: absolute;
-  width: 100%;
+  position: relative;
+  width: 110%;
   bottom: 0;
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 70px;
   margin-left: -20px;
+
 }

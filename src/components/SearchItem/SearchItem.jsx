@@ -458,10 +458,10 @@ function SearchItem(props) {
             autoComplete="off"
           />
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-mutiple-chip-label">Service States</InputLabel>
+            <InputLabel id="demo-multiple-chip-label">Service States</InputLabel>
             <Select
-              labelId="demo-mutiple-chip-label"
-              id="demo-mutiple-chip"
+              labelId="demo-multiple-chip-label"
+              id="demo-multiple-chip"
               multiple
               value={selectedStates}
               onChange={handleSelectedStates}
