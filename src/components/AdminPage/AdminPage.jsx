@@ -51,6 +51,13 @@ const useStyles = makeStyles({
   },
   buttonGroup: {
     padding: '20px',
+    justifyContent: 'center'
+  },
+  button: {
+    marginLeft: '3px',
+    width: '120px',
+    fontSize: '12px',
+
   }
 });
 
@@ -84,8 +91,8 @@ function AdminPage() {
   return (
     <>
     <Box className={classes.buttonGroup} > 
-    <Button variant="contained" color="primary" onClick={()=>setIsFeedback(true)}>Company Feedback</Button>
-    <Button variant="contained" color="secondary" onClick={()=>setIsFeedback(false)}>Recycling Comments</Button>
+    <Button className={classes.button} variant="contained" color="primary" onClick={()=>setIsFeedback(true)}>Company Feedback</Button>
+    <Button className={classes.button} variant="contained" color="secondary" onClick={()=>setIsFeedback(false)}>Recycling Comments</Button>
     </Box>
       {/* <div className="container">
         <h2>Welcome, {user.username}!</h2>
