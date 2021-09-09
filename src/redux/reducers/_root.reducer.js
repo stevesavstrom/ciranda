@@ -3,6 +3,7 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import userSearch from './user-search.reducer';
 import feedback from './feedback.reducer';
+import recyclingFeedback from './recycling.feedback.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   userSearch,
   feedback,
+  recyclingFeedback,
 });
 
 export default rootReducer;

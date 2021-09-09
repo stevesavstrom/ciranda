@@ -67,6 +67,14 @@ CREATE TABLE "feedback" (
    "date" TIMESTAMP
 );
 
+CREATE TABLE "recycle_feedback" (
+   "id" SERIAL PRIMARY KEY,
+   "customer" TEXT,
+   "email" TEXT,
+   "comment" TEXT,
+   "date" DATE 
+);
+
 -- Placeholder Data Insert Statements
 INSERT INTO "companies" ("name", "service_range", "website", "address", "city", "state", "zip", "phone", "email", "cleanliness", "pickup_requirements", "notes")
 VALUES ('Greif', 'National', 'https://wwww.greif.com/', NULL, NULL, NULL, NULL, NULL, 'recyclingservices@greif.com', 'Triple rinsed, labels removed, contact for more details.', NULL, 'Fee for recycling IBCs, cost depends on freight and load density, call or email');
