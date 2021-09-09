@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: 120,
     maxWidth: 300,
+    padding: 10,
   },
   chips: {
     display: "flex",
@@ -165,7 +166,7 @@ function AddRecycler(props) {
             fullWidth
             autoComplete="off"
           />
-          <FormControl className={classes.formControl}>
+          <FormControl style={{minWidth: '98%'}} className={classes.formControl}>
             <InputLabel id="demo-mutiple-chip-label">Service States</InputLabel>
             <Select
               labelId="demo-mutiple-chip-label"
