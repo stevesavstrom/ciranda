@@ -5,6 +5,7 @@ import { takeEvery, put } from "@redux-saga/core/effects";
 
 function* feedbackSaga () {
     yield takeEvery('GET_FEEDBACK', fetchFeedback);
+    yield takeEvery('GET_RECYCLING_FEEDBACK', fetchRecyclingFeedback);
 }
 
 function* fetchFeedback() {
@@ -13,6 +14,15 @@ function* fetchFeedback() {
         yield put({type:'SET_FEEDBACK', payload:feedback.data});
     } catch (err) {
         console.log('Saga: Error getting feedback data', err);
+    }
+}
+
+function* fetchRecyclingFeedback() {
+    try {
+        const feedback = yield axios.get('/api/feedback/recycling_comments');
+        yield put({type:'SET_RECYCLING_FEEDBACK', payload:feedback.data});
+    } catch (err) {
+        console.log('Saga: Error getting recyclingFeedback data', err);
     }
 }
 

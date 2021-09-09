@@ -32,8 +32,7 @@ function Nav() {
             <Link className="navLink" to="/register">
               Register User
             </Link>
-        {/* will be the Admin link for the SUPERUSER login */}
-            <Link className="navLink" to="/">
+            <Link className="navLink" to="/admin">
               Admin
             </Link>
         {/* will be the Admin link for the companies page */}

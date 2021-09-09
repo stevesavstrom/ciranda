@@ -1,6 +1,5 @@
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,14 +7,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
-import RecyclingFeedback from './RecyclingFeedback';
 
 
 const columns = [
-  { id: 'company_name', label: 'Recycler', minWidth: 170 },
   { id: 'customer', label: 'Customer Name', minWidth: 100 },
   {
     id: 'email',
@@ -47,12 +44,11 @@ const useStyles = makeStyles({
 });
 
 // the AdminPage component displays the compiled feedback from users and other Admin-only content 
-function AdminPage() {
+function RecyclingFeedback() {
   //MUI
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [isFeedback, setIsFeedback] = React.useState(true);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -62,27 +58,18 @@ function AdminPage() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  // Dispatches & Store
-  const dispatch = useDispatch();
-  const feedback = useSelector(store => store.feedback);
-  const rows = feedback;
+  // Store and row definition
+  const recyclingFeedback = useSelector(store => store.recyclingFeedback);
+  const rows = recyclingFeedback;
   const user = useSelector((store) => store.user);
-
-  useEffect(() => {
-    dispatch({type:'GET_FEEDBACK'});
-    dispatch({type: 'GET_RECYCLING_FEEDBACK'})
-  }, []);
 
   return (
     <>
-    <Button variant="contained" color="primary" onClick={()=>setIsFeedback(true)}>Company Feedback</Button>
-    <Button variant="contained" color="secondary" onClick={()=>setIsFeedback(false)}>Recycling Comments</Button>
       {/* <div className="container">
         <h2>Welcome, {user.username}!</h2>
         <p>Your ID is: {user.id}</p>
         <LogOutButton className="btn" />
       </div> */}
-      {isFeedback ? 
       <section>
         Client Feedback
         <Paper className={classes.root}>
@@ -130,11 +117,9 @@ function AdminPage() {
           />
         </Paper>
       </section>
-      :
-        <RecyclingFeedback />}
     </>
   );
 }
 
 // this allows us to use <App /> in index.js
-export default AdminPage;
+export default RecyclingFeedback;
