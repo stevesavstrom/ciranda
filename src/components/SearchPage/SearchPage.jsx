@@ -186,7 +186,7 @@ function SearchPage () {
             </Button>
             <AddRecycler states={states} />
 
-            <SearchList materials={materials} selectedState={selectedState} />
+            <SearchList materials={materials} selectedState={selectedState} states={states} />
         </section>
     )
 }
