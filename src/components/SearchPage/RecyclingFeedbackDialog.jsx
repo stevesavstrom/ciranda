@@ -10,11 +10,17 @@ import { useDispatch } from "react-redux";
 
 function RecyclingFeedbackDialog (props) {
     const dispatch = useDispatch();
-    const [recycleFeedback, setRecycleFeedback] = useState({name: '', company: '', email: '', comments: ''})
+    const [name, setName] = useState('');
+    const [company, setCompany] = useState('');
+    const [email, setEmail] = useState('');
+    const [comments, setComments] = useState('');
+
+
 
     const handleFeedbackSubmit = () => {
-        dispatch({ type: "POST_RECYCLE_FEEDBACK", payload: recycleFeedback});
-        setRecycleFeedback({name: '', company: '', email: '', comments: ''});
+        dispatch({ type: "POST_RECYCLE_FEEDBACK", payload: {name, company, email, comments}});
+        setName(''); setCompany(''); setEmail(''); setComments('');
+        props.closeRecyclingDialog();
     }
     
     return (
@@ -26,39 +32,33 @@ function RecyclingFeedbackDialog (props) {
             </DialogContentText>
             <TextField
                 margin="dense"
-                id="name"
                 label="Name"
-                value={recycleFeedback.name}
-                onChange={(event) => setRecycleFeedback({name: event.target.value})}
+                value={name}
+                onChange={(event) => setName(event.target.value)}
                 fullWidth
             />
 
             <TextField
                 margin="dense"
-                id="company"
                 label="Company"
-                value={recycleFeedback.company}
-                onChange={(event) => setRecycleFeedback({company: event.target.value})}
+                value={company}
+                onChange={(event) => setCompany(event.target.value)}
                 fullWidth
             />
 
             <TextField
                 margin="dense"
-                id="email"
                 label="Email Address"
-                type="email"
-                value={recycleFeedback.email}
-                onChange={(event) => setRecycleFeedback({email: event.target.value})}
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
                 fullWidth
             />
 
             <TextField
                 margin="dense"
-                id="name"
                 label="What Are You Recycling?"
-                type="feedback"
-                value={recycleFeedback.comments}
-                onChange={(event) => setRecycleFeedback({comments: event.target.value})}
+                value={comments}
+                onChange={(event) => setComments(event.target.value)}
                 required
                 fullWidth
             />
