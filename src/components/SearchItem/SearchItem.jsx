@@ -49,7 +49,21 @@ function SearchItem(props) {
     buttons: {
       justifyContent: "center",
     },
+    contactInfoHeader: {
+      fontSize: "15px",
+      fontWeight: "bold",
+      display: "flex",
+      alignItems: "baseline",
+      variant: "p",
+    },
+    contactInfoData: {
+      display: "flex",
+      alignItems: "baseline",
+      variant: "p",
+    },
   });
+
+  
 
   const classes = useRowStyles();
 
@@ -316,16 +330,22 @@ function SearchItem(props) {
                 <Table size="large" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell className={classes.headerText} style={{ width: 150 }}>
+                      <TableCell className={classes.headerText} align="left"  style={{ width: 150 }}>
                         Service Range
                       </TableCell>
-                      <TableCell className={classes.headerText} style={{ width: 390 }}>
+                      <TableCell className={classes.headerText} align="left" style={{ width: 150 }}>
+                        Company Information
+                      </TableCell>
+                      {/* <TableCell className={classes.headerText} align="left" style={{ width: 150 }}>
+                        Address
+                      </TableCell> */}
+                      <TableCell className={classes.headerText} align="left"  style={{ width: 350 }}>
                         Recyclable Cleanliness
                       </TableCell>
-                      <TableCell className={classes.headerText} align="left" style={{ width: 390 }}>
+                      <TableCell className={classes.headerText} align="left" style={{ width: 350 }}>
                         Pickup Requirements
                       </TableCell>
-                      <TableCell className={classes.headerText} align="left" style={{ width: 390 }}>
+                      <TableCell className={classes.headerText} align="left" style={{ width: 350 }}>
                         Notes
                       </TableCell>
                     </TableRow>
@@ -333,10 +353,18 @@ function SearchItem(props) {
 
                   <TableBody>
                     <TableRow>
-                      <TableCell component="th" scope="row">
+                      <TableCell  align="left">
                         {props.company.service_range}
                       </TableCell>
-                      <TableCell>{props.company.cleanliness}</TableCell>
+                      <TableCell  align="left">
+                        <Typography className={classes.contactInfoHeader}>Phone:</Typography>
+                        <Typography className={classes.contactInfoData}>{props.company.phone} </Typography>
+                        <Typography className={classes.contactInfoHeader}>Email:</Typography>
+                        <Typography className={classes.contactInfoData}>{props.company.email} </Typography>
+                        <Typography className={classes.contactInfoHeader}>Address:</Typography>
+                        <Typography className={classes.contactInfoData}>{props.company.address} {props.company.city} {props.company.state} {props.company.zip} </Typography>
+                      </TableCell>
+                      <TableCell align="left">{props.company.cleanliness}</TableCell>
                       <TableCell align="left">
                         {props.company.pickup_requirements}
                       </TableCell>

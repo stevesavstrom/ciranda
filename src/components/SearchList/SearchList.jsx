@@ -60,8 +60,6 @@ if (companies.length === 0) {
                       <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 50 }}></TableCell>
                       <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 400 }}>Company</TableCell>
                       <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 400 }}>Service Area</TableCell>
-                      {/* <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 200 }}>Phone</TableCell>
-                      <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 200 }}>Email</TableCell> */}
                       <TableCell className={rowClasses.tableHeader} align="center" style={{ width: 400 }}>Materials Accepted</TableCell>
                     </TableRow>
                   </TableHead>
