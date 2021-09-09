@@ -8,6 +8,9 @@ import AddRecycler from '../SearchPage/AddRecycler.jsx';
 // MUI Imports
     // button import
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+
+
 
     // checkbox imports
 import { makeStyles } from '@material-ui/core/styles';
@@ -42,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'inline-block',
         margin: '10px',
         marginLeft: '20px',
+        width: '500px'
 
     },
     formControl: {
@@ -153,7 +157,9 @@ function SearchPage () {
     }
 
     return (
-        <section>
+
+        <Box className={classes.wrapper}> 
+        <AddRecycler states={states} />
             {/* Button opens RecyclingFeedbackDialog, where the user can enter in comments on what they're recycling */}
             <Button variant="contained" color="secondary" onClick={handleRecyclingDialog}>Recycling Feedback</Button>
                 <RecyclingFeedbackDialog
@@ -167,7 +173,7 @@ function SearchPage () {
                 disableClearable='true'
                 getOptionLabel={(option) => option.label}
                 getOptionSelected={(option) => option.value}
-                style={{ width: 300 }}
+                style={{ width: '33%' }}
                 renderInput={(params) => <TextField {...params} label="Select your State" variant="outlined" />}
                 onChange={(event, newValue) => {
                     setSelectedState(newValue.value);
@@ -198,13 +204,17 @@ function SearchPage () {
                     />
                 </FormGroup>
             </FormControl>
+
+          
             <Button variant="contained" color="primary" size='large' className={classes.button} onClick={handleSearch}>
                 Search
             </Button>
-            <AddRecycler states={states} />
+            
+  
+            <SearchList materials={materials} selectedState={selectedState} />
+        </Box>
 
-            <SearchList materials={materials} selectedState={selectedState} states={states} />
-        </section>
+
     )
 }
 

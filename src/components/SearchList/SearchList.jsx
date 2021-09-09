@@ -29,6 +29,7 @@ function SearchList ({materials, selectedState, states}) {
         root: {
           "& > *": {
             borderBottom: "unset",
+            justify: 'center'
           },
         },
         tableHeader: {
@@ -36,6 +37,9 @@ function SearchList ({materials, selectedState, states}) {
             color: "#fff",
             background: '#2E61A9',
         },
+        alert: {
+
+        }
 
       });
       const classes = useStyles();
@@ -45,8 +49,8 @@ const companies = useSelector(store => store.userSearch);
 
 if (companies.length === 0) {
     return(
-        <section className={classes.root}>
-            <Alert className={classes.alert} severity="info">Please refine search criteria to return results.</Alert>
+        <section className={classes.root} style={{ width: '40%', margin: 'auto', padding: '100px'}}>
+            <Alert className={classes.alert} severity="info" style={{ width: '100%', height: '50px', background: '#2E61A9', alignItems: 'center', justifyContent: 'center'}}>Please refine search criteria to return results.</Alert>
         </section>
     )
 } else {
