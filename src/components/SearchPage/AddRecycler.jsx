@@ -87,15 +87,17 @@ function AddRecycler(props) {
     recyclable_id: [],
     area: [],
   };
-  const [newRecycler, setNewRecycler] = useState(emptyRecycler);
-  const [recyclables, setRecyclables] = useState({
+  const emptyRecyclables = {
     1: false,
     2: false,
     3: false,
     4: false,
     5: false,
     6: false,
-  });
+  }
+
+  const [newRecycler, setNewRecycler] = useState(emptyRecycler);
+  const [recyclables, setRecyclables] = useState(emptyRecyclables);
 
   const [selectedStates, setSelectedStates] = useState([]);
 
@@ -133,10 +135,20 @@ function AddRecycler(props) {
         recyclablesIdArray.push(i);
       }
     }
-    newRecycler.recyclable_id = recyclablesIdArray;
-    newRecycler.area = selectedStates;
-    dispatch({type:'ADD_RECYCLER', payload: newRecycler})
-    handleClose();
+    if (
+        !newRecycler.name ||
+        !newRecycler.service_range ||
+        !recyclablesIdArray ||
+        !selectedStates||
+        !newRecycler.email
+    ) {} else {
+        newRecycler.recyclable_id = recyclablesIdArray;
+        newRecycler.area = selectedStates;
+        dispatch({type:'ADD_RECYCLER', payload: newRecycler});
+        setSelectedStates([]);
+        setRecyclables(emptyRecyclables);
+        handleClose();
+    }
   };
 
   return (
@@ -169,7 +181,7 @@ function AddRecycler(props) {
             autoComplete="off"
           />
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-mutiple-chip-label">Service States</InputLabel>
+            <InputLabel id="demo-mutiple-chip-label">Service States*</InputLabel>
             <Select
               labelId="demo-mutiple-chip-label"
               id="demo-mutiple-chip"
@@ -197,7 +209,7 @@ function AddRecycler(props) {
               ))}
             </Select>
           </FormControl>
-          <FormLabel component="legend">Accepted Materials</FormLabel>
+          <FormLabel component="legend">Accepted Materials*</FormLabel>
           <FormGroup>
             <FormControlLabel
               control={
@@ -265,68 +277,9 @@ function AddRecycler(props) {
             required
             margin="dense"
             id="service_range"
-            label="Service Range"
+            label="Service Range (Local, Regional, or National)"
             value={newRecycler.service_range}
             onChange={handleChange}
-            fullWidth
-          />
-          <TextField
-            required
-            margin="dense"
-            id="website"
-            label="Company Website"
-            value={newRecycler.website}
-            onChange={handleChange}
-            autoComplete="off"
-            fullWidth
-          />
-          <TextField
-            required
-            margin="dense"
-            id="address"
-            label="Street Address"
-            value={newRecycler.address}
-            onChange={handleChange}
-            autoComplete="off"
-            fullWidth
-          />
-          <TextField
-            required
-            margin="dense"
-            id="city"
-            label="City"
-            value={newRecycler.city}
-            onChange={handleChange}
-            autoComplete="off"
-            fullWidth
-          />
-          <TextField
-            required
-            margin="dense"
-            id="state"
-            label="State"
-            value={newRecycler.state}
-            onChange={handleChange}
-            fullWidth
-          />
-          <TextField
-            required
-            margin="dense"
-            id="zip"
-            label="Zip Code"
-            value={newRecycler.zip}
-            onChange={handleChange}
-            autoComplete="off"
-            fullWidth
-          />
-          <TextField
-            required
-            margin="dense"
-            id="phone"
-            label="Phone Number"
-            value={newRecycler.phone}
-            onChange={handleChange}
-            autoComplete="off"
             fullWidth
           />
           <TextField
@@ -340,7 +293,59 @@ function AddRecycler(props) {
             fullWidth
           />
           <TextField
-            required
+            margin="dense"
+            id="phone"
+            label="Phone Number"
+            value={newRecycler.phone}
+            onChange={handleChange}
+            autoComplete="off"
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            id="website"
+            label="Company Website"
+            value={newRecycler.website}
+            onChange={handleChange}
+            autoComplete="off"
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            id="address"
+            label="Street Address"
+            value={newRecycler.address}
+            onChange={handleChange}
+            autoComplete="off"
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            id="city"
+            label="City"
+            value={newRecycler.city}
+            onChange={handleChange}
+            autoComplete="off"
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            id="state"
+            label="State"
+            value={newRecycler.state}
+            onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            id="zip"
+            label="Zip Code"
+            value={newRecycler.zip}
+            onChange={handleChange}
+            autoComplete="off"
+            fullWidth
+          />  
+          <TextField
             margin="dense"
             id="cleanliness"
             label="Cleanliness Instructions"
@@ -350,7 +355,6 @@ function AddRecycler(props) {
             fullWidth
           />
           <TextField
-            required
             margin="dense"
             id="pickup_requirements"
             label="Pickup Requirements"
@@ -360,7 +364,6 @@ function AddRecycler(props) {
             fullWidth
           />
           <TextField
-            required
             margin="dense"
             id="notes"
             label="Notes"
@@ -370,12 +373,12 @@ function AddRecycler(props) {
             fullWidth
           />
         </DialogContent>
+        <Button onClick={handleSubmit} color="primary">
+            Submit
+          </Button>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
-          </Button>
-          <Button onClick={handleSubmit} color="primary">
-            Submit
           </Button>
         </DialogActions>
       </Dialog>
