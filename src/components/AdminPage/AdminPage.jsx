@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import RecyclingFeedback from './RecyclingFeedback';
+import { Typography } from '@material-ui/core';
 
 
 const columns = [
@@ -22,19 +23,19 @@ const columns = [
     id: 'email',
     label: 'Email',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
   },
   {
     id: 'comment',
     label: 'Comment',
     minWidth: 170,
-    align: 'right',
+    align: 'left',
   },
   {
     id: 'date',
     label: 'Date',
     minWidth: 170,
-    align: 'right',
+    align: 'left',
   },
 ];
 
@@ -93,7 +94,7 @@ function AdminPage() {
       </div> */}
       {isFeedback ? 
       <Box className={classes.wrapper} > 
-        Client Feedback
+        <Typography>Client Feedback</Typography>
         <Paper className={classes.root}>
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
@@ -103,7 +104,7 @@ function AdminPage() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth }}
+                      style={{ minWidth: column.minWidth, background: '#2E61A9', color: '#fff' }}
                     >
                       {column.label}
                     </TableCell>
