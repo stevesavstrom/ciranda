@@ -8,10 +8,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import Box from "@material-ui/core/Box";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import RecyclingFeedback from './RecyclingFeedback';
+import { Typography } from '@material-ui/core';
 
 
 const columns = [
@@ -21,19 +23,19 @@ const columns = [
     id: 'email',
     label: 'Email',
     minWidth: 100,
-    align: 'right',
+    align: 'left',
   },
   {
     id: 'comment',
     label: 'Comment',
     minWidth: 170,
-    align: 'right',
+    align: 'left',
   },
   {
     id: 'date',
     label: 'Date',
     minWidth: 170,
-    align: 'right',
+    align: 'left',
   },
 ];
 
@@ -44,6 +46,19 @@ const useStyles = makeStyles({
   container: {
     maxHeight: 440,
   },
+  wrapper: {
+    padding: '20px',
+  },
+  buttonGroup: {
+    padding: '20px',
+    justifyContent: 'center'
+  },
+  button: {
+    marginLeft: '3px',
+    width: '120px',
+    fontSize: '12px',
+
+  }
 });
 
 // the AdminPage component displays the compiled feedback from users and other Admin-only content 
@@ -75,16 +90,18 @@ function AdminPage() {
 
   return (
     <>
-    <Button variant="contained" color="primary" onClick={()=>setIsFeedback(true)}>Company Feedback</Button>
-    <Button variant="contained" color="secondary" onClick={()=>setIsFeedback(false)}>Recycling Comments</Button>
+    <Box className={classes.buttonGroup} > 
+    <Button className={classes.button} variant="contained" color="primary" onClick={()=>setIsFeedback(true)}>Company Feedback</Button>
+    <Button className={classes.button} variant="contained" color="secondary" onClick={()=>setIsFeedback(false)}>Recycling Comments</Button>
+    </Box>
       {/* <div className="container">
         <h2>Welcome, {user.username}!</h2>
         <p>Your ID is: {user.id}</p>
         <LogOutButton className="btn" />
       </div> */}
       {isFeedback ? 
-      <section>
-        Client Feedback
+      <Box className={classes.wrapper} > 
+        <Typography>Client Feedback</Typography>
         <Paper className={classes.root}>
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
@@ -94,7 +111,7 @@ function AdminPage() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth }}
+                      style={{ minWidth: column.minWidth, background: '#2E61A9', color: '#fff' }}
                     >
                       {column.label}
                     </TableCell>
@@ -129,7 +146,7 @@ function AdminPage() {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Paper>
-      </section>
+        </Box>
       :
         <RecyclingFeedback />}
     </>
