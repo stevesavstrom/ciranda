@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
 
+import { Grid, Paper, Avatar, TextField, Button, Typography, Link } from '@material-ui/core'
+import { LockOutlined } from '@material-ui/icons';
+import { Checkbox } from '@material-ui/core';
+import { FormControlLabel } from '@material-ui/core';
+
 // Login form component for Admins and Super Admin to log in. Imported into LoginPage.jsx
 function LoginForm() {
   const [username, setUsername] = useState('');
@@ -25,42 +30,37 @@ function LoginForm() {
     }
   }; // end login
 
+  const paperStyle={padding:20, height:'70vh' ,width:280, margin:"20px auto"}
+  const avatarStyle={backgroundColor: '#1bbd7e'}
+
   return (
-    <form className="formPanel" onSubmit={login}>
-      <h2>Admin Login</h2>
-      {errors.loginMessage && (
-        <h3 className="alert" role="alert">
-          {errors.loginMessage}
-        </h3>
-      )}
-      <div>
-        <label htmlFor="username">
-          Username:
-          <input
-            type="text"
-            name="username"
-            required
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
+    <Grid>
+        <Paper elevation={10} style ={paperStyle}>
+            <Grid align='center'>
+                <Avatar><LockOutlined/></Avatar>
+            </Grid>
+        <h2>Welcome to Ciranda</h2>
+    <TextField label='Username' placeholder='Enter Username' value={username} onChange={(event) => setUsername(event.target.value)} fullWidth required/>
+    <TextField label='Password' placeholder='Enter password' type='password' value={password} onChange={(event) => setPassword(event.target.value)} fullWidth required/>
+    <FormControlLabel
+        control={
+          <Checkbox
+              name="checked"
+              color="primary"
           />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            name="password"
-            required
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <input className="btn" type="submit" name="submit" value="Log In" />
-      </div>
-    </form>
+        }
+        label="Remember me"
+      />
+      <Button type='submit' color='primary' variant="contained" onClick={login} fullWidth>Sign In</Button>
+      {/* <Typography>
+        <Link href='#'>
+          Register
+        </Link>
+      </Typography> */}
+        
+    </Paper>
+    </Grid>
+    
   );
 }
 
