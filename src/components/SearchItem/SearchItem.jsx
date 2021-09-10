@@ -16,7 +16,7 @@ import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
 import Select from "@material-ui/core/Select";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -31,7 +31,40 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
+function getStyles(stateName, stateArray, theme) {
+  return {
+    fontWeight:
+      stateArray.indexOf(stateName) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    maxWidth: 300,
+  },
+  chips: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  button: {
+    display: 'inline-block',
+    margin: '10px',
+    marginLeft: '20px',
+  },
+  chip: {
+    margin: 2,
+  },
+  noLabel: {
+    marginTop: theme.spacing(3),
+  },
+}));
+
 function SearchItem(props) {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const useRowStyles = makeStyles({
     root: {
@@ -49,7 +82,21 @@ function SearchItem(props) {
     buttons: {
       justifyContent: "center",
     },
+    contactInfoHeader: {
+      fontSize: "15px",
+      fontWeight: "bold",
+      display: "flex",
+      alignItems: "baseline",
+      variant: "p",
+    },
+    contactInfoData: {
+      display: "flex",
+      alignItems: "baseline",
+      variant: "p",
+    },
   });
+
+  
 
   const classes = useRowStyles();
 
@@ -78,6 +125,7 @@ function SearchItem(props) {
 
   // This is for the selected company to be deleted (dialog modal)
   const [deleteID, setDeleteId] = useState("");
+  const [editId, setEditId] = useState("");
 
   const handleDeleteOpen = (companyId) => {
     console.log("This is Open companyId", companyId);
@@ -147,11 +195,13 @@ function SearchItem(props) {
 
  // Dialog form for EDIT
  const [open, setOpen] = React.useState(false);
+ const [openRow, setRowOpen] = React.useState(false);
 
- const handleClickOpen = () => {
+ const handleClickOpen = (id) => {
    setOpen(true);
-   setMaterialType();
-   console.log("Boolean of material type:", material);
+   initializeMaterials();
+   initializeStates();
+   setEditId(id);
  };
 
  const handleClose = () => {
@@ -186,33 +236,36 @@ function SearchItem(props) {
     6: false,
   });
 
-  function setMaterialType(event) {
+  const initializeMaterials = () => {
     let acceptedItems = props.company.item;
-
-    for (const item in acceptedItems) {
+    for (const item of acceptedItems) {
       switch (item) {
         case "Metal Drums":
-          setMaterial(material[1]= true);
+          material[1]=true;
           break;
         case "Plastic Drums HDPE":
-          setMaterial(material[2]= true);
+          material[2]=true;
           break;
         case "LDPE Containers":
-          setMaterial(material[3]= true);
+          material[3]=true;
           break;
         case "Plastic Film":
-          setMaterial(material[4]= true);
+          material[4]=true;
           break;
         case "IBCs":
-          setMaterial(material[5]= true);
+          material[5]=true;
           break;
         case "Cardboard":
-          setMaterial(material[6]= true);
+          material[6]=true;
           break;
         default:
           break;
       }
     }
+  }
+
+  const initializeStates = () => {
+    setSelectedStates(currentCompany.area);
   }
 
   const [selectedStates, setSelectedStates] = useState([]);
@@ -251,15 +304,15 @@ function SearchItem(props) {
         materialsArray.push(i);
       }
     }
-    updatedCompany.recyclable_id = recyclablesIdArray;
+    updatedCompany.recyclable_id = materialsArray;
     updatedCompany.area = selectedStates;
-    dispatch({ type: "UPDATE_COMPANY", payload: updatedCompany });
-    // handleClose();
+    console.log('The edit payload', updatedCompany);
+    dispatch({ type: "EDIT_LOCATION_DETAILS", payload: updatedCompany, id: editId });
+    handleClose();
   };
 
   function Row() {
     // const { row } = props;
-    const [open, setOpen] = React.useState(false);
 
     return (
       <Box>
@@ -269,9 +322,9 @@ function SearchItem(props) {
               <IconButton
                 aria-label="expand row"
                 size="medium"
-                onClick={() => setOpen(!open)}
+                onClick={() => setRowOpen(!openRow)}
               >
-                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                {openRow ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
               </IconButton>
             </TableCell>
             <TableCell
@@ -303,7 +356,7 @@ function SearchItem(props) {
         </TableRow>
         <TableRow className={classes.collapsible}>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0}} colSpan={9}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
+            <Collapse in={openRow} timeout="auto" unmountOnExit>
               <Box margin={1}>
                 <Typography
                   className={classes.headerText}
@@ -316,16 +369,22 @@ function SearchItem(props) {
                 <Table size="large" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell className={classes.headerText} style={{ width: 150 }}>
+                      <TableCell className={classes.headerText} align="left"  style={{ width: 150 }}>
                         Service Range
                       </TableCell>
-                      <TableCell className={classes.headerText} style={{ width: 390 }}>
+                      <TableCell className={classes.headerText} align="left" style={{ width: 150 }}>
+                        Company Information
+                      </TableCell>
+                      {/* <TableCell className={classes.headerText} align="left" style={{ width: 150 }}>
+                        Address
+                      </TableCell> */}
+                      <TableCell className={classes.headerText} align="left"  style={{ width: 350 }}>
                         Recyclable Cleanliness
                       </TableCell>
-                      <TableCell className={classes.headerText} align="left" style={{ width: 390 }}>
+                      <TableCell className={classes.headerText} align="left" style={{ width: 350 }}>
                         Pickup Requirements
                       </TableCell>
-                      <TableCell className={classes.headerText} align="left" style={{ width: 390 }}>
+                      <TableCell className={classes.headerText} align="left" style={{ width: 350 }}>
                         Notes
                       </TableCell>
                     </TableRow>
@@ -333,10 +392,18 @@ function SearchItem(props) {
 
                   <TableBody>
                     <TableRow>
-                      <TableCell component="th" scope="row">
+                      <TableCell  align="left">
                         {props.company.service_range}
                       </TableCell>
-                      <TableCell>{props.company.cleanliness}</TableCell>
+                      <TableCell  align="left">
+                        <Typography className={classes.contactInfoHeader}>Phone:</Typography>
+                        <Typography className={classes.contactInfoData}>{props.company.phone} </Typography>
+                        <Typography className={classes.contactInfoHeader}>Email:</Typography>
+                        <Typography className={classes.contactInfoData}>{props.company.email} </Typography>
+                        <Typography className={classes.contactInfoHeader}>Address:</Typography>
+                        <Typography className={classes.contactInfoData}>{props.company.address} {props.company.city} {props.company.state} {props.company.zip} </Typography>
+                      </TableCell>
+                      <TableCell align="left">{props.company.cleanliness}</TableCell>
                       <TableCell align="left">
                         {props.company.pickup_requirements}
                       </TableCell>
@@ -360,7 +427,7 @@ function SearchItem(props) {
                   variant="contained"
                   color="primary"
                   style={{ margin: 2 }}
-                  onClick={handleClickOpen}
+                  onClick={ () => handleClickOpen(props.company.id) }
                 >
                   Edit
                 </Button>
@@ -416,19 +483,19 @@ function SearchItem(props) {
             margin="dense"
             id="name"
             label="Company Name"
-            value={props.company.name}
+            value={updatedCompany.name}
             onChange={handleChange}
             fullWidth
             autoComplete="off"
           />
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-mutiple-chip-label">Service States</InputLabel>
-            {/* <Select
-              labelId="demo-mutiple-chip-label"
-              id="demo-mutiple-chip"
+            <InputLabel id="demo-multiple-chip-label">Service States</InputLabel>
+            <Select
+              labelId="demo-multiple-chip-label"
+              id="demo-multiple-chip"
               multiple
-              value={props.company.state}
-              // onChange={handleSelectedStates}
+              value={selectedStates}
+              onChange={handleSelectedStates}
               input={<Input id="select-multiple-chip" />}
               renderValue={(selected) => (
                 <div className={classes.chips}>
@@ -448,7 +515,7 @@ function SearchItem(props) {
                   {state.label}
                 </MenuItem>
               ))}
-            </Select> */}
+            </Select>
           </FormControl>
           <FormLabel component="legend">Accepted Materials</FormLabel>
           <FormGroup>
@@ -519,7 +586,7 @@ function SearchItem(props) {
             margin="dense"
             id="service_range"
             label="Service Range"
-            value={props.company.service_range}
+            value={updatedCompany.service_range}
             onChange={handleChange}
             fullWidth
           />
@@ -528,7 +595,7 @@ function SearchItem(props) {
             margin="dense"
             id="website"
             label="Company Website"
-            value={props.company.website}
+            value={updatedCompany.website}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -538,7 +605,7 @@ function SearchItem(props) {
             margin="dense"
             id="address"
             label="Street Address"
-            value={props.company.address}
+            value={updatedCompany.address}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -548,7 +615,7 @@ function SearchItem(props) {
             margin="dense"
             id="city"
             label="City"
-            value={props.company.city}
+            value={updatedCompany.city}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -558,7 +625,7 @@ function SearchItem(props) {
             margin="dense"
             id="state"
             label="State"
-            value={props.company.state}
+            value={updatedCompany.state}
             onChange={handleChange}
             fullWidth
           />
@@ -567,7 +634,7 @@ function SearchItem(props) {
             margin="dense"
             id="zip"
             label="Zip Code"
-            value={props.company.zip}
+            value={updatedCompany.zip}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -577,7 +644,7 @@ function SearchItem(props) {
             margin="dense"
             id="phone"
             label="Phone Number"
-            value={props.company.phone}
+            value={updatedCompany.phone}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -587,7 +654,7 @@ function SearchItem(props) {
             margin="dense"
             id="email"
             label="Email Address"
-            value={props.company.email}
+            value={updatedCompany.email}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -597,7 +664,7 @@ function SearchItem(props) {
             margin="dense"
             id="cleanliness"
             label="Cleanliness Instructions"
-            value={props.company.cleanliness}
+            value={updatedCompany.cleanliness}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -607,7 +674,7 @@ function SearchItem(props) {
             margin="dense"
             id="pickup_requirements"
             label="Pickup Requirements"
-            value={props.company.pickup_requirements}
+            value={updatedCompany.pickup_requirements}
             onChange={handleChange}
             autoComplete="off"
             fullWidth
@@ -617,7 +684,7 @@ function SearchItem(props) {
             margin="dense"
             id="notes"
             label="Notes"
-            value={props.company.notes}
+            value={updatedCompany.notes}
             onChange={handleChange}
             autoComplete="off"
             fullWidth

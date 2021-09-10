@@ -7,6 +7,8 @@ import deleteLocationSaga from './delete-location.saga';
 import recyclerSaga from './recycler.saga';
 import feedbackSaga from './feedback.saga';
 import companyFeedbackSaga from './company-feedback.saga';
+import editLocationDetailsSaga from './locationDetails.saga';
+
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -25,5 +27,7 @@ export default function* rootSaga() {
     recyclerSaga(),
     feedbackSaga(),
     companyFeedbackSaga(),
+    editLocationDetailsSaga(),
+    
   ]);
 }

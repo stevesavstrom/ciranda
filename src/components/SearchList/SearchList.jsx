@@ -23,12 +23,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function SearchList ({materials, selectedState}) {
+function SearchList ({materials, selectedState, states}) {
 
     const useRowStyles = makeStyles({
         root: {
           "& > *": {
             borderBottom: "unset",
+            justify: 'center'
           },
         },
         tableHeader: {
@@ -36,6 +37,9 @@ function SearchList ({materials, selectedState}) {
             color: "#fff",
             background: '#2E61A9',
         },
+        alert: {
+
+        }
 
       });
       const classes = useStyles();
@@ -45,8 +49,8 @@ const companies = useSelector(store => store.userSearch);
 
 if (companies.length === 0) {
     return(
-        <section className={classes.root}>
-            <Alert className={classes.alert} severity="info">Please refine search criteria to return results.</Alert>
+        <section className={classes.root} style={{ width: '40%', margin: 'auto', padding: '100px'}}>
+            <Alert className={classes.alert} severity="info" style={{ width: '100%', height: '50px', background: '#2E61A9', alignItems: 'center', justifyContent: 'center'}}>Please refine search criteria to return results.</Alert>
         </section>
     )
 } else {
@@ -60,8 +64,6 @@ if (companies.length === 0) {
                       <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 50 }}></TableCell>
                       <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 400 }}>Company</TableCell>
                       <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 400 }}>Service Area</TableCell>
-                      {/* <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 200 }}>Phone</TableCell>
-                      <TableCell className={rowClasses.tableHeader} align="left" style={{ width: 200 }}>Email</TableCell> */}
                       <TableCell className={rowClasses.tableHeader} align="center" style={{ width: 400 }}>Materials Accepted</TableCell>
                     </TableRow>
                   </TableHead>
@@ -69,7 +71,7 @@ if (companies.length === 0) {
 
                 {companies.map(company => {
                     return (
-                        <SearchItem key={company.id} company={company} materials={materials} selectedState={selectedState} />
+                        <SearchItem key={company.id} states={states} company={company} materials={materials} selectedState={selectedState} />
                     )
                 })}
             
