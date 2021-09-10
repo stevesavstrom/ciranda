@@ -30,6 +30,8 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import SetEmptyCompanyFeedbaclAlert from "../feedbackErrors/companyFeedbackError";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function getStyles(stateName, stateArray, theme) {
   return {
@@ -96,7 +98,7 @@ function SearchItem(props) {
     },
   });
 
-  
+  const user = useSelector(store=>store.user);
 
   const classes = useRowStyles();
 
@@ -316,7 +318,7 @@ function SearchItem(props) {
     updatedCompany.recyclable_id = materialsArray;
     updatedCompany.area = selectedStates;
     console.log('The edit payload', updatedCompany);
-    dispatch({ type: "EDIT_LOCATION_DETAILS", payload: updatedCompany, id: editId });
+    dispatch({ type: "EDIT_LOCATION_DETAILS", payload: updatedCompany, id: editId, renderSearch });
     handleClose();
   };
 
@@ -417,7 +419,7 @@ function SearchItem(props) {
                 >
                   Feedback
                 </Button>
-                <Button
+                {user.id && (<Button
                   size="small"
                   variant="contained"
                   color="primary"
@@ -425,8 +427,8 @@ function SearchItem(props) {
                   onClick={ () => handleClickOpen(props.company.id) }
                 >
                   Edit
-                </Button>
-                <Button 
+                </Button>)}
+                {user.id && (<Button 
                 size="small" 
                 variant="contained"
                 color="secondary"
@@ -434,7 +436,7 @@ function SearchItem(props) {
                 onClick={() => handleDeleteOpen(props.company.id)}
                 >
                   Delete
-                </Button>
+                </Button>)}
                 
               </Box>
             </Collapse>

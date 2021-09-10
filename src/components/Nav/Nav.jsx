@@ -16,9 +16,14 @@ function Nav() {
         {/* If no user is logged in, show these links */}
         {user.id === null &&
           // If there's no user, show login/registration links
+          <>
           <Link className="navLink" to="/login">
-            Login / Register
+            Login
           </Link>
+          <Link className="navLink" to="/register">
+          Register
+          </Link>
+          </>
         }
 
         {/* If a user is logged in, show these links */}
@@ -30,6 +35,14 @@ function Nav() {
             <Link className="navLink" to="/admin">
               Admin
             </Link>
+        {/* will be the Admin link for the companies page */}
+            {/* <Link className="navLink" to="/SearchPage">
+              Companies
+            </Link> */}
+        {/* will be the Admin link for the feedback page */}
+            <Link className="navLink" to="/info">
+              Feedback
+            </Link>
           </>
         )}
         {!user.id && (
@@ -37,7 +50,6 @@ function Nav() {
             Login
           </Link>
         )}
-      
         {user.id && (
           <>
             <LogOutButton className="navLink" />
@@ -49,3 +61,4 @@ function Nav() {
 }
 
 export default Nav;
+
