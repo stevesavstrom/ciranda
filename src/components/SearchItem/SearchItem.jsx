@@ -28,6 +28,8 @@ import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import React, { useState } from "react";
+import SetEmptyCompanyFeedbaclAlert from "../feedbackErrors/companyFeedbackError";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SetEmptyCompanyFeedbackAlert from "../feedbackErrors/companyFeedbackError";
 

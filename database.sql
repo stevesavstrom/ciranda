@@ -64,7 +64,7 @@ CREATE TABLE "feedback" (
    "customer" TEXT,
    "email" TEXT,
    "comment" TEXT,
-   "date" DATE 
+   "date" TIMESTAMP 
 );
 
 CREATE TABLE "recycle_feedback" (
@@ -73,7 +73,7 @@ CREATE TABLE "recycle_feedback" (
    "company" TEXT,
    "email" TEXT,
    "comment" TEXT,
-   "date" DATE 
+   "date" TIMESTAMP 
 );
 
 -- Placeholder Data Insert Statements

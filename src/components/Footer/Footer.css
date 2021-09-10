@@ -1,10 +1,11 @@
-.container {
+.footerContainer {
   margin: 0;
   padding: 0;
+  padding-top: 10rem;
   height: 100%; /* needed for container min-height */
 }
 
-.footer {
+.footerText {
   text-align: center;
   color: #fff;
 }
@@ -12,9 +13,9 @@
 .footerWrapper {
   background-color: #EF5E3A;
   position: relative;
-  width: 96%;
+  width: 100%;
   bottom: 0;
-  margin-left: -20px;
-  margin-bottom: -55px;
+  /* margin-left: -20px; */
+  /* margin-bottom: -55px; */
   padding: 50px;
 }
