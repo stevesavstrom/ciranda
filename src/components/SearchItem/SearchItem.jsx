@@ -29,7 +29,7 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function getStyles(stateName, stateArray, theme) {
   return {
@@ -96,7 +96,7 @@ function SearchItem(props) {
     },
   });
 
-  
+  const user = useSelector(store=>store.user);
 
   const classes = useRowStyles();
 
@@ -422,7 +422,7 @@ function SearchItem(props) {
                 >
                   Feedback
                 </Button>
-                <Button
+                {user.id && (<Button
                   size="small"
                   variant="contained"
                   color="primary"
@@ -430,8 +430,8 @@ function SearchItem(props) {
                   onClick={ () => handleClickOpen(props.company.id) }
                 >
                   Edit
-                </Button>
-                <Button 
+                </Button>)}
+                {user.id && (<Button 
                 size="small" 
                 variant="contained"
                 color="secondary"
@@ -440,7 +440,7 @@ function SearchItem(props) {
                 
                 >
                   Delete
-                </Button>
+                </Button>)}
                 
               </Box>
             </Collapse>
