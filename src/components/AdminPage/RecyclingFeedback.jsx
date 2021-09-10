@@ -14,7 +14,7 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 
 
 const columns = [
-  { id: 'customer', label: 'Customer Name', minWidth: 100 },
+  { id: 'name', label: 'Customer Name', minWidth: 100 },
   {
     id: 'email',
     label: 'Email',
