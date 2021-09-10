@@ -1,6 +1,6 @@
 .nav {
   /* flex box layout */
-  border-top: 8px solid #2E61A9;
+  border-top: 28px solid #2E61A9;
   display: flex;
   justify-content:space-between;
   align-items: center;
