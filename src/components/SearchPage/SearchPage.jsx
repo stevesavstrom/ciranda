@@ -1,31 +1,20 @@
-// React Imports
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {useSelector} from 'react-redux';
-import { useHistory } from 'react-router';
-import AddRecycler from '../SearchPage/AddRecycler.jsx';
-
-// MUI Imports
-    // button import
-import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-
-
-
-    // checkbox imports
-import { makeStyles } from '@material-ui/core/styles';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
+import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
-    // state select imports
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormLabel from '@material-ui/core/FormLabel';
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import SearchList from '../SearchList/SearchList';
+import AddRecycler from '../SearchPage/AddRecycler.jsx';
 import RecyclingFeedbackDialog from './RecyclingFeedbackDialog.jsx';
+
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 
     },
     formControl: {
-        // margin: theme.spacing(3),
         display: 'inline-block',
         margin: '10px',
         marginTop:'16px',
@@ -87,8 +75,6 @@ function SearchPage () {
         ibcs: false,
         cardboard: false,
     });
-    // Determines if RecyclingFeedbackDialog is opened or closed.
-    const [recycleFeedbackDialogOpen, setRecycleFeedbackDialogOpen] = React.useState(false);
 
     // U.S. States for State Select Dropdown
     const states = [
@@ -160,6 +146,9 @@ function SearchPage () {
         dispatch({ type: 'FETCH_COMPANIES', payload: materials, selectedState});
     }
 
+    // Determines if RecyclingFeedbackDialog is opened or closed.
+    const [recycleFeedbackDialogOpen, setRecycleFeedbackDialogOpen] = React.useState(false);
+
     const handleRecyclingDialog = () => {
         setRecycleFeedbackDialogOpen(true);
     }
@@ -179,10 +168,12 @@ function SearchPage () {
         >
           Feedback
         </Button>
+
         <RecyclingFeedbackDialog
           closeRecyclingDialog={closeRecyclingDialog}
           recycleFeedbackDialogOpen={recycleFeedbackDialogOpen}
         />
+        
         <AddRecycler states={states} />
 
         <Autocomplete

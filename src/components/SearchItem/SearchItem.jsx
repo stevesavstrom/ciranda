@@ -28,6 +28,8 @@ import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import SetEmptyCompanyFeedbaclAlert from "../feedbackErrors/companyFeedbackError";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -161,24 +163,42 @@ function SearchItem(props) {
   const [email, setEmail] = useState('');
   const [comment, setComment] = useState('');
 
+
+  const [emptyCompanyFeedbackOpen, setemptyCompanyFeedbackOpen] = React.useState(false);
+    const handleEmptyCompanyOpen = () => {
+      setemptyCompanyFeedbackOpen(true);
+    }
+    const handleEmptyCompanyClose = () => {
+      setemptyCompanyFeedbackOpen(false);
+    }
+
   // Dispatch for company feedback
   const postFeedback = (event) => {
     event.preventDefault();
-    dispatch({
-      type: 'ADD_COMPANY_FEEDBACK',
-      payload: {
-        name: name,
-        customer: customer,
-        email: email,
-        comment: comment,
-        company_id: props.company.id
-      },
-    });
-    setOpenFeedback(false);
-    setName('');
-    setCustomer('');
-    setEmail('');
-    setComment('');
+    if (
+      !customer ||
+      !email ||
+      !comment ||
+      !props.company.id
+    ) {
+      handleEmptyCompanyOpen();
+    } else {
+      dispatch({
+        type: 'ADD_COMPANY_FEEDBACK',
+        payload: {
+          name: name,
+          customer: customer,
+          email: email,
+          comment: comment,
+          company_id: props.company.id
+        },
+      });
+      setOpenFeedback(false);
+      setName('');
+      setCustomer('');
+      setEmail('');
+      setComment('');
+    }
 
   };
 
@@ -270,15 +290,6 @@ function SearchItem(props) {
 
   const [selectedStates, setSelectedStates] = useState([]);
 
-  // const handleClickOpen = () => {
-  //   checkMaterialType();
-  // };
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  //   setNewRecycler(emptyRecycler);
-  // };
-
   const handleChange = (event) => {
     setUpdatedCompany({
       ...updatedCompany,
@@ -312,7 +323,6 @@ function SearchItem(props) {
   };
 
   function Row() {
-    // const { row } = props;
 
     return (
       <Box>
@@ -339,16 +349,6 @@ function SearchItem(props) {
             <TableCell align="left" style={{ width: 400 }}>
               {props.company.areas.join(", ")}
             </TableCell>
-            {/* <TableCell  align="left">{props.company.city}</TableCell>
-          <TableCell  align="left">{props.company.state}</TableCell>
-          <TableCell  align="left">{props.company.zip}</TableCell> */}
-
-            {/* <TableCell align="left" style={{ width: 200 }}>
-            {props.company.phone}
-          </TableCell>
-          <TableCell align="left" style={{ width: 200 }}>
-            {props.company.email}
-          </TableCell> */}
 
           <TableCell align="left" style={{ width: 400 }}>
             {props.company.item.join(", ")}
@@ -375,9 +375,6 @@ function SearchItem(props) {
                       <TableCell className={classes.headerText} align="left" style={{ width: 150 }}>
                         Company Information
                       </TableCell>
-                      {/* <TableCell className={classes.headerText} align="left" style={{ width: 150 }}>
-                        Address
-                      </TableCell> */}
                       <TableCell className={classes.headerText} align="left"  style={{ width: 350 }}>
                         Recyclable Cleanliness
                       </TableCell>
@@ -437,7 +434,6 @@ function SearchItem(props) {
                 color="secondary"
                 style={{ margin: 2 }}
                 onClick={() => handleDeleteOpen(props.company.id)}
-                
                 >
                   Delete
                 </Button>)}
@@ -504,7 +500,6 @@ function SearchItem(props) {
                   ))}
                 </div>
               )}
-              // MenuProps={MenuProps}
             >
               {props.states.map((state) => (
                 <MenuItem
@@ -734,6 +729,12 @@ function SearchItem(props) {
           <DialogContentText>
             Please provide feedback on this recycling company and let us know about your experience with them.
           </DialogContentText>
+
+          {emptyCompanyFeedbackOpen === true && (<SetEmptyCompanyFeedbaclAlert
+          emptyCompanyFeedbackOpen={emptyCompanyFeedbackOpen}
+          handleEmptyCompanyClose={handleEmptyCompanyClose}
+          />)}
+
           <TextField
             margin="dense"
             id="name"
@@ -752,6 +753,7 @@ function SearchItem(props) {
             value={customer}
             onChange={(event) => setCustomer(event.target.value)}
             fullWidth
+            required
           />
 
           <TextField
@@ -762,16 +764,18 @@ function SearchItem(props) {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             fullWidth
+            required
           />
 
           <TextField
             margin="dense"
             id="name"
-            label="Please provide feedback"
+            label="Your Feedback"
             type="feedback"
             value={comment}
             onChange={(event) => setComment(event.target.value)}
             fullWidth
+            required
           />
         </DialogContent>
         <DialogActions>
