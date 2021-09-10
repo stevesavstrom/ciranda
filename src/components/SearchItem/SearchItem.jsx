@@ -28,10 +28,8 @@ import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import SetEmptyCompanyFeedbaclAlert from "../feedbackErrors/companyFeedbackError";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import SetEmptyCompanyFeedbackAlert from "../feedbackErrors/companyFeedbackError";
 
 function getStyles(stateName, stateArray, theme) {
   return {
@@ -730,7 +728,7 @@ function SearchItem(props) {
             Please provide feedback on this recycling company and let us know about your experience with them.
           </DialogContentText>
 
-          {emptyCompanyFeedbackOpen === true && (<SetEmptyCompanyFeedbaclAlert
+          {emptyCompanyFeedbackOpen === true && (<SetEmptyCompanyFeedbackAlert
           emptyCompanyFeedbackOpen={emptyCompanyFeedbackOpen}
           handleEmptyCompanyClose={handleEmptyCompanyClose}
           />)}

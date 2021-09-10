@@ -19,6 +19,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import SetEmptyNewCompanyAlert from "../feedbackErrors/addRecyclerError";
 
 function getStyles(stateName, stateArray, theme) {
   return {
@@ -141,14 +142,26 @@ function AddRecycler(props) {
         !recyclablesIdArray ||
         !selectedStates||
         !newRecycler.email
-    ) {} else {
+    ) {
+      handleAlertPopup();
+    } else {
         newRecycler.recyclable_id = recyclablesIdArray;
         newRecycler.area = selectedStates;
         dispatch({type:'ADD_RECYCLER', payload: newRecycler});
         setSelectedStates([]);
         setRecyclables(emptyRecyclables);
         handleClose();
+        setemptyNewCompany(false);
     }
+  };
+
+  const [emptyNewCompany, setemptyNewCompany] = React.useState(false);
+  
+  const handleAlertPopup = () => {
+    setemptyNewCompany(true);
+  };
+  const closeAlertPopup = () => {
+    setemptyNewCompany(false);
   };
 
   return (
@@ -169,6 +182,12 @@ function AddRecycler(props) {
             Please complete all required (*) fields and click "Submit" to add
             new recycler to the database.
           </DialogContentText>
+
+        {emptyNewCompany === true && (<SetEmptyNewCompanyAlert
+        emptyNewCompany={emptyNewCompany}
+        closeAlertPopup={closeAlertPopup}
+        />)}
+
           <TextField
             required
             autoFocus
@@ -373,12 +392,12 @@ function AddRecycler(props) {
             fullWidth
           />
         </DialogContent>
-        <Button onClick={handleSubmit} color="primary">
-            Submit
-          </Button>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
+          </Button>
+          <Button onClick={handleSubmit} color="primary">
+            Submit
           </Button>
         </DialogActions>
       </Dialog>
