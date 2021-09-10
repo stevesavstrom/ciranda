@@ -10,9 +10,9 @@ import Typography from '@material-ui/core/Typography';
 function Footer() {
 
   return (
-    <div className="container">
+    <div className="footerContainer">
     <footer className="footerWrapper">
-      <Typography className="footer">
+      <Typography className="footerText">
         &copy; 2021 Ciranda, Inc. All Rights Reserved
       </Typography>
     </footer>
