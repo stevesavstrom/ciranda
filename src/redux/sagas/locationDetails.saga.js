@@ -11,7 +11,7 @@ function* editLocationDetails(action) {
     console.log('Inside editLocationDetails: id is', action.id);
 	try {
         yield axios.put(`/api/location/${action.id}`, action.payload);
-        yield put({ type: 'FETCH_COMPANIES'});
+        yield put ( action.renderSearch() );
     } catch (error) {
         console.log('Inside editLocationDetails:  Error Editing location details client side', error);
     }

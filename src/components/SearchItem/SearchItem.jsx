@@ -307,7 +307,7 @@ function SearchItem(props) {
     updatedCompany.recyclable_id = materialsArray;
     updatedCompany.area = selectedStates;
     console.log('The edit payload', updatedCompany);
-    dispatch({ type: "EDIT_LOCATION_DETAILS", payload: updatedCompany, id: editId });
+    dispatch({ type: "EDIT_LOCATION_DETAILS", payload: updatedCompany, id: editId, renderSearch });
     handleClose();
   };
 
