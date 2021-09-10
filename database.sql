@@ -60,11 +60,11 @@ CREATE TABLE "service_areas" (
 
 CREATE TABLE "feedback" (
    "id" SERIAL PRIMARY KEY,
-   "company_id" INT REFERENCES "companies",
+   "company_id" INT REFERENCES "companies" ON DELETE CASCADE,
    "customer" TEXT,
    "email" TEXT,
    "comment" TEXT,
-   "date" TIMESTAMP
+   "date" DATE 
 );
 
 CREATE TABLE "recycle_feedback" (
