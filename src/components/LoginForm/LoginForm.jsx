@@ -52,12 +52,7 @@ function LoginForm() {
         label="Remember me"
       />
       <Button type='submit' color='primary' variant="contained" onClick={login} fullWidth>Sign In</Button>
-      {/* <Typography>
-        <Link href='#'>
-          Register
-        </Link>
-      </Typography> */}
-        
+   
     </Paper>
     </Grid>
     

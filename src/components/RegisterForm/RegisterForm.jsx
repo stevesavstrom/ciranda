@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {useSelector} from 'react-redux';
+import { useHistory } from 'react-router';
+
+import { Grid, Paper, Avatar, TextField, Button, Typography, Link } from '@material-ui/core'
+import { LockOutlined } from '@material-ui/icons';
+import { Checkbox } from '@material-ui/core';
+import { FormControlLabel } from '@material-ui/core';
 
 // Used by Super Admin to register other users. Imported into RegisterPage component
 function RegisterForm() {
@@ -9,6 +15,7 @@ function RegisterForm() {
   const [password, setPassword] = useState('');
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
+  // const [registerUser, setRegisterUser] = useState('');
   const history = useHistory();
 
   const registerUser = (event) => {
@@ -23,56 +30,25 @@ function RegisterForm() {
       },
     });
     history.push('/search');
-  }; // end registerUser
+  }; 
+
+  const paperStyle={padding:20, height:'50vh' ,width:400, margin:"20px auto"}
+  const avatarStyle={backgroundColor: '#1bbd7e'}
+
 
   return (
-    <form className="formPanel" onSubmit={registerUser}>
-      <h2>Register User</h2>
-      {errors.registrationMessage && (
-        <h3 className="alert" role="alert">
-          {errors.registrationMessage}
-        </h3>
-      )}
-      <div>
-        <label htmlFor="username">
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={username}
-            required
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="email">
-          Email Address:
-          <input
-            type="email"
-            name="email"
-            value={email}
-            required
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={password}
-            required
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <input className="btn" type="submit" name="submit" value="Register" />
-      </div>
-    </form>
+    <Grid>
+        <Paper elevation={10} style ={paperStyle}>
+        <h2 align='center'>Register New Administrator</h2>
+    <TextField label='Username' placeholder='Enter Username' value={username} onChange={(event) => setUsername(event.target.value)} fullWidth required/>
+    <TextField label='Email' placeholder='Enter Email' value={email} onChange={(event) => setEmail(event.target.value)} fullWidth required/>
+    <TextField label='Password' placeholder='Enter password' value={password} onChange={(event) => setPassword(event.target.value)} fullWidth required/>
+
+      <Button type='submit' color='primary' variant="contained" onClick={registerUser} fullWidth>Sign In</Button>
+
+        
+    </Paper>
+    </Grid>
   );
 }
 
