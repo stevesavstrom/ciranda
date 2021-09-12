@@ -1,3 +1,4 @@
+import { Grid, Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -158,23 +159,18 @@ function SearchPage () {
     }
 
     return (
-      <Box className={classes.wrapper}>
-        {/* Button opens RecyclingFeedbackDialog, where the user can enter in comments on what they're recycling */}
-        <Button
-        className={classes.feedback}
-          variant="contained"
-          color="secondary"
-          onClick={handleRecyclingDialog}
-        >
-          Feedback
-        </Button>
+        <Box className={classes.wrapper}>
+        <Grid container alignContent="center" justifyContent="center" style={{marginLeft:20, marginBottom:20, maxWidth:"610px", backgroundColor:"rgb(246,204,85)", boxShadow:"0 2px 3px 1px rgba(0, 0, 0, 0.2)", padding:8}}>
+          <Typography>We'd love to hear what you're recycling today!</Typography>
+          <Typography color="primary" style={{marginLeft:10, cursor:"pointer"}} onClick={handleRecyclingDialog}>Click here</Typography>
+          <Typography style={{marginLeft:5}}>to leave us a comment.</Typography>
+        </Grid>
 
         <RecyclingFeedbackDialog
           closeRecyclingDialog={closeRecyclingDialog}
           recycleFeedbackDialogOpen={recycleFeedbackDialogOpen}
         />
         
-        <AddRecycler states={states} />
 
         <Autocomplete
           id="states-combo-box"

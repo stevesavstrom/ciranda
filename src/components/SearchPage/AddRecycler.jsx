@@ -1,4 +1,4 @@
-import { FormControl } from "@material-ui/core";
+import { FormControl, Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
@@ -166,11 +166,9 @@ function AddRecycler(props) {
 
   return (
     <div>
-      <Box>
-      <Button variant="contained" color="primary" className={classes.button} onClick={handleClickOpen}>
+      <Typography variant="h7" onClick={handleClickOpen}>
         Add Recycler
-      </Button>
-      </Box>
+      </Typography>
       <Dialog
         open={open}
         onClose={handleClose}
