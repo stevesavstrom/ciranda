@@ -13,7 +13,7 @@ import { CallReceived } from '@material-ui/icons';
 function Footer() {
 
   return (
-    <AppBar position="static" color="secondary">
+    <AppBar position="static" color="secondary" style={{minHeight:85}}>
     <Container maxWidth="md">
       <Toolbar>
       <Grid container justifyContent="center">
