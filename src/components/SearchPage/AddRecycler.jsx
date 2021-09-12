@@ -166,7 +166,7 @@ function AddRecycler(props) {
 
   return (
     <div>
-      <Typography variant="h7" onClick={handleClickOpen}>
+      <Typography variant="inherit" onClick={handleClickOpen}>
         Add Recycler
       </Typography>
       <Dialog
