@@ -29,12 +29,15 @@ function Nav() {
           </>
         }
 
-        {/* If a user is logged in, show these links */}
-        {user.id===1 && (
-          <>
+        {user.id && (
           <div className="navLink">
           <AddRecycler states={states} />
           </div>
+        )}
+
+        {/* If a user is logged in, show these links */}
+        {user.id===1 && (
+          <>
             <Link className="navLink" to="/register">
               Register User
             </Link>
