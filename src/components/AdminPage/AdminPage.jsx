@@ -13,7 +13,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import RecyclingFeedback from './RecyclingFeedback';
-import { Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 
 
 const columns = [
@@ -90,9 +90,12 @@ function AdminPage() {
 
   return (
     <>
-    <Box className={classes.buttonGroup} > 
-    <Button className={classes.button} variant="contained" color="primary" onClick={()=>setIsFeedback(true)}>Company Feedback</Button>
-    <Button className={classes.button} variant="contained" color="secondary" onClick={()=>setIsFeedback(false)}>Recycling Comments</Button>
+    <Box className={classes.buttonGroup} >
+    <Grid container justifyContent="flex-start" style={{marginBottom:-50}}>
+    <Typography color='primary' style={{marginRight:5, cursor:"pointer"}} onClick={()=>setIsFeedback(true)}>Company Feedback</Typography>
+    <Typography style={{fontWeight:'bold'}}>|</Typography>
+    <Typography color='primary' style={{marginLeft:5, cursor:"pointer"}} onClick={()=>setIsFeedback(false)}>Recycling Feedback</Typography>
+    </Grid>
     </Box>
       {/* <div className="container">
         <h2>Welcome, {user.username}!</h2>
@@ -101,7 +104,7 @@ function AdminPage() {
       </div> */}
       {isFeedback ? 
       <Box className={classes.wrapper} > 
-        <Typography>Client Feedback</Typography>
+        <Typography>Company Feedback</Typography>
         <Paper className={classes.root}>
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">
