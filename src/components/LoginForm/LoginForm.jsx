@@ -25,6 +25,7 @@ function LoginForm() {
           password: password,
         },
       });
+      dispatch({ type: "SET_COMPANIES", payload: [] })
     } else {
       dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
