@@ -33,7 +33,7 @@ function App() {
 
   return (
     <Router>
-      <div style={{minHeight:"95vh"}}>
+      <div style={{minHeight:"92vh"}}>
         <Nav />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
