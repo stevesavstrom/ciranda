@@ -1,6 +1,7 @@
 const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
+const {rejectUnauthenticated} = require("../modules/authentication-middleware");
 
 /**
  * GET route for returning all companies
@@ -154,7 +155,7 @@ pool.query(query, [companyId])
 });
 
 // DELETE a recycling center record from the recycling_centers table
-router.delete('/:id', (req, res) => {
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
   pool.query('DELETE FROM "companies" WHERE id=$1', [req.params.id])
   .then((result) => {
       res.sendStatus(200);
@@ -165,7 +166,7 @@ router.delete('/:id', (req, res) => {
 });
 
 // POST a recycling center record
-router.post('/', (req,res) => {
+router.post('/', rejectUnauthenticated, (req,res) => {
     const newCompany = req.body;
     console.log('Whole req.body', req.body);
     const recyclableIds = req.body.recyclable_id;
@@ -208,7 +209,7 @@ router.post('/', (req,res) => {
 });
 
 // PUT to edit recycling center record
-router.put("/:id", async (req, res) => {
+router.put("/:id", rejectUnauthenticated, async (req, res) => {
     
     const editCompany = req.body;
 
