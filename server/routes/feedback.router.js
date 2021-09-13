@@ -43,8 +43,8 @@ router.get('/recycling_comments', rejectUnauthenticated, (req, res) => {
 router.post('/', (req, res) => {
     feedback = req.body;
     const query = `
-    INSERT INTO feedback (company_id, customer, email, comment, date)
-    VALUES ($1, $2, $3, $4, NOW());
+    INSERT INTO feedback (company_id, name, customer, email, comment, date)
+    VALUES ($1, $2, $3, $4, $5, NOW());
     `;
     pool.query(query, [feedback.company_id, feedback.customer, feedback.email, feedback.comment])
     .then( response => {

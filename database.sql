@@ -61,6 +61,7 @@ CREATE TABLE "service_areas" (
 CREATE TABLE "feedback" (
    "id" SERIAL PRIMARY KEY,
    "company_id" INT REFERENCES "companies" ON DELETE CASCADE,
+   "name" TEXT,
    "customer" TEXT,
    "email" TEXT,
    "comment" TEXT,
