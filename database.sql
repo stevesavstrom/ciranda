@@ -52,7 +52,7 @@ CREATE TABLE "companies_recyclables" (
 CREATE TABLE "service_areas" (
     "id" SERIAL PRIMARY KEY,
     "area" TEXT,
-    "company_id" INT REFERENCES "companies"
+    "company_id" INT REFERENCES "companies" ON DELETE CASCADE,
 );
 
 CREATE TABLE "feedback" (
