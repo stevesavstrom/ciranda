@@ -164,6 +164,25 @@ function AddRecycler(props) {
     setemptyNewCompany(false);
   };
 
+  const presentPopulate = () => {
+    setNewRecycler({
+    name: "NPM Disposal",
+    service_range: "Local",
+    website: "http://www.npmdisposal.com",
+    address: "19823 Disposal Ln",
+    city: "Rochester",
+    state: "MN",
+    zip: "55901",
+    phone: "651-555-3333",
+    email: "customercare@npmdisposal.com",
+    cleanliness: "Drip dry",
+    pickup_requirements: "Can't pickup",
+    notes: "Has information on local transportation companies for pickup",
+    recyclable_id: [],
+    area: [],
+    })
+  }
+
   return (
     <div>
       <Typography variant="inherit" onClick={handleClickOpen}>
@@ -174,7 +193,7 @@ function AddRecycler(props) {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Add Recycler</DialogTitle>
+        <DialogTitle id="form-dialog-title" onClick={presentPopulate}>Add Recycler</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please complete all required (*) fields and click "Submit" to add
