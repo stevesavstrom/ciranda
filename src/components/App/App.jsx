@@ -19,7 +19,6 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 
 import SearchPage from '../SearchPage/SearchPage';
 import SearchList from '../SearchList/SearchList';
-import SearchItem from '../SearchItem/SearchItem';
 import "../App/App.css";
 
 function App() {
@@ -33,7 +32,7 @@ function App() {
 
   return (
     <Router>
-      <div>
+      <div style={{minHeight:"92vh"}}>
         <Nav />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
@@ -43,12 +42,12 @@ function App() {
             <SearchPage />
           </Route>
 
-          <Route
+          <ProtectedRoute
             exact
             path="/admin"
           >
             <AdminPage />
-          </Route>
+          </ProtectedRoute>
 
           <Route
             exact
@@ -83,19 +82,15 @@ function App() {
             <SearchList />
           </Route>
           
-          <Route 
-          exact
-          path="/search-results">
-            <SearchItem />
-          </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
             <h1>404</h1>
           </Route>
         </Switch>
-        <Footer />
       </div>
+      <Footer />
+
     </Router>
   );
 }

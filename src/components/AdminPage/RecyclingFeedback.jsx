@@ -11,6 +11,7 @@ import Box from "@material-ui/core/Box";
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
+import { Typography } from '@material-ui/core';
 
 
 const columns = [
@@ -75,7 +76,7 @@ function RecyclingFeedback() {
         <LogOutButton className="btn" />
       </div> */}
       <Box className={classes.wrapper} > 
-        Client Feedback
+        <Typography>Recycling Feedback</Typography>
         <Paper className={classes.root}>
           <TableContainer className={classes.container}>
             <Table stickyHeader aria-label="sticky table">

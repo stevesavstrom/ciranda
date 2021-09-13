@@ -41,8 +41,8 @@ function RegisterForm() {
         <Paper elevation={10} style ={paperStyle}>
         <h2 align='center'>Register New Administrator</h2>
     <TextField label='Username' placeholder='Enter Username' value={username} onChange={(event) => setUsername(event.target.value)} fullWidth required/>
-    <TextField label='Email' placeholder='Enter Email' value={email} onChange={(event) => setEmail(event.target.value)} fullWidth required/>
-    <TextField label='Password' placeholder='Enter password' value={password} onChange={(event) => setPassword(event.target.value)} fullWidth required/>
+    <TextField label='Email' type='email' placeholder='Enter Email' value={email} onChange={(event) => setEmail(event.target.value)} fullWidth required/>
+    <TextField label='Password' type='password' placeholder='Enter password' value={password} onChange={(event) => setPassword(event.target.value)} fullWidth required/>
     <p></p>
 
       <Button type='submit' color='primary' variant="contained" onClick={registerUser} fullWidth>Create New Admin</Button>

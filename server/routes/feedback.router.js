@@ -2,12 +2,13 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const {rejectUnauthenticated} = require("../modules/authentication-middleware");
 
 
 // returns all feedback from db for display in the admin view
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
     const query = `
-    SELECT feedback.company_id, companies.name AS company_name, feedback.customer, feedback.email, feedback.comment, feedback.date FROM feedback
+    SELECT feedback.company_id, companies.name AS company_name, feedback.name, feedback.customer, feedback.email, feedback.comment, feedback.date FROM feedback
     JOIN companies ON feedback.company_id = companies.id
     `;
     pool.query(query)
@@ -22,7 +23,7 @@ router.get('/', (req, res) => {
 
 
 // returns all recycler feedback from db for display in the admin view
-router.get('/recycling_comments', (req, res) => {
+router.get('/recycling_comments', rejectUnauthenticated, (req, res) => {
     const query = `
     SELECT * FROM recycle_feedback ORDER BY date;`;
     pool.query(query)
@@ -42,10 +43,10 @@ router.get('/recycling_comments', (req, res) => {
 router.post('/', (req, res) => {
     feedback = req.body;
     const query = `
-    INSERT INTO feedback (company_id, customer, email, comment, date)
-    VALUES ($1, $2, $3, $4, NOW());
+    INSERT INTO feedback (company_id, name, customer, email, comment, date)
+    VALUES ($1, $2, $3, $4, $5, NOW());
     `;
-    pool.query(query, [feedback.company_id, feedback.customer, feedback.email, feedback.comment])
+    pool.query(query, [feedback.company_id, feedback.name, feedback.customer, feedback.email, feedback.comment])
     .then( response => {
         res.sendStatus(201);
     })
@@ -75,7 +76,7 @@ router.post('/recycling_comments', (req, res) => {
 
 // PUT feedback router
 // This is a sample of what should be needed for the admin edit feedback.
-router.put("/:id",  (req, res) => {
+router.put("/:id", rejectUnauthenticated, (req, res) => {
     const company_id = req.body.company_id;
     const customer = req.body.customer;
     const email = req.body.email;
@@ -99,7 +100,7 @@ router.put("/:id",  (req, res) => {
 
 
 // DELETE feedback from the Feedback table
-router.delete('/:id', (req, res) => {
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
     pool.query('DELETE FROM "feedback" WHERE id=$1', [req.params.id])
     .then((result) => {
         res.sendStatus(200);
