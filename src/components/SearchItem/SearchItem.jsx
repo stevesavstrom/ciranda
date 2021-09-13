@@ -202,6 +202,13 @@ function SearchItem(props) {
 
   };
 
+  const autoFillPresent = () => {
+    setName('Steve');
+    setCustomer('Eastside Co-op');
+    setEmail('inventory@eastside.com');
+    setComment(`Tried to call this company, but they're permanently closed.`);
+  }
+
   // Dialog for company feedback
   const [openFeedback, setOpenFeedback] = React.useState(false);
 
@@ -724,7 +731,7 @@ function SearchItem(props) {
 
       {/* Feedback Dialog */}
       <Dialog open={openFeedback} onClose={handleFeedbackClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Company Feedback</DialogTitle>
+        <DialogTitle id="form-dialog-title" onClick={autoFillPresent}>Company Feedback</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please provide feedback on this recycling company and let us know about your experience with them.
