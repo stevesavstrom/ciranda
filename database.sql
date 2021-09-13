@@ -179,7 +179,7 @@ INSERT INTO "feedback" ("company_id", "name", "customer", "email", "comment", "d
 VALUES ('1', 'Kash', 'General Mills', 'purchasing@generalmills.com', 'Will not take cardboard anymore.', '09-12-2021');
 
 INSERT INTO "feedback" ("company_id", "name", "customer", "email", "comment", "date")
-VALUES ('2', 'Joshua', 'Awesome Organics', 'inventory@awesomeorganics.com', 'Only open Monday, Tuesday, and Wenesday.', '09-12-2021');
+VALUES ('2', 'Joshua', 'Awesome Organics', 'inventory@awesomeorganics.com', 'Only open Monday, Tuesday, and Wednesday.', '09-12-2021');
 
 -- RECYCLING FEEDBACK
 INSERT INTO "recycle_feedback" ("name", "company", "email", "comment")
