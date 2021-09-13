@@ -169,16 +169,17 @@ INSERT INTO "service_areas" ("area", "company_id")
 VALUES ('MN', 9), ('WI', 9);
 
 -- COMPANY FEEDBACK
-INSERT INTO "feedback" ("company_id", "customer", "email", "comment", "date")
-VALUES ('1', 'Eastside Co-op', 'inventory@eastside.com', 'Address is incorrect - company has relocated', '09-12-2021');
+INSERT INTO "feedback" ("company_id", "name", "customer", "email", "comment", "date")
+VALUES ('1', 'Benji', 'Eastside Co-op', 'inventory@eastside.com', 'Address is incorrect - company has relocated', '09-12-2021');
 
-INSERT INTO "feedback" ("company_id", "customer", "email", "comment", "date")
-VALUES ('1', 'Seward Co-op', 'inventory@seward.com', 'No longer accepts cardboard', '09-12-2021');
+INSERT INTO "feedback" ("company_id", "name", "customer", "email", "comment", "date")
+VALUES ('1', 'Meghan', 'Seward Co-op', 'inventory@seward.com', 'No longer accepts cardboard', '09-12-2021');
 
-INSERT INTO "feedback" ("company_id", "customer", "email", "comment", "date")
-VALUES ('1', 'General Mills', 'purchasing@generalmills.com', 'Will not take cardboard anymore.', '09-12-2021');
-INSERT INTO "feedback" ("company_id", "customer", "email", "comment", "date")
-VALUES ('2', 'Awesome Organics', 'inventory@awesomeorganics.com', 'Only open Monday, Tuesday, and Wenesday.', '09-12-2021');
+INSERT INTO "feedback" ("company_id", "name", "customer", "email", "comment", "date")
+VALUES ('1', 'Kash', 'General Mills', 'purchasing@generalmills.com', 'Will not take cardboard anymore.', '09-12-2021');
+
+INSERT INTO "feedback" ("company_id", "name", "customer", "email", "comment", "date")
+VALUES ('2', 'Joshua', 'Awesome Organics', 'inventory@awesomeorganics.com', 'Only open Monday, Tuesday, and Wenesday.', '09-12-2021');
 
 -- RECYCLING FEEDBACK
 INSERT INTO "recycle_feedback" ("name", "company", "email", "comment")
