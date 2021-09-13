@@ -53,7 +53,7 @@ function RegisterForm() {
     <TextField label='Password' type='password' placeholder='Enter password' value={password} onChange={(event) => setPassword(event.target.value)} fullWidth required/>
     <p></p>
 
-      <Button type='submit' color='primary' variant="contained" onClick={registerUser} fullWidth>Create New Admin</Button>
+      <Button type='submit' autocomplete="off" color='primary' variant="contained" onClick={registerUser} fullWidth>Create New Admin</Button>
 
         
     </Paper>
