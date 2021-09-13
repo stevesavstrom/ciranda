@@ -26,6 +26,8 @@ function LoginForm() {
         },
       });
       dispatch({ type: "SET_COMPANIES", payload: [] })
+      setUsername('');
+      setPassword('');
     } else {
       dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }

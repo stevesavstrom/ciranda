@@ -29,6 +29,9 @@ function RegisterForm() {
         password: password,
       },
     });
+    setUsername('');
+    setEmail('');
+    setPassword('');
     history.push('/search');
   }; 
 
