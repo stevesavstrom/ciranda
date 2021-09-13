@@ -18,7 +18,8 @@ import { Grid, Typography } from '@material-ui/core';
 
 const columns = [
   { id: 'company_name', label: 'Recycler', minWidth: 170 },
-  { id: 'customer', label: 'Customer Name', minWidth: 100 },
+  { id: 'name', label: 'Customer Name', minWidth: 100},
+  { id: 'customer', label: 'Customer Company', minWidth: 100 },
   {
     id: 'email',
     label: 'Email',

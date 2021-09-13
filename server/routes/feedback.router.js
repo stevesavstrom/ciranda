@@ -8,7 +8,7 @@ const {rejectUnauthenticated} = require("../modules/authentication-middleware");
 // returns all feedback from db for display in the admin view
 router.get('/', rejectUnauthenticated, (req, res) => {
     const query = `
-    SELECT feedback.company_id, companies.name AS company_name, feedback.customer, feedback.email, feedback.comment, feedback.date FROM feedback
+    SELECT feedback.company_id, companies.name AS company_name, feedback.name, feedback.customer, feedback.email, feedback.comment, feedback.date FROM feedback
     JOIN companies ON feedback.company_id = companies.id
     `;
     pool.query(query)
@@ -46,7 +46,7 @@ router.post('/', (req, res) => {
     INSERT INTO feedback (company_id, name, customer, email, comment, date)
     VALUES ($1, $2, $3, $4, $5, NOW());
     `;
-    pool.query(query, [feedback.company_id, feedback.customer, feedback.email, feedback.comment])
+    pool.query(query, [feedback.company_id, feedback.name, feedback.customer, feedback.email, feedback.comment])
     .then( response => {
         res.sendStatus(201);
     })
