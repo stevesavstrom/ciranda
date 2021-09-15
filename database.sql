@@ -1,4 +1,4 @@
--- Create a database called 'ciranda'
+-- Create a PostgreSQL database called 'ciranda'
 
 -- Drop tables (use this order to avoid dependency conflicts)
 DROP TABLE "user";

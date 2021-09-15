@@ -1,121 +1,56 @@
 
-# EDA Project
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+# Ciranda: Recycling Center Search Interface
 
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
+## Description
+[Ciranda](https://www.ciranda.com/) supplies brands and manufacturers with the highest quality certified organic and non-GMO ingredients. As part of its' sustainability mission, Ciranda wants to help customers properly recycle commercial shipping containers such as a metal drums, plastic drums, intermediate bulk containers (IBCs), plastic film, and cardboard.
 
-## Use the Template for This Repository (Don't Clone)
+Ciranda tasked our team with building a search engine user interface that allows customers to search for, locate, and contact recycling companies in their area to meet their needs. Ciranda Recycling Center Interface was created in partnership with [Prime Digital Academy](https://www.primeacademy.io/) by [John Idso](https://www.linkedin.com/in/johnidso/), [Kong Yang](https://www.linkedin.com/in/kong-yang-founder/), [Shawn White](https://www.linkedin.com/in/shawn-white-20a2a486/), [Matthew Bouc](https://www.linkedin.com/in/matthew-bouc/), and [Steve Savstrom](https://www.linkedin.com/in/stevesavstrom/).
 
-- Don't Fork or Clone. Instead, click the `Use this Template` button, and make a copy to your personal account.
+- Customers can search for recycling centers based on geographic area.
+- Locate recycling centers based on service area and materials they accept.
+- Contact recycling centers by accessing phone, email, website, and address.
+- Provide feedback to Ciranda on individual recycling companies.
+- Provide feedback to Ciranda on their participation in recycling efforts and contributions to sustainability mission.
 
+## Preview
+![Preview](public/images/ciranda.gif)
 
-## Prerequisites
+## Installation
+1. Create a SQL database named `ciranda` (see `database.sql` for setup instructions.)
+2. Open your text editor and run `npm install` in Terminal.
+3. Run `npm run server` in Terminal.
+4. Run `npm run client` in another Terminal to view React application.
 
-Before you get started, make sure you have the following software installed on your computer:
+## Usage
 
+Users:
+- Users can search for recycling centers by state and materials to return a list of local and national recycling centers that serve their area and accept the materials they wish to recycle.
+- Users can view details including contact information by expanding the collapsible list to reveal additional information.
+- Users can provide feedback on specific recycling companies by clicking the `feedback` button in the details view including their experience or information that needs to be updated (i.e. hours, address, materials accepted, etc.)
+- Users can provide Ciranda with feedback on how often and how much they are recycling by clicking the `click here` link in the alert at the top of the search page.
+
+Admin:
+- Superuser can create additional admin/employee accounts by completing the `register user` form.
+- Admins can post new recycling centers to the database by clicking `add recycler` in navigation bar when logged in.
+- Admins can view feedback by clicking `feedback` in the navigation bar.
+- On feedback page, admins can view company feedback and recycling feedback by toggling between the feedback views.
+- On the search page, admins can search by location and materials to view company details.
+- On the company details view, admins can edit company details by clicking the `edit` button.
+- On company details view, admins can delete a company by clicking the `delete` button.
+
+## Built With
+- [React](https://reactjs.org/)
+- [Redux](https://redux.js.org/)
+- [Redux Saga](https://redux-saga.js.org/)
 - [Node.js](https://nodejs.org/en/)
-- [PostrgeSQL](https://www.postgresql.org/)
-- [Nodemon](https://nodemon.io/)
+- [Express](https://expressjs.com/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Postico](https://eggerapps.at/postico/)
+- [Material-UI](https://material-ui.com/)
+- [VS Code](https://code.visualstudio.com/)
 
-## Create database and table
+## Acknowledgement
+Thank you to [Ciranda](https://www.ciranda.com/) and [Prime Digital Academy](https://www.primeacademy.io/) for partnering to build this application. &copy; 2021 Ciranda, Inc. All Rights Reserved.
 
-Create a new database called `prime_app` and create a `user` table:
-
-```SQL
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-```
-
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
-
-## Development Setup Instructions
-
-- Run `npm install`
-- Create a `.env` file at the root of the project and paste this line into the file:
-  ```
-  SERVER_SESSION_SECRET=superDuperSecret
-  ```
-  While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm run server`
-- Run `npm run client`
-- Navigate to `localhost:3000`
-
-## Debugging
-
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run client`. Start the debugging server by selecting the Debug button.
-
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
-
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
-
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
-
-## Testing Routes with Postman
-
-To use Postman with this repo, you will need to set up requests in Postman to register a user and login a user at a minimum.
-
-Keep in mind that once you using the login route, Postman will manage your session cookie for you just like a browser, ensuring it is sent with each subsequent request. If you delete the `localhost` cookie in Postman, it will effectively log you out.
-
-1. Start the server - `npm run server`
-2. Import the sample routes JSON file [v2](./PostmanPrimeSoloRoutesv2.json) by clicking `Import` in Postman. Select the file.
-3. Click `Collections` and `Send` the following three calls in order:
-   1. `POST /api/user/register` registers a new user, see body to change username/password
-   2. `POST /api/user/login` will login a user, see body to change username/password
-   3. `GET /api/user` will get user information, by default it's not very much
-
-After running the login route above, you can try any other route you've created that requires a logged in user!
-
-## Production Build
-
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
-
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm start`
-- Navigate to `localhost:5000`
-
-## Lay of the Land
-
-There are a few videos linked below that show a walkthrough the client and sever setup to help acclimatize to the boilerplate. Please take some time to watch the videos in order to get a better understanding of what the boilerplate is like.
-
-- [Initial Set](https://vimeo.com/453297271)
-- [Server Walkthrough](https://vimeo.com/453297212)
-- [Client Walkthrough](https://vimeo.com/453297124)
-
-Directory Structure:
-
-- `src/` contains the React application
-- `public/` contains static assets for the client-side
-- `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site
-- `server/` contains the Express App
-
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
-
-- src/components
-  - App/App
-  - Footer/Footer
-  - Nav/Nav
-  - AboutPage/AboutPage
-  - InfoPage/InfoPage
-  - UserPage/UserPage
-  - LoginPage/LoginPage
-  - RegisterPage/RegisterPage
-  - LogOutButton/LogOutButton
-  - ProtectedRoute/ProtectedRoute
-
-## Deployment
-
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
-
-## Update Documentation
-
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+## Support
+If you need support or have suggestions, please contact [hello@primeacademy.io](hello@primeacademy.io)
