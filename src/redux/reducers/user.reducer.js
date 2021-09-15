@@ -1,3 +1,5 @@
+// contains current user information (admins)
+
 const userReducer = (state = {}, action) => {
   switch (action.type) {
     case 'SET_USER':
