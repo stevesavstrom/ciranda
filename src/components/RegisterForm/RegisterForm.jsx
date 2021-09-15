@@ -29,23 +29,31 @@ function RegisterForm() {
         password: password,
       },
     });
+    setUsername('');
+    setEmail('');
+    setPassword('');
     history.push('/search');
   }; 
 
   const paperStyle={padding:20, height:'50vh' ,width:400, margin:"20px auto"}
   const avatarStyle={backgroundColor: '#1bbd7e'}
 
+  const handleAutoFill = () => {
+    setUsername('Matt');
+    setEmail('matt@ciranda.com');
+    setPassword('123');
+  }
 
   return (
     <Grid>
         <Paper elevation={10} style ={paperStyle}>
-        <h2 align='center'>Register New Administrator</h2>
+        <h2 align='center' onClick={handleAutoFill}>Register New Administrator</h2>
     <TextField label='Username' placeholder='Enter Username' value={username} onChange={(event) => setUsername(event.target.value)} fullWidth required/>
-    <TextField label='Email' placeholder='Enter Email' value={email} onChange={(event) => setEmail(event.target.value)} fullWidth required/>
-    <TextField label='Password' placeholder='Enter password' value={password} onChange={(event) => setPassword(event.target.value)} fullWidth required/>
+    <TextField label='Email' type='email' placeholder='Enter Email' value={email} onChange={(event) => setEmail(event.target.value)} fullWidth required/>
+    <TextField label='Password' type='password' placeholder='Enter password' value={password} onChange={(event) => setPassword(event.target.value)} fullWidth required/>
     <p></p>
 
-      <Button type='submit' color='primary' variant="contained" onClick={registerUser} fullWidth>Create New Admin</Button>
+      <Button type='submit' autocomplete="off" color='primary' variant="contained" onClick={registerUser} fullWidth>Create New Admin</Button>
 
         
     </Paper>

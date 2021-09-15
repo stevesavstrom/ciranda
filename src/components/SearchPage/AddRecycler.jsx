@@ -1,4 +1,4 @@
-import { FormControl } from "@material-ui/core";
+import { FormControl, Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
@@ -164,19 +164,36 @@ function AddRecycler(props) {
     setemptyNewCompany(false);
   };
 
+  const presentPopulate = () => {
+    setNewRecycler({
+    name: "NPM Disposal",
+    service_range: "Local",
+    website: "http://www.npmdisposal.com",
+    address: "19823 Disposal Ln",
+    city: "Rochester",
+    state: "MN",
+    zip: "55901",
+    phone: "651-555-3333",
+    email: "customercare@npmdisposal.com",
+    cleanliness: "Drip dry",
+    pickup_requirements: "Can't pickup",
+    notes: "Has information on local transportation companies for pickup",
+    recyclable_id: [],
+    area: [],
+    })
+  }
+
   return (
     <div>
-      <Box>
-      <Button variant="contained" color="primary" className={classes.button} onClick={handleClickOpen}>
+      <Typography variant="inherit" onClick={handleClickOpen}>
         Add Recycler
-      </Button>
-      </Box>
+      </Typography>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Add Recycler</DialogTitle>
+        <DialogTitle id="form-dialog-title" onClick={presentPopulate}>Add Recycler</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please complete all required (*) fields and click "Submit" to add

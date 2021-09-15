@@ -1,6 +1,7 @@
 const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
+const {rejectUnauthenticated} = require("../modules/authentication-middleware");
 
 /**
  * GET route for returning all companies
@@ -29,9 +30,9 @@ GROUP BY companies.id;`;
 /**
  * GET route using query params to search for companies that match
  */
-router.get("/search?", async (req, res) => {
+router.get("/search?", async (req, res) => { 
     try{
-        console.log('IN SEARCH')
+        console.log('IN SEARCH', req.query)
         // trueMaterials is populated with all materials = 'true' from req.query
         const trueMaterials = []
         // loop through req.query and push materials to trueMaterials.  Use switch to replace query name with database name.
@@ -99,7 +100,7 @@ router.get("/search?", async (req, res) => {
             GROUP BY companies.id;`
         );
         // Add the state to the trueMaterials array, the array will then be used for the pool.query
-        trueMaterials.unshift(req.query.state)
+        trueMaterials.unshift(req.query.state || null)
         // Creates a variable of the returned array from queryText and trueMaterials - this will be used to gather information on all companies
         const companiesList = await pool.query(queryText, trueMaterials)
         // Blank array that will hold further query info - this array is eventually sent as the complete array
@@ -116,7 +117,7 @@ router.get("/search?", async (req, res) => {
                                 WHERE companies.id=$1
                                 GROUP BY companies.id;`
         // Loop through the companyList of ids, run a query to get all company details, then push those details to the returningCompanies array.
-        for (company of companiesList.rows){
+        for (const company of companiesList.rows){
             const companyDetails = await pool.query(secondaryQuery, [company.id])
             returningCompanies.push(companyDetails.rows[0])
         }
@@ -154,7 +155,7 @@ pool.query(query, [companyId])
 });
 
 // DELETE a recycling center record from the recycling_centers table
-router.delete('/:id', (req, res) => {
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
   pool.query('DELETE FROM "companies" WHERE id=$1', [req.params.id])
   .then((result) => {
       res.sendStatus(200);
@@ -165,7 +166,7 @@ router.delete('/:id', (req, res) => {
 });
 
 // POST a recycling center record
-router.post('/', (req,res) => {
+router.post('/', rejectUnauthenticated, (req,res) => {
     const newCompany = req.body;
     console.log('Whole req.body', req.body);
     const recyclableIds = req.body.recyclable_id;
@@ -208,7 +209,7 @@ router.post('/', (req,res) => {
 });
 
 // PUT to edit recycling center record
-router.put("/:id", async (req, res) => {
+router.put("/:id", rejectUnauthenticated, async (req, res) => {
     
     const editCompany = req.body;
 

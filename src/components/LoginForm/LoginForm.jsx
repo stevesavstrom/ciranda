@@ -25,6 +25,9 @@ function LoginForm() {
           password: password,
         },
       });
+      dispatch({ type: "SET_COMPANIES", payload: [] })
+      setUsername('');
+      setPassword('');
     } else {
       dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
@@ -33,13 +36,23 @@ function LoginForm() {
   const paperStyle={padding:20, height:'70vh' ,width:280, margin:"20px auto"}
   const avatarStyle={backgroundColor: '#1bbd7e'}
 
+  const autoFillEckhart = () => {
+    setUsername('Eckhart');
+    setPassword('123');
+  }
+
+  const handleAutoFillMatt = () => {
+    setUsername('Matt');
+    setPassword('123');
+  }
+
   return (
     <Grid>
         <Paper elevation={10} style ={paperStyle}>
             <Grid align='center'>
-                <Avatar><LockOutlined/></Avatar>
+                <Avatar onClick={autoFillEckhart}><LockOutlined/></Avatar>
             </Grid>
-        <h2>Welcome to Ciranda</h2>
+        <h2 onClick={handleAutoFillMatt}>Welcome to Ciranda</h2>
     <TextField label='Username' placeholder='Enter Username' value={username} onChange={(event) => setUsername(event.target.value)} fullWidth required/>
     <TextField label='Password' placeholder='Enter password' type='password' value={password} onChange={(event) => setPassword(event.target.value)} fullWidth required/>
     <FormControlLabel

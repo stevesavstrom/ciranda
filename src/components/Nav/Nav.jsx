@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 import { useSelector } from 'react-redux';
+import AddRecycler from '../SearchPage/AddRecycler';
+import {states} from '../StateList/StateList.js';
+import { Grid } from '@material-ui/core';
 
 function Nav() {
   const user = useSelector((store) => store.user);
@@ -26,16 +29,22 @@ function Nav() {
           </>
         }
 
-        {/* If a user is logged in, show these links */}
-        {user.id===1 && (
+        {user.id && (
           <>
-            <Link className="navLink" to="/register">
-              Register User
-            </Link>
+          <div className="navLink">
+            <AddRecycler states={states} />
+          </div>
             <Link className="navLink" to="/admin">
               Feedback
             </Link>
           </>
+        )}
+
+        {/* If a user is logged in, show these links */}
+        {user.id===1 && (
+            <Link className="navLink" to="/register">
+              Register User
+            </Link>
         )}
         {!user.id && (
           <Link className="navLink" to="/login">
