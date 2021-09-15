@@ -6,7 +6,6 @@ function* recyclerSaga() {
   }
 
 function* addRecycler (action) {
-    console.log(action.payload);
     try {
         yield axios.post('/api/location', action.payload);
         // yield put({type:'GET_RECYCLERS'}) -- whatever this is 

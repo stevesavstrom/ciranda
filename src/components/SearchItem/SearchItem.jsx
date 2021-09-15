@@ -128,7 +128,6 @@ function SearchItem(props) {
   const [editId, setEditId] = useState("");
 
   const handleDeleteOpen = (companyId) => {
-    console.log("This is Open companyId", companyId);
     setDeleteId(companyId);
     setOpenDialog(true);
   };
@@ -138,9 +137,6 @@ function SearchItem(props) {
   };
 
   const handleDelete = (deleteItem) => {
-    console.log(`Delete item`, deleteItem);
-    console.log("materials", props.materials);
-    console.log("selectedState", props.selectedState);
     dispatch({ type: "DELETE_LOCATION", payload: deleteItem, renderSearch });
     setOpenDialog(false);
   };
@@ -316,7 +312,6 @@ function SearchItem(props) {
     }
     updatedCompany.recyclable_id = materialsArray;
     updatedCompany.area = selectedStates;
-    console.log("The edit payload", updatedCompany);
     dispatch({
       type: "EDIT_LOCATION_DETAILS",
       payload: updatedCompany,

@@ -7,8 +7,6 @@ function* editLocationDetailsSaga() {
 }
 
 function* editLocationDetails(action) {
-    console.log('Inside editLocationDetails: data is', action.payload);
-    console.log('Inside editLocationDetails: id is', action.id);
 	try {
         yield axios.put(`/api/location/${action.id}`, action.payload);
         yield put ( action.renderSearch() );

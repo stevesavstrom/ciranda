@@ -1,4 +1,7 @@
-// U.S. States for State Select Dropdown
+
+// List of U.S. States utilized across the application
+// Notably used in any of the state selectors in AddRecycler, SearchPage
+
 export const states = [
     { label: 'Alabama', value: 'AL' },
     { label: 'Alaska', value: 'AK' },

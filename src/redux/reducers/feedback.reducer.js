@@ -8,7 +8,4 @@ const feedbackReducer = (state = [], action) => {
     }
 }
 
-    // library will be on the redux state at:
-    // state.feedback
-
 export default feedbackReducer;
