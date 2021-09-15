@@ -32,7 +32,7 @@ GROUP BY companies.id;`;
  */
 router.get("/search?", async (req, res) => { 
     try{
-        console.log('IN SEARCH')
+        console.log('IN SEARCH', req.query)
         // trueMaterials is populated with all materials = 'true' from req.query
         const trueMaterials = []
         // loop through req.query and push materials to trueMaterials.  Use switch to replace query name with database name.

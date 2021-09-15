@@ -74,6 +74,7 @@ function SearchPage () {
         metalDrums: false,
         plasticDrums: false,
         plasticFilm: false,
+        ldpe: false,
         ibcs: false,
         cardboard: false,
     });
@@ -156,6 +157,16 @@ function SearchPage () {
                 />
               }
               label="Plastic Drums HDPE"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={materials.ldpe}
+                  onChange={handleChange}
+                  name="ldpe"
+                />
+              }
+              label="LDPE Container"
             />
             <FormControlLabel
               control={
