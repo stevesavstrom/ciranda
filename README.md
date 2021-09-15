@@ -12,7 +12,8 @@ Ciranda tasked our team with building a search engine user interface that allows
 - Provide feedback to Ciranda on individual recycling companies.
 - Provide feedback to Ciranda on their participation in recycling efforts and contributions to sustainability mission.
 
-## Screenshot
+## Preview
+![Preview](public/images/ciranda.gif)
 
 ## Installation
 
