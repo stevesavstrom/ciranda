@@ -5,7 +5,7 @@ body,
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
 }
 
@@ -14,25 +14,13 @@ img {
   max-width: 100%;
 }
 
-/* --------------------------------------------------------------------------------
-Container
--------------------------------------------------------------------------------- */
-
-/* .container {
-  padding: 20px;
-} */
-
-/* --------------------------------------------------------------------------------
-Button
--------------------------------------------------------------------------------- */
-
 .btn {
   display: inline-block;
   padding: 10px 20px;
   border-color: #014041;
   border-width: 1px 1px 3px;
   border-radius: 4px;
-  background-color: #F7CD54;
+  background-color: #f7cd54;
   color: #000000;
   font-size: 1.1rem;
   outline: 0;
@@ -55,7 +43,7 @@ Button
 }
 
 .btn:hover {
-  background-color: #F7CD54;
+  background-color: #f7cd54;
   text-decoration: none;
 }
 
@@ -72,8 +60,8 @@ Button
 
 .btn_asLink:hover {
   background-color: transparent;
-  border-color: #EF5E3A;
-  color: #EF5E3A;
+  border-color: #ef5e3a;
+  color: #ef5e3a;
 }
 
 /* --------------------------------------------------------------------------------
