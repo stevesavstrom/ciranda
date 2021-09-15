@@ -14,7 +14,6 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
-import Box from '@material-ui/core/Box';
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
@@ -32,21 +31,20 @@ function getStyles(stateName, stateArray, theme) {
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    minWidth: '100%',
-    paddingBottom: '20px',
-
+    minWidth: "100%",
+    paddingBottom: "20px",
   },
   chips: {
     display: "flex",
     flexWrap: "wrap",
   },
   button: {
-    display: 'inline-block',
-    margin: '10px',
-    marginLeft: '20px',
-    fontSize: '12px',
-    width: '130px',
-    padding: '10px'
+    display: "inline-block",
+    margin: "10px",
+    marginLeft: "20px",
+    fontSize: "12px",
+    width: "130px",
+    padding: "10px",
   },
   chip: {
     margin: 2,
@@ -66,6 +64,8 @@ const MenuProps = {
     },
   },
 };
+
+// AddRecycler contains all logic and UI for the Add Recycler button and form. 
 
 function AddRecycler(props) {
   const theme = useTheme();
@@ -95,7 +95,7 @@ function AddRecycler(props) {
     4: false,
     5: false,
     6: false,
-  }
+  };
 
   const [newRecycler, setNewRecycler] = useState(emptyRecycler);
   const [recyclables, setRecyclables] = useState(emptyRecyclables);
@@ -137,26 +137,26 @@ function AddRecycler(props) {
       }
     }
     if (
-        !newRecycler.name ||
-        !newRecycler.service_range ||
-        !recyclablesIdArray ||
-        !selectedStates||
-        !newRecycler.email
+      !newRecycler.name ||
+      !newRecycler.service_range ||
+      !recyclablesIdArray ||
+      !selectedStates ||
+      !newRecycler.email
     ) {
       handleAlertPopup();
     } else {
-        newRecycler.recyclable_id = recyclablesIdArray;
-        newRecycler.area = selectedStates;
-        dispatch({type:'ADD_RECYCLER', payload: newRecycler});
-        setSelectedStates([]);
-        setRecyclables(emptyRecyclables);
-        handleClose();
-        setemptyNewCompany(false);
+      newRecycler.recyclable_id = recyclablesIdArray;
+      newRecycler.area = selectedStates;
+      dispatch({ type: "ADD_RECYCLER", payload: newRecycler });
+      setSelectedStates([]);
+      setRecyclables(emptyRecyclables);
+      handleClose();
+      setemptyNewCompany(false);
     }
   };
 
   const [emptyNewCompany, setemptyNewCompany] = React.useState(false);
-  
+
   const handleAlertPopup = () => {
     setemptyNewCompany(true);
   };
@@ -166,22 +166,22 @@ function AddRecycler(props) {
 
   const presentPopulate = () => {
     setNewRecycler({
-    name: "NPM Disposal",
-    service_range: "Local",
-    website: "http://www.npmdisposal.com",
-    address: "19823 Disposal Ln",
-    city: "Rochester",
-    state: "MN",
-    zip: "55901",
-    phone: "651-555-3333",
-    email: "customercare@npmdisposal.com",
-    cleanliness: "Drip dry",
-    pickup_requirements: "Can't pickup",
-    notes: "Has information on local transportation companies for pickup",
-    recyclable_id: [],
-    area: [],
-    })
-  }
+      name: "NPM Disposal",
+      service_range: "Local",
+      website: "http://www.npmdisposal.com",
+      address: "19823 Disposal Ln",
+      city: "Rochester",
+      state: "MN",
+      zip: "55901",
+      phone: "651-555-3333",
+      email: "customercare@npmdisposal.com",
+      cleanliness: "Drip dry",
+      pickup_requirements: "Can't pickup",
+      notes: "Has information on local transportation companies for pickup",
+      recyclable_id: [],
+      area: [],
+    });
+  };
 
   return (
     <div>
@@ -193,17 +193,21 @@ function AddRecycler(props) {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title" onClick={presentPopulate}>Add Recycler</DialogTitle>
+        <DialogTitle id="form-dialog-title" onClick={presentPopulate}>
+          Add Recycler
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please complete all required (*) fields and click "Submit" to add
             new recycler to the database.
           </DialogContentText>
 
-        {emptyNewCompany === true && (<SetEmptyNewCompanyAlert
-        emptyNewCompany={emptyNewCompany}
-        closeAlertPopup={closeAlertPopup}
-        />)}
+          {emptyNewCompany === true && (
+            <SetEmptyNewCompanyAlert
+              emptyNewCompany={emptyNewCompany}
+              closeAlertPopup={closeAlertPopup}
+            />
+          )}
 
           <TextField
             required
@@ -217,7 +221,9 @@ function AddRecycler(props) {
             autoComplete="off"
           />
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-mutiple-chip-label">Service States*</InputLabel>
+            <InputLabel id="demo-mutiple-chip-label">
+              Service States*
+            </InputLabel>
             <Select
               labelId="demo-mutiple-chip-label"
               id="demo-mutiple-chip"
@@ -380,7 +386,7 @@ function AddRecycler(props) {
             onChange={handleChange}
             autoComplete="off"
             fullWidth
-          />  
+          />
           <TextField
             margin="dense"
             id="cleanliness"

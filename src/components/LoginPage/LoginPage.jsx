@@ -1,8 +1,8 @@
-import React from 'react';
-import LoginForm from '../LoginForm/LoginForm';
-import { useHistory } from 'react-router-dom';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import LoginForm from "../LoginForm/LoginForm";
 
-// Login form component for Admins and Super Admin to log in. 
+// Login form component for Admins and Super Admin to log in.
 function LoginPage() {
   const history = useHistory();
 

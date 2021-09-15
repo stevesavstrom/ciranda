@@ -11,11 +11,9 @@
 }
 
 .footerWrapper {
-  background-color: #EF5E3A;
+  background-color: #ef5e3a;
   position: relative;
   width: 100%;
   bottom: 0;
-  /* margin-left: -20px; */
-  /* margin-bottom: -55px; */
   padding: 50px;
 }

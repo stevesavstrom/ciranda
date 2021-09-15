@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -6,8 +5,11 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import SetEmptyFeedbackAlert from "../feedbackErrors/feedbackDialogError";
+
+// Contains Feedback toast and modal form that is displayed from SearchPage.
 
 function RecyclingFeedbackDialog(props) {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ function RecyclingFeedbackDialog(props) {
   const [comment, setComment] = useState("");
 
   const [emptyFeedbackAlert, setEmptyFeedbackAlert] = React.useState(false);
-  
+
   const handleAlertPopup = () => {
     setEmptyFeedbackAlert(true);
   };
@@ -46,8 +48,10 @@ function RecyclingFeedbackDialog(props) {
     setName("Steve");
     setCompany("Eastside Co-op");
     setEmail("inventory@eastside.com");
-    setComment("I recycled 200lbs of cardboard last week.  The company even picked it up for me!");
-  }
+    setComment(
+      "I recycled 200lbs of cardboard last week.  The company even picked it up for me!"
+    );
+  };
 
   return (
     <Dialog
@@ -55,16 +59,20 @@ function RecyclingFeedbackDialog(props) {
       onClose={props.closeRecyclingDialog}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title" onClick={handleAutoFill}>Recycling Feedback</DialogTitle>
+      <DialogTitle id="form-dialog-title" onClick={handleAutoFill}>
+        Recycling Feedback
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>
           We'd love to hear what you're recycling today and the quantity!
         </DialogContentText>
 
-        {emptyFeedbackAlert === true && (<SetEmptyFeedbackAlert
+        {emptyFeedbackAlert === true && (
+          <SetEmptyFeedbackAlert
             emptyFeedbackAlert={emptyFeedbackAlert}
-            closeAlertPopup={closeAlertPopup} 
-        />)}
+            closeAlertPopup={closeAlertPopup}
+          />
+        )}
 
         <TextField
           margin="dense"
