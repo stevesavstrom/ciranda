@@ -16,6 +16,10 @@ Ciranda tasked our team with building a search engine user interface that allows
 ![Preview](public/images/ciranda.gif)
 
 ## Installation
+1. Create a SQL database named `ciranda` (see `database.sql` for setup instructions.)
+2. Open your text editor and run `npm install` in Terminal.
+3. Run `npm run server` in Terminal.
+4. Run `npm run client` in another Terminal to view React application.
 
 ## Usage
 
