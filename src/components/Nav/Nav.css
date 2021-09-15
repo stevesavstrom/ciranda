@@ -1,12 +1,12 @@
 .nav {
   /* flex box layout */
-  border-top: 28px solid #2E61A9;
+  border-top: 28px solid #2e61a9;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
   padding: 10px;
   margin: 0 0 30px;
-  background-color: #EF5E3A;
+  background-color: #ef5e3a;
   overflow: hidden;
 }
 
@@ -25,7 +25,7 @@
 .navLink {
   display: inline-block;
   color: #ffffff;
-  background-color: #EF5E3A;
+  background-color: #ef5e3a;
   text-align: center;
   padding: 24px 10px;
   text-decoration: none;
