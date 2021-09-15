@@ -2,7 +2,7 @@
 # Ciranda: Recycling Center Search Interface
 
 ## Description
-Ciranda supplies brands and manufacturers with the highest quality certified organic and non-GMO ingredients. As part of its' sustainability mission, Ciranda wants to help customers properly recycle commercial shipping containers such as a metal drums, plastic drums, intermediate bulk containers (IBCs), plastic film, and cardboard.
+[Ciranda](https://www.ciranda.com/) supplies brands and manufacturers with the highest quality certified organic and non-GMO ingredients. As part of its' sustainability mission, Ciranda wants to help customers properly recycle commercial shipping containers such as a metal drums, plastic drums, intermediate bulk containers (IBCs), plastic film, and cardboard.
 
 Ciranda tasked our team with building a search engine user interface that allows customers to search for, locate, and contact recycling companies in their area to meet their needs. Ciranda Recycling Center Interface was created in partnership with [Prime Digital Academy](https://www.primeacademy.io/) by [John Idso](https://www.linkedin.com/in/johnidso/), [Kong Yang](https://www.linkedin.com/in/kong-yang-founder/), [Shawn White](https://www.linkedin.com/in/shawn-white-20a2a486/), [Matthew Bouc](https://www.linkedin.com/in/matthew-bouc/), and [Steve Savstrom](https://www.linkedin.com/in/stevesavstrom/).
 
@@ -35,7 +35,7 @@ Ciranda tasked our team with building a search engine user interface that allows
 - [VS Code](https://code.visualstudio.com/)
 
 ## Acknowledgement
-Thank you to Ciranda and Prime Digital Academy for partnering to build this application. &copy; 2021 Ciranda, Inc. All Rights Reserved.
+Thank you to [Ciranda](https://www.ciranda.com/) and [Prime Digital Academy](https://www.primeacademy.io/) for partnering to build this application. &copy; 2021 Ciranda, Inc. All Rights Reserved.
 
 ## Support
 If you need support or have suggestions, please contact [hello@primeacademy.io](hello@primeacademy.io)
