@@ -116,6 +116,7 @@ function SearchPage() {
       >
         <Typography>We'd love to hear what you're recycling today!</Typography>
         <Typography
+
           color="primary"
           style={{ marginLeft: 10, cursor: "pointer" }}
           onClick={handleRecyclingDialog}
