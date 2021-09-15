@@ -23,6 +23,21 @@ Ciranda tasked our team with building a search engine user interface that allows
 
 ## Usage
 
+Users:
+1. Users can search for recycling centers by state and materials to return a list of local and national recycling centers that serve their area and accept the materials they wish to recycle.
+2. Users can view details including contact information by expanding the collapsible list to reveal additional information.
+3. Users can provide feedback on specific recycling companies by clicking the `feedback` button in the details view including their experience or information that needs to be updated (i.e. hours, address, materials accepted, etc.)
+4. Users can provide Ciranda with feedback on how often and how much they are recycling by clicking the `click here` link in the alert at the top of the search page.
+
+Admin:
+5. Superuser can create additional admin/employee accounts by completing the `register user` form.
+6. Admins can post new recycling centers to the database by clicking `add recycler` in navigation bar when logged in.
+7. Admins can view feedback by clicking `feedback` in the navigation bar.
+8. On feedback page, admins can view company feedback and recycling feedback by toggling between the feedback views.
+9. On the search page, admins can search by location and materials to view company details.
+10. On the company details view, admins can edit company details by clicking the `edit` button.
+11. On company details view, admins can delete a company by clicking the `delete` button.
+
 ## Built With
 - [React](https://reactjs.org/)
 - [Redux](https://redux.js.org/)
