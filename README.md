@@ -32,9 +32,10 @@ Ciranda tasked our team with building a search engine user interface that allows
 - [PostgreSQL](https://www.postgresql.org/)
 - [Postico](https://eggerapps.at/postico/)
 - [Material-UI](https://material-ui.com/)
+- [VS Code](https://code.visualstudio.com/)
 
 ## Acknowledgement
-Thank you to Ciranda and Prime Digital Academy for partnering to build this application.
+Thank you to Ciranda and Prime Digital Academy for partnering to build this application. &copy; 2021 Ciranda, Inc. All Rights Reserved.
 
 ## Support
 If you need support or have suggestions, please contact [hello@primeacademy.io](hello@primeacademy.io)
