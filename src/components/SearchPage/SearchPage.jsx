@@ -221,6 +221,16 @@ function SearchPage () {
             <FormControlLabel
               control={
                 <Checkbox
+                  checked={materials.LDPEContainer}
+                  onChange={handleChange}
+                  name="LDPEContainer"
+                />
+              }
+              label="LDPE Container"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
                   checked={materials.plasticFilm}
                   onChange={handleChange}
                   name="plasticFilm"
